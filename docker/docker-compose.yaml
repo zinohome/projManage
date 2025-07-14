@@ -1,8 +1,8 @@
 services:
-  projManage:
-    image: "tls/projManage:v0.1.1"
-    container_name: crtool
-    hostname: projManage
+  projmanage:
+    image: "tls/projmanage:v0.1.1"
+    container_name: projmanage
+    hostname: projmanage
     restart: unless-stopped
     environment:
       LANG: "zh_CN"
