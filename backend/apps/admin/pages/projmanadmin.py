@@ -14,6 +14,7 @@ from zoneinfo import ZoneInfo
 from typing import List, Optional, Union, Dict, Any, Callable
 
 from fastapi_amis_admin import amis
+from fastapi_amis_admin.utils.pydantic import model_fields
 from starlette.requests import Request
 from fastapi_amis_admin.admin import AdminAction
 from fastapi_amis_admin.crud import CrudEnum, BaseApiOut
@@ -22,6 +23,7 @@ from fastapi_amis_admin.amis import PageSchema, TableColumn, ActionType, Action,
     Divider
 from fastapi_amis_admin.utils.translation import i18n as _
 from apps.admin.swiftadmin import SwiftAdmin
+from utils.log import log as log
 from apps.admin.models.projman import Projman
 
 
@@ -88,63 +90,91 @@ class ProjmanAdmin(SwiftAdmin):
         self.schema_read = None
         self.action_type = 'Drawer'
 
-    # 项目管理Tab页面布局（可根据实际字段分组优化）
-    @staticmethod
-    def get_tabbed_form(fld_dict):
-        proj_fld_lst1 = []
-        proj_fld_lst1.append(
-            Group(body=[fld_dict["customer_id"], fld_dict["customer_name"], fld_dict["business_category"]]))
-        proj_fld_lst1.append(Group(body=[
-            fld_dict["project_name"], fld_dict["project_location"], fld_dict["project_contact"],
-            fld_dict["contact_phone"]
-        ]))
-        proj_fld_lst1.append(Divider())
-        proj_fld_lst1.append(
-            Group(body=[
-                fld_dict["service_content"], fld_dict["contract_amount"],
-                fld_dict["contract_duration"], fld_dict["contract_sign_date"], fld_dict["contract_end_date"],
-                fld_dict["expected_renewal_time"]
-            ])
-        )
-        proj_fld_lst1.append(Divider())
-        proj_fld_lst1.append(
-            Group(body=[
-                fld_dict["cooperation_method"], fld_dict["is_bidding"], fld_dict["bidding_type"],
-                fld_dict["main_competitors"]
-            ])
-        )
-        proj_fld_lst1.append(Divider())
+    def get_tabbed_form(self,fld_dict):
+        # 检查是否缺少必需字段
+        REQUIRED_FIELDS = [
+            "customer_id", "customer_name",
+            "business_category", "project_name", "project_location",
+            "project_contact", "contact_phone", "service_content",
+            "contract_amount", "contract_duration", "contract_sign_date",
+            "contract_end_date", "expected_renewal_time", "cooperation_method",
+            "is_bidding", "bidding_type", "project_number",
+            "subject_matter", "budget_amount", "max_price",
+            "publish_time", "deadline",
+            "bid_price", "bid_date", "winning_company",
+            "website_reference", "main_competitors", "others", "create_time", "update_time"
+        ]
+        # 检查是否缺少必需字段
+        missing_fields = []
+        for field in REQUIRED_FIELDS:
+            if field not in fld_dict:
+                missing_fields.append(field)
+            elif fld_dict[field] is None:
+                missing_fields.append(field)
+        if missing_fields:
+            log.error(f"缺少必需字段: {', '.join(missing_fields)}")
 
-        proj_fld_lst1.append(
-            Group(body=[
-                fld_dict["project_number"], fld_dict["subject_matter"], fld_dict["budget_amount"],
-                fld_dict["max_price"],
-                fld_dict["publish_time"], fld_dict["deadline"]
-            ])
-        )
-        proj_fld_lst1.append(Divider())
-        proj_fld_lst1.append(
-            Group(body=[
-                fld_dict["bid_price"], fld_dict["bid_date"], fld_dict["winning_company"], fld_dict["website_reference"]
-            ])
-        )
-        proj_fld_lst1.append(Divider())
-        proj_fld_lst1.append(
-            Group(body=[fld_dict["others"]])
-        )
-        proj_fld_lst1.append(Divider())
-        proj_fld_lst1.append(
-            Group(body=[fld_dict["create_time"], fld_dict["update_time"]])
-        )
+        try:
+            # 初始化 Tabs
+            formtab = amis.Tabs(tabsMode='strong')
+            formtab.tabs = []
 
-        # 主分tab
-        tabitem = amis.Tabs.Item(
-            title=_('基础信息'),
-            icon='fa fa-folder-open',
-            className="bg-blue-100",
-            body=proj_fld_lst1
-        )
-        return tabitem
+            # 客户基本信息 Tab
+            customer_fld_lst = []
+            customer_fld_lst.append(Group(body=[fld_dict["customer_id"], fld_dict["customer_name"]]))
+            customer_tabitem = amis.Tabs.Item(title="客户基本信息", icon='fa fa-university', className="bg-blue-100",
+                                         body=customer_fld_lst)
+
+            # 项目基本信息 Tab
+            project_fld_lst = []
+            project_fld_lst.append(
+                Group(body=[fld_dict["business_category"], fld_dict["project_name"], fld_dict["project_location"],
+                            fld_dict["project_contact"], fld_dict["contact_phone"], fld_dict["service_content"],
+                            fld_dict["contract_amount"], fld_dict["contract_duration"], fld_dict["contract_sign_date"],
+                            fld_dict["contract_end_date"], fld_dict["expected_renewal_time"],
+                            fld_dict["cooperation_method"]]))
+            project_tabitem = amis.Tabs.Item(title="项目基本信息", icon='fa fa-id-card', className="bg-red-100",
+                                        body=project_fld_lst)
+
+            # 招标信息 Tab
+            bidding_fld_lst = []
+            bidding_fld_lst.append(
+                Group(body=[fld_dict["is_bidding"], fld_dict["bidding_type"], fld_dict["project_number"],
+                            fld_dict["subject_matter"], fld_dict["budget_amount"], fld_dict["max_price"],
+                            fld_dict["publish_time"], fld_dict["deadline"]]))
+            bidding_tabitem = amis.Tabs.Item(title="招标信息", icon='fa fa-gavel', className="bg-purple-100",
+                                        body=bidding_fld_lst)
+
+            # 中标信息 Tab
+            winning_fld_lst = []
+            winning_fld_lst.append(
+                Group(body=[fld_dict["bid_price"], fld_dict["bid_date"], fld_dict["winning_company"]]))
+            winning_tabitem = amis.Tabs.Item(title="中标信息", icon='fa fa-trophy', className="bg-yellow-100",
+                                        body=winning_fld_lst)
+
+            # 其他参考信息 Tab
+            other_fld_lst = []
+            other_fld_lst.append(
+                Group(body=[fld_dict["website_reference"], fld_dict["main_competitors"], fld_dict["others"]]))
+
+            other_fld_lst.append(Divider())
+            other_fld_lst.append(Group(body=[fld_dict["create_time"], fld_dict["update_time"]]))
+            other_tabitem = amis.Tabs.Item(title="其他参考信息", icon='fa fa-info', className="bg-green-100",
+                                      body=other_fld_lst)
+
+            # 将所有 Tab 项添加到 Tabs 中
+            formtab.tabs.append(customer_tabitem)
+            formtab.tabs.append(project_tabitem)
+            formtab.tabs.append(bidding_tabitem)
+            formtab.tabs.append(winning_tabitem)
+            formtab.tabs.append(other_tabitem)
+
+            return formtab
+        except Exception as exp:
+            print('Exception at get_tabbed_form() %s ' % exp)
+            import traceback
+            traceback.print_exc()
+
 
     async def get_read_form(self, request: Request) -> Form:
         try:
@@ -152,8 +182,13 @@ class ProjmanAdmin(SwiftAdmin):
             formtab = amis.Tabs(tabsMode='strong')
             formtab.tabs = []
             fieldlist = [item for item in r_form.body]
+            # 设置只读
+            for item in fieldlist:
+                item.disabled = True
             fld_dict = {item.name: item for item in fieldlist}
-            formtab.tabs.append(self.get_tabbed_form(fld_dict))
+            formtab = amis.Tabs(tabsMode='strong')
+            formtab.tabs = []
+            formtab = self.get_tabbed_form(fld_dict)
             r_form.body = formtab
             return r_form
         except Exception as exp:
@@ -168,7 +203,7 @@ class ProjmanAdmin(SwiftAdmin):
             fld_dict = {item.name: item for item in fieldlist}
             formtab = amis.Tabs(tabsMode='strong')
             formtab.tabs = []
-            formtab.tabs.append(self.get_tabbed_form(fld_dict))
+            formtab = self.get_tabbed_form(fld_dict)
             c_form.body = formtab
             return c_form
         except Exception as exp:
@@ -183,7 +218,7 @@ class ProjmanAdmin(SwiftAdmin):
             fld_dict = {item.name: item for item in fieldlist}
             formtab = amis.Tabs(tabsMode='strong')
             formtab.tabs = []
-            formtab.tabs.append(self.get_tabbed_form(fld_dict))
+            formtab = self.get_tabbed_form(fld_dict)
             u_form.body = formtab
             return u_form
         except Exception as exp:
@@ -193,10 +228,12 @@ class ProjmanAdmin(SwiftAdmin):
     async def get_duplicate_form_inner(self, request: Request, bulk: bool = False) -> Form:
         try:
             extra = {}
-            api = f"post:{self.router_path}/item"
-            fields = self.schema_model.__fields__.values()
-            if self.schema_read:
-                extra["initApi"] = f"get:{self.router_path}/item/${self.pk_name}"
+            if not bulk:
+                api = f"post:{self.router_path}/item"
+                #fields = self.schema_model.model_fields.values()
+                fields = [field for field in model_fields(self.schema_create).values() if field.name != self.pk_name]
+                if self.schema_read:
+                    extra["initApi"] = f"get:{self.router_path}/item/${self.pk_name}"
 
             d_form = Form(
                 api=api,
@@ -204,17 +241,20 @@ class ProjmanAdmin(SwiftAdmin):
                 body=await self._conv_modelfields_to_formitems(request, fields, CrudEnum.create),
                 **extra,
             )
-            # 强制tab
-            fieldlist = [item for item in d_form.body]
-            fld_dict = {item.name: item for item in fieldlist}
-            formtab = amis.Tabs(tabsMode='strong')
-            formtab.tabs = []
-            formtab.tabs.append(self.get_tabbed_form(fld_dict))
-            d_form.body = formtab
+            if not bulk:
+                # 强制tab
+                fieldlist = [item for item in d_form.body]
+                fld_dict = {item.name: item for item in fieldlist}
+                formtab = amis.Tabs(tabsMode='strong')
+                formtab.tabs = []
+                formtab = self.get_tabbed_form(fld_dict)
+                d_form.body = formtab
             return d_form
         except Exception as exp:
             print('Exception at ProjmanAdmin.get_duplicate_form_inner() %s ' % exp)
             traceback.print_exc()
+            # 显式抛出异常，以便于上层感知
+            raise
 
     async def get_duplicate_form(self, request: Request, bulk: bool = False) -> Form:
         d_form = await self.get_duplicate_form_inner(request, bulk)
