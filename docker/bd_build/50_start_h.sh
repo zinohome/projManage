@@ -1,11 +1,11 @@
 #!/bin/bash
-FIND_FILE="/opt/crtool/apprun/hypercorn.py"
+FIND_FILE="/opt/projManage/apprun/hypercorn.py"
 FIND_STR="workers"
 if [ `grep -c "$FIND_STR" $FIND_FILE` -ne '0' ];then
     echo "hypercorn config exist"
 else
-    cp /opt/crtool/apprun/hypercorn_default.py /opt/crtool/apprun/hypercorn.py
+    cp /opt/projManage/apprun/hypercorn_default.py /opt/projManage/apprun/hypercorn.py
 fi
 
-cd /opt/crtool/backend && \
-nohup /opt/crtool/venv/bin/hypercorn -c /opt/crtool/apprun/hypercorn.py main:app >> /tmp/crtool.log 2>&1 &
+cd /opt/projManage/backend && \
+nohup /opt/projManage/venv/bin/hypercorn -c /opt/projManage/apprun/hypercorn.py main:app >> /tmp/projManage.log 2>&1 &

@@ -29,7 +29,7 @@ from apps.admin.models.projman import Projman
 
 class ProjmanAdmin(SwiftAdmin):
     group_schema = "Projman"
-    page_schema = PageSchema(label='项目管理', page_title='项目管理', icon='fa fa-folder-open', sort=80)
+    page_schema = PageSchema(label='Projects', page_title='Projects', icon='fa fa-folder-open', sort=80)
     model = Projman
     pk_name = 'id'
     list_per_page = 20

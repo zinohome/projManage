@@ -13,7 +13,7 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/instantclient
 RUN mkdir -p /data && chmod 755 /bd_build/install.sh && /bd_build/install.sh
 
 # Clean up APT when done.
-WORKDIR /opt/crtool/backend
+WORKDIR /opt/projManage/backend
 
 # Use baseimage-docker's init system.
 EXPOSE 8890
