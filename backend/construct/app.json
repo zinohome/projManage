@@ -1,0 +1,97 @@
+{
+  "AppName": "CRTool",
+  "AppTitle": "ChangeRequestAdmin",
+  "Description": "A Swift Application",
+  "Version": "v1.1",
+  "Author": "Zinohome.com",
+  "Settings": {
+    "host": "0.0.0.0",
+    "port": 8000,
+    "debug": true,
+    "version": "v1.1",
+    "site_title": "ChangeRequestAdmin",
+    "site_icon": "/static/favicon.png",
+    "site_url": "",
+    "site_path": "/admin",
+    "database_url_async": "mysql+aiomysql://crtool:passw0rd@192.168.32.11:3306/crtool?charset=utf8mb4",
+    "database_url": "mysql+pymysql://crtool:passw0rd@192.168.32.11:3306/crtool?charset=utf8mb4",
+    "language": "zh_CN",
+    "amis_cdn": "/static/",
+    "amis_pkg": "amis@6.5.0",
+    "amis_theme": "cxd",
+    "secret_key": "tr0kjyg3dls6wk2tyv816wljchqp7039hjxesccebpxd701ow4ctlfe2u0anmm60",
+    "allow_origins": "*"
+  },
+  "Groups": [
+    {
+      "group_name": "Changerequestgroup",
+      "group_schema": "Changerequest",
+      "label": "ChangeRequest",
+      "title": "ChangeRequest",
+      "icon": "fa fa-bolt",
+      "sort": 10,
+      "router_prefix": "/changerequest",
+      "models": [
+        {
+          "name": "changerequest",
+          "group_schema": "Changerequest",
+          "label": "ChangeRequest",
+          "title": "ChangeRequest",
+          "icon": "fa fa-bolt",
+          "sort": 96,
+          "model": "Changerequest",
+          "model_file": "models/changerequest.json",
+          "pk_name": "id",
+          "list_per_page": 30,
+          "list_display": "Changerequest.id,Changerequest.customer_name,Changerequest.ssr,Changerequest.sngl_pnt_sys,Changerequest.urgency,Changerequest.complexity,Changerequest.support_tsg_id,Changerequest.begin_date,Changerequest.end_date,Changerequest.tsg_rvew_rslt",
+          "search_fields": "",
+          "parent_class": "None",
+          "print": false,
+          "enable_bulk_create": false,
+          "schema_read": true,
+          "action_type": "Drawer",
+          "sub_include": [],
+          "submodels": []
+        }
+      ]
+    }
+  ],
+  "AppVariables": [
+    {
+      "name": "sngl_pnt_sys",
+      "cname": "是否单点系统变更",
+      "type": "List",
+      "value": [{"label": "否","value": "N"},{"label": "是","value": "Y"}]
+    },
+    {
+      "name": "urgency",
+      "cname": "紧急程度SV",
+      "type": "List",
+      "value": [{"label": "高","value": "1"},{"label": "中","value": "2"},{"label": "低","value": "3"}]
+    },
+    {
+      "name": "complexity",
+      "cname": "复杂程度",
+      "type": "List",
+      "value": [{"label": "高","value": "1"},{"label": "中","value": "2"},{"label": "低","value": "3"}]
+    },
+    {
+      "name": "category",
+      "cname": "变更类型",
+      "type": "List",
+      "value": [{"label": "设备安装","value": "设备安装"},{"label": "设备维修","value": "设备维修"},{"label": "健康检查","value": "健康检查"},{"label": "ECA","value": "ECA"},{"label": "其他","value": "其他"}]
+    },
+    {
+      "name": "tsg_rvew_rslt",
+      "cname": "TSGReview审核结果",
+      "type": "List",
+      "value": [{"label": "Draft","value": "Draft"},{"label": "Submitted","value": "Submitted"},{"label": "Approved","value": "Approved"},{"label": "Returned","value": "Returned"},{"label": "Completed","value": "Completed"}]
+    },
+    {
+      "name": "tsg_onsite",
+      "cname": "TSGOnSiteNeeded",
+      "type": "List",
+      "value": [{"label": "Yes","value": "Yes"},{"label": "No","value": "No"},{"label": "TBD","value": "TBD"}]
+    }
+  ]
+}
