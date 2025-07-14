@@ -10,6 +10,7 @@
 from fastapi import APIRouter
 from fastapi_amis_admin.crud import SqlalchemyCrud
 
+from apps.admin.pages.projmanadmin import ProjmanAdmin
 from core.globals import site
 from fastapi_amis_admin import amis, admin
 from fastapi_amis_admin.admin import AdminApp
@@ -30,6 +31,4 @@ class Projmangroup(admin.AdminApp):
 
     def __init__(self, app: "AdminApp"):
         super().__init__(app)
-        self.register_admin(ChangerequestAdmin)
-        self.register_admin(CrRequest)
-        self.register_admin(CrReview)
+        self.register_admin(ProjmanAdmin)

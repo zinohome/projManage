@@ -63,12 +63,12 @@ from fastapi_user_auth.mixins.admin import AuthFieldModelAdmin, AuthSelectModelA
 
 
 def attach_page_head(page: Page) -> Page:
-    desc = "TLS CRTool是TLS TSG Team帮助SSR评估系统变更风险的工具，记录变更技术支持，保证客户系统稳定运行"
+    desc = "TLS Projct Management System"
     page.body = [
         Html(
             html=f'<div style="display: flex; justify-content: center; align-items: center; margin: 96px 0px 8px;">'
             f'<img src="/static/favicon.png" alt="logo" style="margin-right: 8px; '
-            f'width: 48px;"><span style="font-size: 32px; font-weight: bold;">TLS CRTool</span></div>'
+            f'width: 48px;"><span style="font-size: 32px; font-weight: bold;">TLS ProjManagement</span></div>'
             f'<div style="width: 100%; text-align: center; color: rgba(0, 0, 0, 0.45); margin-bottom: 40px;">{desc}</div>'
         ),
         Grid(columns=[{"body": [page.body], "lg": 2, "md": 4, "valign": "middle"}], align="center", valign="middle"),
