@@ -121,42 +121,74 @@ class ProjmanAdmin(SwiftAdmin):
 
             # 客户基本信息 Tab
             customer_fld_lst = []
+            customer_fld_lst.append(Divider())
             customer_fld_lst.append(Group(body=[fld_dict["customer_id"], fld_dict["customer_name"]]))
             customer_tabitem = amis.Tabs.Item(title="客户基本信息", icon='fa fa-university', className="bg-blue-100",
                                          body=customer_fld_lst)
 
             # 项目基本信息 Tab
             project_fld_lst = []
+            project_fld_lst.append(Divider())
             project_fld_lst.append(
-                Group(body=[fld_dict["business_category"], fld_dict["project_name"], fld_dict["project_location"],
-                            fld_dict["project_contact"], fld_dict["contact_phone"], fld_dict["service_content"],
-                            fld_dict["contract_amount"], fld_dict["contract_duration"], fld_dict["contract_sign_date"],
-                            fld_dict["contract_end_date"], fld_dict["expected_renewal_time"],
-                            fld_dict["cooperation_method"]]))
+                Group(body=[fld_dict["business_category"], fld_dict["project_name"], fld_dict["project_location"]]))
+            project_fld_lst.append(Divider())
+            project_fld_lst.append(
+                Group(body=[fld_dict["project_contact"], fld_dict["contact_phone"]]))
+            project_fld_lst.append(Divider())
+            project_fld_lst.append(
+                Group(body=[fld_dict["service_content"]]))
+            project_fld_lst.append(Divider())
+            project_fld_lst.append(
+                Group(body=[fld_dict["contract_amount"], fld_dict["contract_duration"]]))
+            project_fld_lst.append(Divider())
+            project_fld_lst.append(
+                Group(body=[fld_dict["contract_sign_date"],
+                            fld_dict["contract_end_date"], fld_dict["expected_renewal_time"]]))
+            project_fld_lst.append(Divider())
+            project_fld_lst.append(
+                Group(body=[fld_dict["cooperation_method"]]))
             project_tabitem = amis.Tabs.Item(title="项目基本信息", icon='fa fa-id-card', className="bg-red-100",
                                         body=project_fld_lst)
 
             # 招标信息 Tab
             bidding_fld_lst = []
+            bidding_fld_lst.append(Divider())
             bidding_fld_lst.append(
-                Group(body=[fld_dict["is_bidding"], fld_dict["bidding_type"], fld_dict["project_number"],
-                            fld_dict["subject_matter"], fld_dict["budget_amount"], fld_dict["max_price"],
-                            fld_dict["publish_time"], fld_dict["deadline"]]))
+                Group(body=[fld_dict["is_bidding"], fld_dict["bidding_type"], fld_dict["project_number"]]))
+            bidding_fld_lst.append(Divider())
+            bidding_fld_lst.append(
+                Group(body=[fld_dict["subject_matter"], fld_dict["budget_amount"], fld_dict["max_price"]]))
+            bidding_fld_lst.append(Divider())
+            bidding_fld_lst.append(
+                Group(body=[fld_dict["publish_time"], fld_dict["deadline"]]))
             bidding_tabitem = amis.Tabs.Item(title="招标信息", icon='fa fa-gavel', className="bg-purple-100",
                                         body=bidding_fld_lst)
 
             # 中标信息 Tab
             winning_fld_lst = []
+            winning_fld_lst.append(Divider())
             winning_fld_lst.append(
-                Group(body=[fld_dict["bid_price"], fld_dict["bid_date"], fld_dict["winning_company"]]))
+                Group(body=[fld_dict["bid_price"]]))
+            winning_fld_lst.append(Divider())
+            winning_fld_lst.append(
+                Group(body=[fld_dict["bid_date"]]))
+            winning_fld_lst.append(Divider())
+            winning_fld_lst.append(
+                Group(body=[fld_dict["winning_company"]]))
             winning_tabitem = amis.Tabs.Item(title="中标信息", icon='fa fa-trophy', className="bg-yellow-100",
                                         body=winning_fld_lst)
 
             # 其他参考信息 Tab
             other_fld_lst = []
+            other_fld_lst.append(Divider())
             other_fld_lst.append(
-                Group(body=[fld_dict["website_reference"], fld_dict["main_competitors"], fld_dict["others"]]))
-
+                Group(body=[fld_dict["website_reference"]]))
+            other_fld_lst.append(Divider())
+            other_fld_lst.append(
+                Group(body=[fld_dict["main_competitors"]]))
+            other_fld_lst.append(Divider())
+            other_fld_lst.append(
+                Group(body=[fld_dict["others"]]))
             other_fld_lst.append(Divider())
             other_fld_lst.append(Group(body=[fld_dict["create_time"], fld_dict["update_time"]]))
             other_tabitem = amis.Tabs.Item(title="其他参考信息", icon='fa fa-info', className="bg-green-100",
