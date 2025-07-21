@@ -28,8 +28,8 @@ from apps.admin.models.projman import Projman
 
 
 class ProjmanAdmin(SwiftAdmin):
-    group_schema = "Projman"
-    page_schema = PageSchema(label='Projects', page_title='Projects', icon='fa fa-folder-open', sort=80)
+    group_schema = "Customers"
+    page_schema = PageSchema(label='Customers', page_title='Customers', icon='fa fa-folder-open', sort=80)
     model = Projman
     pk_name = 'id'
     list_per_page = 20
@@ -86,9 +86,83 @@ class ProjmanAdmin(SwiftAdmin):
 
     def __init__(self, app: "AdminApp"):
         super().__init__(app)
-        self.enable_bulk_create = False
+        self.enable_bulk_create = True
         self.schema_read = None
         self.action_type = 'Drawer'
+
+
+    async def get_list_table(self, request: Request) -> TableCRUD:
+        '''
+        headerToolbar = [
+            "filter-toggler",
+            "reload",
+            "bulkActions",
+            {"type": "columns-toggler", "align": "right"},
+            {"type": "drag-toggler", "align": "right"},
+            {"type": "pagination", "align": "right"},
+            {
+                "type": "tpl",
+                "tpl": _("SHOWING ${items|count} OF ${total} RESULT(S)"),
+                "className": "v-middle",
+                "align": "right",
+            },
+        ]
+        '''
+        try:
+            headerToolbar = [{"type": "columns-toggler", "align": "left", "draggable": False},
+                             {"type": "filter-toggler", "align": "left"}]
+            headerToolbar.extend(await self.get_actions(request, flag="toolbar"))
+            headerToolbarright = [{"type": "export-excel", "align": "right"},
+                                  {"type": "reload", "align": "right"},
+                                  {"type": "bulkActions", "align": "right"}]
+            headerToolbar.extend(headerToolbarright)
+            itemActions = []
+            if not self.display_item_action_as_column:
+                itemActions = await self.get_actions(request, flag="item")
+            filter_form = None
+            if await self.has_filter_permission(request, None):
+                filter_form = await self.get_list_filter_form(request)
+            table = TableCRUD(
+                api=await self.get_list_table_api(request),
+                autoFillHeight=True,
+                headerToolbar=headerToolbar,
+                filterTogglable=True,
+                filterDefaultVisible=True,
+                filter=filter_form,
+                syncLocation=False,
+                keepItemSelectionOnPageChange=True,
+                perPage=self.list_per_page,
+                itemActions=itemActions,
+                bulkActions=await self.get_actions(request, flag="bulk"),
+                footerToolbar=[
+                    "statistics",
+                    "switch-per-page",
+                    "pagination",
+                    "load-more",
+                    {
+                        "type": "tpl",
+                        "tpl": _("SHOWING ${items|count} OF ${total} RESULT(S)"),
+                        "className": "v-middle",
+                        "align": "right",
+                    },
+                ],
+                columns=await self.get_list_columns(request),
+                primaryField=self.pk_name,
+                quickSaveItemApi=f"put:{self.router_path}/item/${self.pk_name}",
+                defaultParams={k: v for k, v in request.query_params.items() if v},
+            )
+            # Append operation column
+            action_columns = await self._get_list_columns_for_actions(request)
+            table.columns.extend(action_columns)
+            # Append inline link model column
+            link_model_columns = await self._get_list_columns_for_link_model(request)
+            if link_model_columns:
+                table.columns.extend(link_model_columns)
+                table.footable = True
+            return table
+        except Exception as exp:
+            print('Exception at ProjmanAdmin.get_list_table() %s ' % exp)
+            traceback.print_exc()
 
     def get_tabbed_form(self,fld_dict):
         # 检查是否缺少必需字段
@@ -203,7 +277,7 @@ class ProjmanAdmin(SwiftAdmin):
 
             return formtab
         except Exception as exp:
-            print('Exception at get_tabbed_form() %s ' % exp)
+            print('Exception at ProjmanAdmin.get_tabbed_form() %s ' % exp)
             import traceback
             traceback.print_exc()
 
@@ -229,15 +303,46 @@ class ProjmanAdmin(SwiftAdmin):
 
     async def get_create_form(self, request: Request, bulk: bool = False) -> Form:
         try:
-            c_form = await super().get_create_form(request, bulk)
-            c_form.preventEnterSubmit = True
-            fieldlist = [item for item in c_form.body]
-            fld_dict = {item.name: item for item in fieldlist}
-            formtab = amis.Tabs(tabsMode='strong')
-            formtab.tabs = []
-            formtab = self.get_tabbed_form(fld_dict)
-            c_form.body = formtab
-            return c_form
+            if not bulk:
+                c_form = await super().get_create_form(request, bulk)
+                c_form.preventEnterSubmit = True
+                fieldlist = [item for item in c_form.body]
+                fld_dict = {item.name: item for item in fieldlist}
+                formtab = amis.Tabs(tabsMode='strong')
+                formtab.tabs = []
+                formtab = self.get_tabbed_form(fld_dict)
+                c_form.body = formtab
+                return c_form
+            else:
+                fields = [field for field in model_fields(self.schema_create).values() if field.name != self.pk_name]
+                columns, keys = [], {}
+                for field in fields:
+                    column = await self.get_list_column(request, self.parser.get_modelfield(field))
+                    keys[column.name] = "${" + column.label + "}"
+                    column.name = column.label
+                    columns.append(column)
+                return Form(
+                    api=AmisAPI(
+                        method="post",
+                        url=f"{self.router_path}/item",
+                        data={"&": {"$excel": keys}},
+                    ),
+                    name=CrudEnum.create,
+                    mode=DisplayModeEnum.normal,
+                    body=[
+                        InputExcel(name="excel"),
+                        InputTable(
+                            name="excel",
+                            showIndex=True,
+                            columns=columns,
+                            addable=False,
+                            copyable=False,
+                            editable=True,
+                            removable=True,
+                        ),
+                    ],
+                )
+
         except Exception as exp:
             print('Exception at ProjmanAdmin.get_create_form() %s ' % exp)
             traceback.print_exc()

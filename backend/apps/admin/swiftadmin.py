@@ -338,11 +338,11 @@ class SwiftAdmin(AuthSelectModelAdmin):
                         ),
                     )
             if self.action_type == 'Drawer':
-                return ActionType.Dialog(
+                return ActionType.Drawer(
                     icon="fa fa-plus pull-left",
                     label=_("Bulk Create"),
                     level=LevelEnum.primary,
-                    dialog=Dialog(
+                    drawer=Drawer(
                         title=_("Bulk Create") + " - " + _(self.page_schema.label),
                         position="right",
                         showCloseButton=False,

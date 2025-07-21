@@ -1,6 +1,6 @@
 {
-  "AppName": "ProjManager",
-  "AppTitle": "TLSProjectManagement",
+  "AppName": "CustomerInfo",
+  "AppTitle": "TLSCustomerInfo",
   "Description": "A Swift Application",
   "Version": "v1.1",
   "Author": "Zinohome.com",
@@ -9,7 +9,7 @@
     "port": 8000,
     "debug": true,
     "version": "v1.1",
-    "site_title": "TLSProjectManagement",
+    "site_title": "TLSCustomerInfo",
     "site_icon": "/static/favicon.png",
     "site_url": "",
     "site_path": "/admin",
