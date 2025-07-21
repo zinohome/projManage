@@ -14,6 +14,9 @@ from typing import Optional
 from sqlalchemy import func
 from sqlmodelx import SQLModel
 
+from core.settings import appdef
+
+
 class SwiftSQLModel(SQLModel):
     class Config:
         use_enum_values = True
@@ -29,9 +32,16 @@ class Projman(SwiftSQLModel, table=True):
                                      index=False,
                                      amis_form_item=amis.InputText(required=True),
                                      amis_table_column=amis.TableColumn(toggled=False))
+    sn: Optional[int] = models.Field(default=None,
+                                     title='编号',
+                                     primary_key=False,
+                                     nullable=True,
+                                     index=False,
+                                     amis_form_item=amis.InputText(disabled=True),
+                                     amis_table_column=amis.TableColumn(toggled=False))
     customer_id: str = models.Field(default=None,
                                     title='客户号',
-                                    nullable=False,
+                                    nullable=True,
                                     index=False,
                                     amis_form_item=amis.InputText(required=True),
                                     amis_table_column=amis.TableColumn(toggled=True))
@@ -45,7 +55,7 @@ class Projman(SwiftSQLModel, table=True):
                                                     title='业务分类',
                                                     nullable=True,
                                                     index=False,
-                                                    amis_form_item=amis.InputText(),
+                                                    amis_form_item=amis.Select(options=appdef.AppVardicts['business_category']['value'], labelField='label', valueField='value', required=True),
                                                     amis_table_column=amis.TableColumn(toggled=True))
     project_name: str = models.Field(default=None,
                                      title='项目名称',
@@ -93,19 +103,19 @@ class Projman(SwiftSQLModel, table=True):
                                                      title='合同签订日期',
                                                      nullable=True,
                                                      index=False,
-                                                     amis_form_item=amis.InputDatetime(format="YYYY-MM-DD"),
+                                                     amis_form_item=amis.InputDatetime(format="YYYY-MM-DD", inputFormat="YYYY-MM-DD"),
                                                      amis_table_column=amis.TableColumn(toggled=True))
     contract_end_date: Optional[str] = models.Field(default=None,
                                                     title='合同到期时间',
                                                     nullable=True,
                                                     index=False,
-                                                    amis_form_item=amis.InputDatetime(format="YYYY-MM-DD"),
+                                                    amis_form_item=amis.InputDatetime(format="YYYY-MM-DD", inputFormat="YYYY-MM-DD"),
                                                     amis_table_column=amis.TableColumn(toggled=True))
     expected_renewal_time: Optional[str] = models.Field(default=None,
                                                         title='预计续约时间',
                                                         nullable=True,
                                                         index=False,
-                                                        amis_form_item=amis.InputDatetime(format="YYYY-MM-DD"),
+                                                        amis_form_item=amis.InputDatetime(format="YYYY-MM-DD", inputFormat="YYYY-MM-DD"),
                                                         amis_table_column=amis.TableColumn(toggled=True))
     cooperation_method: Optional[str] = models.Field(default=None,
                                                      title='合作方式',
@@ -117,13 +127,13 @@ class Projman(SwiftSQLModel, table=True):
                                              title='是否开标',
                                              nullable=True,
                                              index=False,
-                                             amis_form_item=amis.InputText(),
+                                             amis_form_item=amis.Select(options=appdef.AppVardicts['open_bid']['value'], labelField='label', valueField='value', required=True),
                                              amis_table_column=amis.TableColumn(toggled=True))
     bidding_type: Optional[str] = models.Field(default=None,
                                                title='招标类型',
                                                nullable=True,
                                                index=False,
-                                               amis_form_item=amis.InputText(),
+                                               amis_form_item=amis.Select(options=appdef.AppVardicts['bid_type']['value'], labelField='label', valueField='value', required=True),
                                                amis_table_column=amis.TableColumn(toggled=True))
     project_number: Optional[str] = models.Field(default=None,
                                                 title='项目编号',
@@ -153,13 +163,13 @@ class Projman(SwiftSQLModel, table=True):
                                                title='发布时间',
                                                nullable=True,
                                                index=False,
-                                               amis_form_item=amis.InputDatetime(format="YYYY-MM-DD HH:mm"),
+                                               amis_form_item=amis.InputDatetime(format="YYYY-MM-DD HH:mm", inputFormat="YYYY-MM-DD HH:mm"),
                                                amis_table_column=amis.TableColumn(toggled=True))
     deadline: Optional[str] = models.Field(default=None,
                                            title='截至时间',
                                            nullable=True,
                                            index=False,
-                                           amis_form_item=amis.InputDatetime(format="YYYY-MM-DD HH:mm"),
+                                           amis_form_item=amis.InputDatetime(format="YYYY-MM-DD HH:mm", inputFormat="YYYY-MM-DD HH:mm"),
                                            amis_table_column=amis.TableColumn(toggled=True))
     bid_price: Optional[float] = models.Field(default=None,
                                               title='中标价格',
@@ -171,7 +181,7 @@ class Projman(SwiftSQLModel, table=True):
                                            title='中标日期',
                                            nullable=True,
                                            index=False,
-                                           amis_form_item=amis.InputDatetime(format="YYYY-MM-DD"),
+                                           amis_form_item=amis.InputDatetime(format="YYYY-MM-DD", inputFormat="YYYY-MM-DD"),
                                            amis_table_column=amis.TableColumn(toggled=True))
     winning_company: Optional[str] = models.Field(default=None,
                                                   title='中标公司',

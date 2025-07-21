@@ -92,6 +92,24 @@
       "cname": "TSGOnSiteNeeded",
       "type": "List",
       "value": [{"label": "Yes","value": "Yes"},{"label": "No","value": "No"},{"label": "TBD","value": "TBD"}]
+    },
+    {
+      "name": "business_category",
+      "cname": "BusinessCategory",
+      "type": "List",
+      "value": [{"label": "ITOSS","value": "ITOSS"},{"label": "DCS","value": "DCS"},{"label": "软硬件维保","value": "软硬件维保"},{"label": "Others","value": "Others"}]
+    },
+    {
+      "name": "open_bid",
+      "cname": "OpenBid",
+      "type": "List",
+      "value": [{"label": "是","value": "是"},{"label": "否","value": "否"},{"label": "未知","value": "未知"}]
+    },
+    {
+      "name": "bid_type",
+      "cname": "BidType",
+      "type": "List",
+      "value": [{"label": "公开招标","value": "公开招标"},{"label": "竞争性谈判","value": "竞争性谈判"},{"label": "单一来源采购","value": "单一来源采购"},{"label": "框架协议采购","value": "框架协议采购"},{"label": "其他","value": "其他"}]
     }
   ]
 }

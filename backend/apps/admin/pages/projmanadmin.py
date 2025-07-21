@@ -25,6 +25,7 @@ from fastapi_amis_admin.utils.translation import i18n as _
 from apps.admin.swiftadmin import SwiftAdmin
 from utils.log import log as log
 from apps.admin.models.projman import Projman
+from utils.projectIDGenerator import ProjectIDGenerator
 
 
 class ProjmanAdmin(SwiftAdmin):
@@ -167,7 +168,7 @@ class ProjmanAdmin(SwiftAdmin):
     def get_tabbed_form(self,fld_dict):
         # 检查是否缺少必需字段
         REQUIRED_FIELDS = [
-            "customer_id", "customer_name",
+            "customer_id", "customer_name","sn",
             "business_category", "project_name", "project_location",
             "project_contact", "contact_phone", "service_content",
             "contract_amount", "contract_duration", "contract_sign_date",
@@ -203,6 +204,8 @@ class ProjmanAdmin(SwiftAdmin):
             # 项目基本信息 Tab
             project_fld_lst = []
             project_fld_lst.append(Divider())
+            project_fld_lst.append(
+                Group(body=[fld_dict["sn"]]))
             project_fld_lst.append(
                 Group(body=[fld_dict["business_category"], fld_dict["project_name"], fld_dict["project_location"]]))
             project_fld_lst.append(Divider())
@@ -447,6 +450,7 @@ class ProjmanAdmin(SwiftAdmin):
             self, request: Request, obj: Any, **kwargs,
     ) -> Dict[str, Any]:
         data = await super().on_create_pre(request, obj)
+        data['sn'] = ProjectIDGenerator().generate_id()
         data['create_time'] = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
         data['update_time'] = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
         return data
