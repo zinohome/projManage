@@ -32,7 +32,7 @@ class Projman(SwiftSQLModel, table=True):
                                      index=False,
                                      amis_form_item=amis.InputText(required=True),
                                      amis_table_column=amis.TableColumn(toggled=False))
-    sn: Optional[int] = models.Field(default=None,
+    sn: Optional[str] = models.Field(default=None,
                                      title='编号',
                                      primary_key=False,
                                      nullable=True,

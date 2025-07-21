@@ -317,17 +317,17 @@ class ProjmanAdmin(SwiftAdmin):
                 return c_form
             else:
                 fields = [field for field in model_fields(self.schema_create).values() if field.name != self.pk_name]
-                log.debug(fields)
+                #log.debug(fields)
                 columns, keys = [], {}
                 for field in fields:
                     column = await self.get_list_column(request, self.parser.get_modelfield(field))
                     column.quickEdit=False
                     column.id=column.name
-                    log.debug(column)
+                    #log.debug(column)
                     keys[column.name] = "${" + column.label + "}"
                     column.name = column.label
                     columns.append(column)
-                log.debug(keys)
+                #log.debug(keys)
                 return Form(
                     api=AmisAPI(
                         method="post",
@@ -337,7 +337,7 @@ class ProjmanAdmin(SwiftAdmin):
                     name=CrudEnum.create,
                     mode=DisplayModeEnum.normal,
                     body=[
-                        InputExcel(name="excel"),
+                        InputExcel(name="excel",plainText=True),
                         InputTable(
                             name="excel",
                             showIndex=True,

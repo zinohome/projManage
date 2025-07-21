@@ -17,8 +17,12 @@ from core.globals import auth, site, check_db_connection
 from contextlib import asynccontextmanager
 
 from utils.batchuserreg import BatchUserReg
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
+from utils.log import log as log
 
 app = FastAPI(debug=settings.debug)
+
 # 在app应用下每条请求处理之前都附加`request.auth`和`request.user`对象
 auth.backend.attach_middleware(app)
 

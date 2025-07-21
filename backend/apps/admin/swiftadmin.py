@@ -487,6 +487,8 @@ class SwiftAdmin(AuthSelectModelAdmin):
             data: Annotated[Union[List[self.schema_create], self.schema_create], Body()],  # type: ignore
         ) -> BaseApiOut[Union[int, self.schema_model]]:  # type: ignore
             try:
+                #log.info(f"Create request received: {request.url}")
+                #log.debug(f"Request data: {data}")
                 if not await self.has_create_permission(request, data):
                     return self.error_no_router_permission(request)
                 if not isinstance(data, list):
