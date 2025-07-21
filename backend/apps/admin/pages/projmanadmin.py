@@ -315,19 +315,17 @@ class ProjmanAdmin(SwiftAdmin):
                 formtab = self.get_tabbed_form(fld_dict)
                 c_form.body = formtab
                 return c_form
-                #log.debug(c_form)
-                #og.debug(c_form.api)
             else:
                 fields = [field for field in model_fields(self.schema_create).values() if field.name != self.pk_name]
+                log.debug(fields)
                 columns, keys = [], {}
                 for field in fields:
                     column = await self.get_list_column(request, self.parser.get_modelfield(field))
                     keys[column.name] = "${" + column.label + "}"
                     column.name = column.label
                     columns.append(column)
-                #log.debug(columns)
-                #log.debug(keys)
-                #log.debug(f"{self.router_path}/item")
+                log.debug(columns)
+                log.debug(keys)
                 return Form(
                     api=AmisAPI(
                         method="post",
