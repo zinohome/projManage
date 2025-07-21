@@ -6,17 +6,20 @@
 @time: 2025/7/21 上午9:20
 @desc: 
 """
+import os
 import shelve
 from datetime import datetime
 from threading import Lock
 from utils.log import log as log
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CACHE_DIR = os.path.join(BASE_DIR, 'projID')
 
 class ProjectIDGenerator:
     _instance = None
     _lock = Lock()
 
-    def __new__(cls, db_file="projid"):
+    def __new__(cls, db_file=CACHE_DIR):
         with cls._lock:
             if not cls._instance:
                 cls._instance = super().__new__(cls)

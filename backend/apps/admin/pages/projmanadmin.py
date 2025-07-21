@@ -454,8 +454,9 @@ class ProjmanAdmin(SwiftAdmin):
             self, request: Request, obj: Any, **kwargs,
     ) -> Dict[str, Any]:
         data = await super().on_create_pre(request, obj)
-        log.debug(data)
-        data['sn'] = ProjectIDGenerator().generate_id()
+        #log.debug(data)
+        generator = ProjectIDGenerator()
+        data['sn'] = generator.generate_id()
         #data['create_time'] = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
         #data['update_time'] = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
         return data
