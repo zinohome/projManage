@@ -321,10 +321,12 @@ class ProjmanAdmin(SwiftAdmin):
                 columns, keys = [], {}
                 for field in fields:
                     column = await self.get_list_column(request, self.parser.get_modelfield(field))
+                    column.quickEdit=False
+                    column.id=column.name
+                    log.debug(column)
                     keys[column.name] = "${" + column.label + "}"
                     column.name = column.label
                     columns.append(column)
-                log.debug(columns)
                 log.debug(keys)
                 return Form(
                     api=AmisAPI(
@@ -342,7 +344,7 @@ class ProjmanAdmin(SwiftAdmin):
                             columns=columns,
                             addable=False,
                             copyable=False,
-                            editable=True,
+                            editable=False,
                             removable=True,
                         ),
                     ],
