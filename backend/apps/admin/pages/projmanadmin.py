@@ -15,6 +15,7 @@ from typing import List, Optional, Union, Dict, Any, Callable
 
 from fastapi_amis_admin import amis
 from fastapi_amis_admin.utils.pydantic import model_fields
+from pygments.lexers import q
 from starlette.requests import Request
 from fastapi_amis_admin.admin import AdminAction
 from fastapi_amis_admin.crud import CrudEnum, BaseApiOut
@@ -39,7 +40,7 @@ class ProjmanAdmin(SwiftAdmin):
         Projman.project_name, Projman.project_location, Projman.project_contact,
         Projman.cooperation_method, Projman.is_bidding, Projman.bidding_type,
         Projman.project_number, Projman.subject_matter, Projman.contract_sign_date,
-        Projman.contract_end_date, Projman.update_time
+        Projman.contract_end_date
     ]
     search_fields = [
         Projman.customer_id, Projman.customer_name,
@@ -177,7 +178,7 @@ class ProjmanAdmin(SwiftAdmin):
             "subject_matter", "budget_amount", "max_price",
             "publish_time", "deadline",
             "bid_price", "bid_date", "winning_company",
-            "website_reference", "main_competitors", "others", "create_time", "update_time"
+            "website_reference", "main_competitors", "others"
         ]
         # 检查是否缺少必需字段
         missing_fields = []
@@ -266,8 +267,6 @@ class ProjmanAdmin(SwiftAdmin):
             other_fld_lst.append(Divider())
             other_fld_lst.append(
                 Group(body=[fld_dict["others"]]))
-            other_fld_lst.append(Divider())
-            other_fld_lst.append(Group(body=[fld_dict["create_time"], fld_dict["update_time"]]))
             other_tabitem = amis.Tabs.Item(title="其他参考信息", icon='fa fa-info', className="bg-green-100",
                                       body=other_fld_lst)
 
@@ -316,6 +315,8 @@ class ProjmanAdmin(SwiftAdmin):
                 formtab = self.get_tabbed_form(fld_dict)
                 c_form.body = formtab
                 return c_form
+                #log.debug(c_form)
+                #og.debug(c_form.api)
             else:
                 fields = [field for field in model_fields(self.schema_create).values() if field.name != self.pk_name]
                 columns, keys = [], {}
@@ -324,6 +325,9 @@ class ProjmanAdmin(SwiftAdmin):
                     keys[column.name] = "${" + column.label + "}"
                     column.name = column.label
                     columns.append(column)
+                #log.debug(columns)
+                #log.debug(keys)
+                #log.debug(f"{self.router_path}/item")
                 return Form(
                     api=AmisAPI(
                         method="post",
@@ -450,14 +454,15 @@ class ProjmanAdmin(SwiftAdmin):
             self, request: Request, obj: Any, **kwargs,
     ) -> Dict[str, Any]:
         data = await super().on_create_pre(request, obj)
+        log.debug(data)
         data['sn'] = ProjectIDGenerator().generate_id()
-        data['create_time'] = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
-        data['update_time'] = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
+        #data['create_time'] = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
+        #data['update_time'] = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
         return data
 
     async def on_update_pre(
             self, request: Request, obj: Any, item_id: Union[List[str], List[int]], **kwargs,
     ) -> Dict[str, Any]:
         data = await super().on_update_pre(request, obj, item_id)
-        data['update_time'] = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
+        #data['update_time'] = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
         return data
