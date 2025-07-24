@@ -110,6 +110,18 @@
       "cname": "BidType",
       "type": "List",
       "value": [{"label": "公开招标","value": "公开招标"},{"label": "竞争性谈判","value": "竞争性谈判"},{"label": "单一来源采购","value": "单一来源采购"},{"label": "框架协议采购","value": "框架协议采购"},{"label": "其他","value": "其他"}]
+    },
+    {
+      "name": "customer_location",
+      "cname": "CustomerLocation",
+      "type": "List",
+      "value": [{"label": "NC","value": "NC"},{"label": "SC","value": "SC"}]
+    },
+    {
+      "name": "customer_industry",
+      "cname": "CustomerIndustry",
+      "type": "List",
+      "value": [{"label": "金融","value": "金融"},{"label": "制造","value": "制造"},{"label": "MNC","value": "MNC"},{"label": "其他","value": "其他"}]
     }
   ]
 }

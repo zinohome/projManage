@@ -169,7 +169,7 @@ class ProjmanAdmin(SwiftAdmin):
     def get_tabbed_form(self,fld_dict):
         # 检查是否缺少必需字段
         REQUIRED_FIELDS = [
-            "customer_id", "customer_name","sn",
+            "customer_id", "customer_name","sn","customer_location","customer_industry","contact_title",
             "business_category", "project_name", "project_location",
             "project_contact", "contact_phone", "service_content",
             "contract_amount", "contract_duration", "contract_sign_date",
@@ -199,6 +199,8 @@ class ProjmanAdmin(SwiftAdmin):
             customer_fld_lst = []
             customer_fld_lst.append(Divider())
             customer_fld_lst.append(Group(body=[fld_dict["customer_id"], fld_dict["customer_name"]]))
+            customer_fld_lst.append(Divider())
+            customer_fld_lst.append(Group(body=[fld_dict["customer_location"], fld_dict["customer_industry"]]))
             customer_tabitem = amis.Tabs.Item(title="客户基本信息", icon='fa fa-university', className="bg-blue-100",
                                          body=customer_fld_lst)
 
@@ -211,7 +213,7 @@ class ProjmanAdmin(SwiftAdmin):
                 Group(body=[fld_dict["business_category"], fld_dict["project_name"], fld_dict["project_location"]]))
             project_fld_lst.append(Divider())
             project_fld_lst.append(
-                Group(body=[fld_dict["project_contact"], fld_dict["contact_phone"]]))
+                Group(body=[fld_dict["project_contact"], fld_dict["contact_title"], fld_dict["contact_phone"]]))
             project_fld_lst.append(Divider())
             project_fld_lst.append(
                 Group(body=[fld_dict["service_content"]]))
