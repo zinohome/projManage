@@ -39,7 +39,7 @@ class Projman(SwiftSQLModel, table=True):
                                      index=False,
                                      amis_form_item=amis.InputText(disabled=True, placeholder='自动生成，不需输入'),
                                      amis_table_column=amis.TableColumn(toggled=False))
-    customer_id: str = models.Field(default=None,
+    customer_id: Optional[str] = models.Field(default=None,
                                     title='客户号',
                                     nullable=True,
                                     index=False,
@@ -51,7 +51,7 @@ class Projman(SwiftSQLModel, table=True):
                                       index=False,
                                       amis_form_item=amis.InputText(required=True, placeholder='请输入客户名'),
                                       amis_table_column=amis.TableColumn(toggled=True))
-    customer_location: str = models.Field(default=None,
+    customer_location: Optional[str] = models.Field(default=None,
                                       title='Location',
                                       nullable=False,
                                       index=False,
