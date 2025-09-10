@@ -56,7 +56,9 @@ class Projman(SwiftSQLModel, table=True):
                                       nullable=False,
                                       index=False,
                                       amis_form_item=amis.Select(options=appdef.AppVardicts['customer_location']['value'], labelField='label', valueField='value', required=True),
-                                      amis_table_column=amis.TableColumn(toggled=True))
+                                      amis_table_column=amis.TableColumn(toggled=True),
+                                      amis_filter_item = amis.Select(options=appdef.AppVardicts['customer_location']['value'], labelField='label', valueField='value'))
+
     customer_industry: Optional[str] = models.Field(default=None,
                                                     title='行业',
                                                     nullable=True,
@@ -68,7 +70,8 @@ class Projman(SwiftSQLModel, table=True):
                                                     nullable=True,
                                                     index=False,
                                                     amis_form_item=amis.Select(options=appdef.AppVardicts['business_category']['value'], labelField='label', valueField='value', required=True),
-                                                    amis_table_column=amis.TableColumn(toggled=True))
+                                                    amis_table_column=amis.TableColumn(toggled=True),
+                                                    amis_filter_item = amis.Select(options=appdef.AppVardicts['business_category']['value'], labelField='label', valueField='value'))
     project_name: str = models.Field(default=None,
                                      title='项目名称',
                                      nullable=False,

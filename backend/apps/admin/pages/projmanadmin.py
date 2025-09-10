@@ -36,15 +36,12 @@ class ProjmanAdmin(SwiftAdmin):
     pk_name = 'id'
     list_per_page = 20
     list_filter = [
-        Projman.customer_id, Projman.customer_name, Projman.business_category,
-        Projman.project_name, Projman.project_location, Projman.project_contact,
-        Projman.cooperation_method, Projman.is_bidding, Projman.bidding_type,
-        Projman.project_number, Projman.subject_matter, Projman.contract_sign_date,
-        Projman.contract_end_date
+        Projman.customer_name, Projman.customer_location, Projman.business_category, Projman.project_location,
+        Projman.cooperation_method, Projman.subject_matter
     ]
     search_fields = [
-        Projman.customer_id, Projman.customer_name,
-        Projman.project_name, Projman.main_competitors, Projman.others
+        Projman.customer_name, Projman.customer_location, Projman.business_category, Projman.project_location,
+        Projman.cooperation_method, Projman.subject_matter
     ]
     parent_class = None
     tabsMode = TabsModeEnum.card

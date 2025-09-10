@@ -22,4 +22,6 @@ Starlette-OpenTracing>=0.1.0
 nest_asyncio>=1.6.0
 cryptography>=44.0.2
 requests>=2.32.3
- emails>=0.6
+emails>=0.6
+pandas>=2.3.2
+openpyxl>=3.1.5
