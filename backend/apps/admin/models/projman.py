@@ -156,7 +156,8 @@ class Projman(SwiftSQLModel, table=True):
                                                nullable=True,
                                                index=False,
                                                amis_form_item=amis.Select(options=appdef.AppVardicts['bid_type']['value'], labelField='label', valueField='value', required=False),
-                                               amis_table_column=amis.TableColumn(toggled=True))
+                                               amis_table_column=amis.TableColumn(toggled=True),
+                                                    amis_filter_item = amis.Select(options=appdef.AppVardicts['bid_type']['value'], labelField='label', valueField='value'))
     project_number: Optional[str] = models.Field(default=None,
                                                 title='项目编号',
                                                 nullable=True,
