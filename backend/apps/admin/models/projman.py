@@ -55,9 +55,9 @@ class Projman(SwiftSQLModel, table=True):
                                       title='Location',
                                       nullable=False,
                                       index=False,
-                                      amis_form_item=amis.Select(options=appdef.AppVardicts['customer_location']['value'], labelField='label', valueField='value', required=True),
+                                      amis_form_item=amis.Select(options=appdef.AppVardicts['customer_location']['value'], labelField='label', valueField='value', required=True, clearable=True),
                                       amis_table_column=amis.TableColumn(toggled=True),
-                                      amis_filter_item = amis.Select(options=appdef.AppVardicts['customer_location']['value'], labelField='label', valueField='value'))
+                                      amis_filter_item = amis.Select(options=appdef.AppVardicts['customer_location']['value'], labelField='label', valueField='value', clearable=True))
 
     customer_industry: Optional[str] = models.Field(default=None,
                                                     title='行业',
@@ -69,9 +69,9 @@ class Projman(SwiftSQLModel, table=True):
                                                     title='业务分类',
                                                     nullable=True,
                                                     index=False,
-                                                    amis_form_item=amis.Select(options=appdef.AppVardicts['business_category']['value'], labelField='label', valueField='value', required=True),
+                                                    amis_form_item=amis.Select(options=appdef.AppVardicts['business_category']['value'], labelField='label', valueField='value', required=True, clearable=True),
                                                     amis_table_column=amis.TableColumn(toggled=True),
-                                                    amis_filter_item = amis.Select(options=appdef.AppVardicts['business_category']['value'], labelField='label', valueField='value'))
+                                                    amis_filter_item = amis.Select(options=appdef.AppVardicts['business_category']['value'], labelField='label', valueField='value', clearable=True))
     project_name: str = models.Field(default=None,
                                      title='项目名称',
                                      nullable=False,
@@ -155,9 +155,9 @@ class Projman(SwiftSQLModel, table=True):
                                                title='招标类型',
                                                nullable=True,
                                                index=False,
-                                               amis_form_item=amis.Select(options=appdef.AppVardicts['bid_type']['value'], labelField='label', valueField='value', required=False),
+                                               amis_form_item=amis.Select(options=appdef.AppVardicts['bid_type']['value'], labelField='label', valueField='value', required=False, clearable=True),
                                                amis_table_column=amis.TableColumn(toggled=True),
-                                                    amis_filter_item = amis.Select(options=appdef.AppVardicts['bid_type']['value'], labelField='label', valueField='value'))
+                                                    amis_filter_item = amis.Select(options=appdef.AppVardicts['bid_type']['value'], labelField='label', valueField='value', clearable=True))
     project_number: Optional[str] = models.Field(default=None,
                                                 title='项目编号',
                                                 nullable=True,
