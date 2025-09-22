@@ -55,26 +55,22 @@ class BatchUserReg(object):
 
     async def reguser(self):
         userselect = UserSelect()
-        #log.debug(userselect.SSR)
-        #log.debug(userselect.SDM)
-        #log.debug(userselect.TSG)
-        #log.debug(userselect.TSGLeader)
+        log.debug(userselect.TLS)
+        log.debug(userselect.Mission)
+        log.debug(userselect.Sales)
+
         try:
-            for ssr in userselect.SSR:
-                user = await auth.db.async_run_sync(self._create_role_user_sync, ssr['id'], ssr['nickname'], ssr['email'], 'SSR')
-                log.debug(f'SSR： {user.username} registered !')
+            for tls in userselect.TLS:
+                user = await auth.db.async_run_sync(self._create_role_user_sync, tls['id'], tls['nickname'], tls['email'], 'TLS')
+                log.debug(f'TLS： {user.username} registered !')
             await auth.db.async_commit()
-            for tsg in userselect.TSG:
-                user = await auth.db.async_run_sync(self._create_role_user_sync, tsg['id'], tsg['nickname'], tsg['email'], 'TSG')
-                log.debug(f'TSG： {user.username} registered !')
+            for mission in userselect.Mission:
+                user = await auth.db.async_run_sync(self._create_role_user_sync, mission['id'], mission['nickname'], mission['email'], 'TLSMission')
+                log.debug(f'Mission： {user.username} registered !')
             await auth.db.async_commit()
-            for sdm in userselect.SDM:
-                user = await auth.db.async_run_sync(self._create_role_user_sync, sdm['id'], sdm['nickname'], sdm['email'], 'SDM')
-                log.debug(f'SDM： {user.username} registered !')
-            await auth.db.async_commit()
-            for leader in userselect.TSGLeader:
-                user = await auth.db.async_run_sync(self._create_role_user_sync, leader['id'], leader['nickname'], leader['email'], 'TSGLeader')
-                log.debug(f'TSGLeader： {user.username} registered !')
+            for sales in userselect.Sales:
+                user = await auth.db.async_run_sync(self._create_role_user_sync, sales['id'], sales['nickname'], sales['email'], 'GlobalSales')
+                log.debug(f'Sales： {user.username} registered !')
             await auth.db.async_commit()
             #user = await auth.db.async_run_sync(self._create_role_user_sync, 'liuyuly@cn.ibm.com','LIU YU','liuyuly@cn.ibm.com','SSR')
             #await auth.db.async_commit()
