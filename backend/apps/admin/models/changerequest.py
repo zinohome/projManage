@@ -97,7 +97,7 @@ class Changerequest(SwiftSQLModel, table=True):
                                                     title='*SSR Contact Name<br>(负责SSR 名字)',
                                                     nullable=True,
                                                     index=False,
-                                                    amis_form_item = amis.Select(options=userselect.SSR, menuTpl='<div>${nickname} [ ${email} ]</div>', labelField='nickname', valueField='id', searchable=True, required=True),
+                                                    amis_form_item = amis.Select(options=userselect.TLS, menuTpl='<div>${nickname} [ ${email} ]</div>', labelField='nickname', valueField='id', searchable=True, required=True),
                                                     amis_table_column = amis.TableColumn(toggled=False))
     ssr_phone: Optional[str] = models.Field(default=None,
                                                     title='*Phone/MP',
@@ -109,7 +109,7 @@ class Changerequest(SwiftSQLModel, table=True):
                                                     title='*Support TSG ID<br>(技术支持人员名字)',
                                                     nullable=True,
                                                     index=False,
-                                                    amis_form_item = amis.Select(options=userselect.TSG, menuTpl='<div>${nickname} [ ${email} ]</div>', labelField='nickname', valueField='id', searchable=True, required=True),
+                                                    amis_form_item = amis.Select(options=userselect.TLS, menuTpl='<div>${nickname} [ ${email} ]</div>', labelField='nickname', valueField='id', searchable=True, required=True),
                                                     amis_table_column = amis.TableColumn(toggled=False))
     local_sdm: Optional[str] = models.Field(default=None,
                                                     title='*Local SDM<br>(SSR经理)',
@@ -141,7 +141,7 @@ class Changerequest(SwiftSQLModel, table=True):
                                                     title='*Onsite Engineer<br>(维修SSR名字)',
                                                     nullable=True,
                                                     index=False,
-                                                    amis_form_item = amis.Select(options=userselect.SSR, menuTpl='<div>${nickname} [ ${email} ]</div>', labelField='nickname', valueField='id', searchable=True, required=True),
+                                                    amis_form_item = amis.Select(options=userselect.TLS, menuTpl='<div>${nickname} [ ${email} ]</div>', labelField='nickname', valueField='id', searchable=True, required=True),
                                                     amis_table_column = amis.TableColumn(toggled=False))
     begin_date: Optional[str] = models.Field(default_factory= datetime.now,
                                                     title='Begin Date<br>(维护开始时间)',
