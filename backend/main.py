@@ -48,6 +48,7 @@ site.mount_app(app)
 @app.on_event("startup")
 async def startup():
     await check_db_connection()
+    #log.debug(SQLModel.metadata.tables)
     await site.db.async_run_sync(SQLModel.metadata.create_all, is_session=False)
     # 创建默认管理员,用户名: admin,密码: admin, 请及时修改密码!!!
     await auth.create_role_user("admin")

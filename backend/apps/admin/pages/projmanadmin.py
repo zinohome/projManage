@@ -309,7 +309,7 @@ class ProjmanAdmin(SwiftAdmin):
 
     async def get_create_form(self, request: Request, bulk: bool = False) -> Form:
         user = await auth.get_current_user(request)
-        log.debug(f'user: {user}')
+        #log.debug(f'user: {user}')
         try:
             if not bulk:
                 c_form = await super().get_create_form(request, bulk)

@@ -75,14 +75,14 @@ class UserSelect(object):
             return sales_info["email"]
         else:
             return "yangq@cn.ibm.com"
-            
+
     def get_nickname(self, target_id):
         """
         从三个字典中用最快的速度根据id找到对应的nickname
-        
+
         Args:
             target_id: 要查找的用户ID
-        
+
         Returns:
             str: 找到的nickname，如果所有字典中都不存在，则返回"Unknown"
         """
@@ -97,6 +97,48 @@ class UserSelect(object):
         # 如果所有字典中都不存在，则返回默认值
         return "Unknown"
 
+    def get_org(self, target_id):
+        """
+        从三个字典中用最快的速度根据id找到对应的nickname
+
+        Args:
+            target_id: 要查找的用户ID
+
+        Returns:
+            str: 找到的nickname，如果所有字典中都不存在，则返回"Unknown"
+        """
+        # 由于字典的查找是O(1)的，所以这是最快的查找方式
+        # 依次检查三个字典
+        if target_id in self.tls_dict:
+            return self.tls_dict[target_id]["organization"]
+        if target_id in self.mission_dict:
+            return self.mission_dict[target_id]["organization"]
+        if target_id in self.sales_dict:
+            return self.sales_dict[target_id]["organization"]
+        # 如果所有字典中都不存在，则返回默认值
+        return "Unknown"
+
+    def get_manager(self, target_id):
+        """
+        从三个字典中用最快的速度根据id找到对应的nickname
+
+        Args:
+            target_id: 要查找的用户ID
+
+        Returns:
+            str: 找到的nickname，如果所有字典中都不存在，则返回"Unknown"
+        """
+        # 由于字典的查找是O(1)的，所以这是最快的查找方式
+        # 依次检查三个字典
+        if target_id in self.tls_dict:
+            return self.tls_dict[target_id]["manager"]
+        if target_id in self.mission_dict:
+            return self.mission_dict[target_id]["manager"]
+        if target_id in self.sales_dict:
+            return self.sales_dict[target_id]["manager"]
+        # 如果所有字典中都不存在，则返回默认值
+        return "Unknown"
+
 
 if __name__ == '__main__':
     userselect = UserSelect()
@@ -104,6 +146,8 @@ if __name__ == '__main__':
     log.debug(userselect.mission_dict)
     log.debug(userselect.sales_dict)
     log.debug(userselect.get_nickname('952530'))
+    log.debug(userselect.get_org('952530'))
+    log.debug(userselect.get_manager('952530'))
 
     log.debug(datetime.now().astimezone(ZoneInfo("Asia/Shanghai")).strftime("%Y-%m-%d %H:%M"))
 

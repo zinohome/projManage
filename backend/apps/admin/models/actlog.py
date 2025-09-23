@@ -37,20 +37,30 @@ class ActLog(SwiftSQLModel, table=True):
                                      title='操作类型',
                                      nullable=True,
                                      amis_form_item=amis.InputText(required=True),
-                                     amis_table_column=amis.TableColumn(toggled=False))
+                                     amis_table_column=amis.TableColumn(toggled=True))
     act_username: Optional[str] = models.Field(default=None,
                                      title='操作用户',
                                      nullable=True,
                                      amis_form_item=amis.InputText(required=True),
-                                     amis_table_column=amis.TableColumn(toggled=False))
+                                     amis_table_column=amis.TableColumn(toggled=True))
     act_name: Optional[str] = models.Field(default=None,
                                      title='操作人',
                                      nullable=True,
                                      amis_form_item=amis.InputText(required=True),
-                                     amis_table_column=amis.TableColumn(toggled=False))
+                                     amis_table_column=amis.TableColumn(toggled=True))
+    act_org: Optional[str] = models.Field(default=None,
+                                           title='团队',
+                                           nullable=True,
+                                           amis_form_item=amis.InputText(required=True),
+                                           amis_table_column=amis.TableColumn(toggled=True))
+    act_manager: Optional[str] = models.Field(default=None,
+                                           title='Manager',
+                                           nullable=True,
+                                           amis_form_item=amis.InputText(required=True),
+                                           amis_table_column=amis.TableColumn(toggled=False))
     act_time: Optional[datetime] = models.Field(default_factory=datetime.now,
                                                    title='操作时间',
                                                    nullable=True,
                                                    index=True,
                                                    amis_form_item=amis.InputDatetime(disabled=True),
-                                                   amis_table_column=amis.TableColumn(toggled=False))
+                                                   amis_table_column=amis.TableColumn(toggled=True))

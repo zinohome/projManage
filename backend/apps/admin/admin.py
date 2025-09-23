@@ -33,6 +33,7 @@ for file in items:
         module_name = 'apps.admin.groups.' + os.path.splitext(file.name)[0]
         adminmodel = importlib.import_module(module_name)
         for name, class_ in inspect.getmembers(adminmodel, inspect.isclass):
+            #log.debug(name)
             if name.lower() == os.path.splitext(file.name)[0]:
                 log.debug("Regist admin module [ %s ] ..." % name)
                 site.register_admin(class_)
