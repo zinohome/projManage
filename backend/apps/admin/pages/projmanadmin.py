@@ -15,23 +15,26 @@ from typing import List, Optional, Union, Dict, Any, Callable
 from fastapi_amis_admin import amis
 from fastapi_amis_admin.crud.parser import parse_obj_to_schema
 from fastapi_amis_admin.utils.pydantic import model_fields
+from fastapi_user_auth.auth.schemas import SystemUserEnum
 from fastapi_user_auth.globals import auth
 from pygments.lexers import q
 from starlette.requests import Request
 from fastapi_amis_admin.admin import AdminAction
-from fastapi_amis_admin.crud import CrudEnum, BaseApiOut
+from fastapi_amis_admin.crud import CrudEnum, BaseApiOut, ItemListSchema
 from fastapi_amis_admin.amis import PageSchema, TableColumn, ActionType, Action, Dialog, SizeEnum, Drawer, LevelEnum, \
     TableCRUD, TabsModeEnum, Form, AmisAPI, DisplayModeEnum, InputExcel, InputTable, Page, FormItem, SchemaNode, Group, \
     Divider
 from fastapi_amis_admin.utils.translation import i18n as _
 from apps.admin.swiftadmin import SwiftAdmin
+from utils.actlogtool import add_act_log
 from utils.log import log as log
 from apps.admin.models.projman import Projman
 from utils.projectIDGenerator import ProjectIDGenerator
 from fastapi import Body, Depends, FastAPI, HTTPException, Request
 from typing_extensions import Annotated, Literal
 from fastapi_amis_admin.globals.deps import SyncSess, AsyncSess
-from sqlalchemy import text
+from sqlalchemy import text, func, Select
+
 
 class ProjmanAdmin(SwiftAdmin):
     group_schema = "Customers"
@@ -309,7 +312,7 @@ class ProjmanAdmin(SwiftAdmin):
 
     async def get_create_form(self, request: Request, bulk: bool = False) -> Form:
         user = await auth.get_current_user(request)
-        #log.debug(f'user: {user}')
+        log.debug(f'user: {user}')
         try:
             if not bulk:
                 c_form = await super().get_create_form(request, bulk)
@@ -547,6 +550,8 @@ class ProjmanAdmin(SwiftAdmin):
                 if result == 1:  # if only one item, return the first item
                     result = await self.db.async_run_sync(lambda _: parse_obj_to_schema(items[0], self.schema_model, refresh=True))
                 #log.info(f"Create successful, result: {result}")
+                # 添加创建记录后的actlog日志，act_type为create_{result.id}
+                await add_act_log(user.username, f"create_{result.id}")
                 return BaseApiOut(data=result)
             except Exception as exp:
                 log.error(f"Exception at ProjmanAdmin.route_create(): {str(exp)}")
@@ -577,6 +582,8 @@ class ProjmanAdmin(SwiftAdmin):
                 if not values:
                     return self.error_data_handle(request)
                 items = await self.update_items(request, item_id, values)
+                # 添加更新记录后的actlog日志，act_type为update_{item_id}
+                await add_act_log(user.username, f"update_{item_id}")
                 return BaseApiOut(data=len(items))
             except Exception as exp:
                 print('Exception at SwiftAdmin.route_update() %s ' % exp)
@@ -611,9 +618,79 @@ class ProjmanAdmin(SwiftAdmin):
                 if hasattr(data, 'creator') and data.creator != user.nickname and user.nickname != 'root':
                     return self.error_no_router_permission(request)
                 items = await self.delete_items(request, item_id)
+                # 添加删除记录后的actlog日志，act_type为delete_{item_id}
+                await add_act_log(user.username, f"delete_{item_id}")
                 return BaseApiOut(data=len(items))
             except Exception as exp:
                 print('Exception at SwiftAdmin.route_delete() %s ' % exp)
                 traceback.print_exc()
 
         return route
+
+
+    @property
+    def route_read(self) -> Callable:
+        async def route(
+            request: Request,
+            item_id: self.AnnotatedItemIdList,  # type: ignore
+        ):
+            try:
+                user = await auth.get_current_user(request)
+                if not await self.has_read_permission(request, item_id):
+                    return self.error_no_router_permission(request)
+                items = await self.read_items(request, item_id)
+                # 添加读取记录后的actlog日志，act_type为read_{item_id}
+                await add_act_log(user.username, f"read_{item_id}")
+                return BaseApiOut(data=items if len(items) > 1 else items[0])
+            except Exception as exp:
+                print('Exception at SwiftAdmin.route_read() %s ' % exp)
+                traceback.print_exc()
+
+        return route
+
+
+    @property
+    def route_list(self) -> Callable:
+        async def route(
+            request: Request,
+            sel: self.AnnotatedSelect,  # type: ignore
+            paginator: Annotated[self.paginator, Depends()],  # type: ignore
+            filters: Annotated[self.schema_filter, Body()] = None,  # type: ignore
+        ):
+            try:
+                user = await auth.get_current_user(request)
+                if not await self.has_list_permission(request, paginator, filters):
+                    return self.error_no_router_permission(request)
+                data = ItemListSchema(items=[])
+                data.query = request.query_params
+                if await self.has_filter_permission(request, filters):
+                    data.filters = await self.on_filter_pre(request, filters)
+                    if data.filters:
+                        sel = sel.filter(*self.calc_filter_clause(data.filters))
+                if paginator.showTotal:
+                    data.total = await self.db.async_scalar(sel.with_only_columns(func.count("*")))
+                    if data.total == 0:
+                        return BaseApiOut(data=data)
+                orderBy = self._calc_ordering(paginator.orderBy, paginator.orderDir)
+                if orderBy:
+                    sel = sel.order_by(*orderBy)
+                sel = sel.limit(paginator.perPage).offset(paginator.offset)
+                result = await self.db.async_execute(sel)
+                # 添加读取列表记录后的actlog日志，act_type为list_{paginator.perPage}_{paginator.offset}
+                await add_act_log(user.username, f"list_{paginator.perPage}_{paginator.offset}")
+                return BaseApiOut(data=await self.on_list_after(request, result, data))
+            except Exception as exp:
+                print('Exception at SwiftAdmin.route_list() %s ' % exp)
+                traceback.print_exc()
+
+        return route
+
+    async def filter_select(self, request: Request, sel: Select) -> Select:
+        """在sel中添加权限过滤条件"""
+        subject = await self.site.auth.get_current_user_identity(request)
+        user = await auth.get_current_user(request)
+        # 添加读取列表记录后的actlog日志，act_type为list_{paginator.perPage}_{paginator.offset}
+        await add_act_log(user.username, f"select_{self.unique_id}")
+        if subject == SystemUserEnum.ROOT:
+            return sel
+        return await super().filter_select(request, sel)
