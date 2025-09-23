@@ -56,9 +56,10 @@ async def get_duplicate_data(
     returnobj['msg'] = "success"
     returnobj['code'] = None
     try:
+        user = await auth.get_current_user(request)
         query = text("""
                     SELECT * 
-                    FROM changerequest 
+                    FROM projman 
                     WHERE id = :item_id
                 """)
         result = sess.execute(query, {"item_id": item_id})
@@ -67,8 +68,7 @@ async def get_duplicate_data(
         result_list = [dict(row._asdict()) for row in rows]
         returnobj["data"] = result_list[0]
         returnobj["data"].pop("id", None)
-        returnobj["data"]["tsg_rvew_rslt"] = "Draft"
-        returnobj["data"]["review_history"] = ""
+        returnobj["data"]["creator"] = user.nickname
         returnobj["data"]["create_time"] = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
         returnobj["data"]["update_time"] = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
     except Exception as exp:

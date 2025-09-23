@@ -30,7 +30,8 @@ from apps.admin.models.projman import Projman
 from utils.projectIDGenerator import ProjectIDGenerator
 from fastapi import Body, Depends, FastAPI, HTTPException, Request
 from typing_extensions import Annotated, Literal
-
+from fastapi_amis_admin.globals.deps import SyncSess, AsyncSess
+from sqlalchemy import text
 
 class ProjmanAdmin(SwiftAdmin):
     group_schema = "Customers"
@@ -568,8 +569,10 @@ class ProjmanAdmin(SwiftAdmin):
             try:
                 user = await auth.get_current_user(request)
                 if not await self.has_update_permission(request, item_id, data):
+                    return self.error_no_router_permission(request)  
+                # 新增判断：如果提交的数据字段creator的值不等于user.nickname则返回无权限错误
+                if hasattr(data, 'creator') and data.creator != user.nickname and user.nickname != 'root':
                     return self.error_no_router_permission(request)
-
                 values = await self.on_update_pre(request, data, item_id=item_id)
                 if not values:
                     return self.error_data_handle(request)
@@ -586,11 +589,26 @@ class ProjmanAdmin(SwiftAdmin):
     def route_delete(self) -> Callable:
         async def route(
             request: Request,
+            sess: SyncSess,
             item_id: self.AnnotatedItemIdList,  # type: ignore
         ):
             try:
                 user = await auth.get_current_user(request)
                 if not await self.has_delete_permission(request, item_id):
+                    return self.error_no_router_permission(request)
+                # 新增判断：如果提交的数据字段creator的值不等于user.nickname则返回无权限错误，但root用户除外
+                query = text("""
+                    SELECT * 
+                    FROM projman 
+                    WHERE id = :item_id
+                """)
+                result = sess.execute(query, {"item_id": item_id})
+                rows = result.fetchall()
+                #log.debug(f"rows: {rows}")
+                # 将Row对象转换为字典列表
+                result_list = [dict(row._asdict()) for row in rows]
+                data = result_list[0]
+                if hasattr(data, 'creator') and data.creator != user.nickname and user.nickname != 'root':
                     return self.error_no_router_permission(request)
                 items = await self.delete_items(request, item_id)
                 return BaseApiOut(data=len(items))
