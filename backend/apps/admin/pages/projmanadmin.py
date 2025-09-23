@@ -12,9 +12,10 @@ import traceback
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from typing import List, Optional, Union, Dict, Any, Callable
-
 from fastapi_amis_admin import amis
+from fastapi_amis_admin.crud.parser import parse_obj_to_schema
 from fastapi_amis_admin.utils.pydantic import model_fields
+from fastapi_user_auth.globals import auth
 from pygments.lexers import q
 from starlette.requests import Request
 from fastapi_amis_admin.admin import AdminAction
@@ -27,6 +28,8 @@ from apps.admin.swiftadmin import SwiftAdmin
 from utils.log import log as log
 from apps.admin.models.projman import Projman
 from utils.projectIDGenerator import ProjectIDGenerator
+from fastapi import Body, Depends, FastAPI, HTTPException, Request
+from typing_extensions import Annotated, Literal
 
 
 class ProjmanAdmin(SwiftAdmin):
@@ -175,7 +178,7 @@ class ProjmanAdmin(SwiftAdmin):
             "subject_matter", "budget_amount", "max_price",
             "publish_time", "deadline",
             "bid_price", "bid_date", "winning_company",
-            "website_reference", "main_competitors", "others"
+            "website_reference", "main_competitors", "others", "creator", "create_time", "update_time"
         ]
         # 检查是否缺少必需字段
         missing_fields = []
@@ -198,6 +201,7 @@ class ProjmanAdmin(SwiftAdmin):
             customer_fld_lst.append(Group(body=[fld_dict["customer_id"], fld_dict["customer_name"]]))
             customer_fld_lst.append(Divider())
             customer_fld_lst.append(Group(body=[fld_dict["customer_location"], fld_dict["customer_industry"]]))
+            customer_fld_lst.append(Group(body=[fld_dict["creator"], fld_dict["create_time"], fld_dict["update_time"]]))
             customer_tabitem = amis.Tabs.Item(title="客户基本信息", icon='fa fa-university', className="bg-blue-100",
                                          body=customer_fld_lst)
 
@@ -303,19 +307,22 @@ class ProjmanAdmin(SwiftAdmin):
             traceback.print_exc()
 
     async def get_create_form(self, request: Request, bulk: bool = False) -> Form:
+        user = await auth.get_current_user(request)
+        #log.debug(f'user: {user}')
         try:
             if not bulk:
                 c_form = await super().get_create_form(request, bulk)
                 c_form.preventEnterSubmit = True
                 fieldlist = [item for item in c_form.body]
                 fld_dict = {item.name: item for item in fieldlist}
+                fld_dict["creator"].value = user.nickname
                 formtab = amis.Tabs(tabsMode='strong')
                 formtab.tabs = []
                 formtab = self.get_tabbed_form(fld_dict)
                 c_form.body = formtab
                 return c_form
             else:
-                fields = [field for field in model_fields(self.schema_create).values() if field.name != self.pk_name]
+                fields = [field for field in model_fields(self.schema_create).values() if field.name != self.pk_name and field.name not in ['creator', 'create_time', 'update_time']]
                 #log.debug(fields)
                 columns, keys = [], {}
                 for field in fields:
@@ -369,12 +376,15 @@ class ProjmanAdmin(SwiftAdmin):
             traceback.print_exc()
 
     async def get_duplicate_form_inner(self, request: Request, bulk: bool = False) -> Form:
+        user = await auth.get_current_user(request)
         try:
             extra = {}
             if not bulk:
                 api = f"post:{self.router_path}/item"
                 #fields = self.schema_model.model_fields.values()
                 fields = [field for field in model_fields(self.schema_create).values() if field.name != self.pk_name]
+                # 排除 creator, create_time, update_time 字段
+                # fields = [field for field in model_fields(self.schema_create).values() if field.name != self.pk_name and field.name not in ['creator', 'create_time', 'update_time']]
                 if self.schema_read:
                     extra["initApi"] = f"get:{self.router_path}/item/${self.pk_name}"
 
@@ -388,6 +398,9 @@ class ProjmanAdmin(SwiftAdmin):
                 # 强制tab
                 fieldlist = [item for item in d_form.body]
                 fld_dict = {item.name: item for item in fieldlist}
+                fld_dict["creator"].value = user.nickname
+                fld_dict["create_time"].value = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
+                fld_dict["update_time"].value = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
                 formtab = amis.Tabs(tabsMode='strong')
                 formtab.tabs = []
                 formtab = self.get_tabbed_form(fld_dict)
@@ -452,17 +465,137 @@ class ProjmanAdmin(SwiftAdmin):
     async def on_create_pre(
             self, request: Request, obj: Any, **kwargs,
     ) -> Dict[str, Any]:
+        user = await auth.get_current_user(request)
         data = await super().on_create_pre(request, obj)
         #log.debug(data)
         generator = ProjectIDGenerator()
         data['sn'] = generator.generate_id()
-        #data['create_time'] = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
-        #data['update_time'] = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
+        data['creator'] = user.nickname
+        data['create_time'] = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
+        data['update_time'] = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
         return data
 
     async def on_update_pre(
             self, request: Request, obj: Any, item_id: Union[List[str], List[int]], **kwargs,
     ) -> Dict[str, Any]:
         data = await super().on_update_pre(request, obj, item_id)
-        #data['update_time'] = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
+        data['update_time'] = datetime.now().astimezone(ZoneInfo("Asia/Shanghai"))
         return data
+
+    @property
+    def route_create(self) -> Callable:
+        async def route(
+            request: Request,
+            data: Annotated[Union[List[self.schema_create], self.schema_create], Body()],  # type: ignore
+        ) -> BaseApiOut[Union[int, self.schema_model]]:  # type: ignore
+            try:
+                #log.info(f"Create request received: {request.url}")
+                user = await auth.get_current_user(request)
+                if not await self.has_create_permission(request, data):
+                    return self.error_no_router_permission(request)
+                if not isinstance(data, list):
+                    data = [data]
+                #log.debug(f"Request data: {data}")
+                try:
+                    # 验证必填字段
+                    required_fields = ['customer_name', 'customer_location', 'business_category', 'project_name']
+                    errors = {}
+
+                    for idx, item in enumerate(data):
+                        log.debug(f"Processing item {idx + 1}")
+                        # 只验证必填字段，而不是遍历所有字段
+                        for field in required_fields:
+                            # 安全地获取字段值，避免AttributeError
+                            if hasattr(item, field):
+                                value = getattr(item, field)
+                                # 验证字段值不为空
+                                if isinstance(value, str) and not value.strip():
+                                    errors[field] = f"{field}字段不能为空"
+                                    break
+                                elif value is None:
+                                    errors[field] = f"{field}字段不能为None"
+                                    break
+                            else:
+                                errors[field] = f"缺少必填字段: {field}"
+                                break
+
+                        # 如果当前item有错误，跳出循环
+                        if errors:
+                            log.warning(f"Validation failed for item {idx + 1}: {errors}")
+                            break
+                
+                    # 如果有验证错误，返回标准的BaseApiOut格式的错误信息
+                    if len(errors) > 0:
+                        error_msg = "参数验证失败: " + ", ".join([f"{k}: {v}" for k, v in errors.items()])
+                        log.warning(f"Validation failed: {error_msg}")
+                        # 使用标准的BaseApiOut格式返回错误
+                        return BaseApiOut(
+                            status=422,
+                            msg=error_msg,
+                            errors=errors,
+                            data=None
+                        )
+                
+                    # 只调用一次create_items方法
+                    items = await self.create_items(request, data)
+                except Exception as error:
+                    await self.db.async_rollback()
+                    log.error(f"Database error during creation: {str(error)}")
+                    return self.error_execute_sql(request=request, error=error)
+                result = len(items)
+                if result == 1:  # if only one item, return the first item
+                    result = await self.db.async_run_sync(lambda _: parse_obj_to_schema(items[0], self.schema_model, refresh=True))
+                #log.info(f"Create successful, result: {result}")
+                return BaseApiOut(data=result)
+            except Exception as exp:
+                log.error(f"Exception at ProjmanAdmin.route_create(): {str(exp)}")
+                traceback.print_exc()
+                # 确保总是返回一个有效的BaseApiOut响应
+                return BaseApiOut(
+                    status=500,
+                    msg=f"服务器内部错误: {str(exp)}",
+                    data=None
+                )
+        return route
+
+    @property
+    def route_update(self) -> Callable:
+        async def route(
+            request: Request,
+            item_id: self.AnnotatedItemIdList,  # type: ignore
+            data: Annotated[self.schema_update, Body()],  # type: ignore
+        ):
+            try:
+                user = await auth.get_current_user(request)
+                if not await self.has_update_permission(request, item_id, data):
+                    return self.error_no_router_permission(request)
+
+                values = await self.on_update_pre(request, data, item_id=item_id)
+                if not values:
+                    return self.error_data_handle(request)
+                items = await self.update_items(request, item_id, values)
+                return BaseApiOut(data=len(items))
+            except Exception as exp:
+                print('Exception at SwiftAdmin.route_update() %s ' % exp)
+                traceback.print_exc()
+
+        return route
+
+
+    @property
+    def route_delete(self) -> Callable:
+        async def route(
+            request: Request,
+            item_id: self.AnnotatedItemIdList,  # type: ignore
+        ):
+            try:
+                user = await auth.get_current_user(request)
+                if not await self.has_delete_permission(request, item_id):
+                    return self.error_no_router_permission(request)
+                items = await self.delete_items(request, item_id)
+                return BaseApiOut(data=len(items))
+            except Exception as exp:
+                print('Exception at SwiftAdmin.route_delete() %s ' % exp)
+                traceback.print_exc()
+
+        return route

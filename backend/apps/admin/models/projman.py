@@ -230,3 +230,23 @@ class Projman(SwiftSQLModel, table=True):
                                          index=False,
                                          amis_form_item=amis.Textarea(required=False, placeholder='可填写其他项目关联信息，例如：供应商具体情况，招标流程，注意事项，特殊说明等。'),
                                          amis_table_column=amis.TableColumn(toggled=True))
+    creator: Optional[str] = models.Field(default=None,
+                                      title='Creator',
+                                      nullable=True,
+                                      index=False,
+                                      amis_form_item=amis.InputText(required=False, placeholder='Creator',disabled=True),
+                                      amis_table_column=amis.TableColumn(toggled=False))
+    create_time: Optional[datetime] = models.Field(default_factory=datetime.now,
+                                         title='Create Time',
+                                         nullable=True,
+                                         index=True,
+                                         amis_form_item=amis.InputDatetime(disabled=True),
+                                         amis_table_column=amis.TableColumn(toggled=False))
+    update_time: Optional[datetime] = models.Field(default_factory=datetime.now,
+                                                   title='Update Time',
+                                                   nullable=True,
+                                                   index=True,
+                                                   sa_column_kwargs={"onupdate": func.now(),
+                                                                     "server_default": func.now()},
+                                                   amis_form_item=amis.InputDatetime(disabled=True),
+                                                   amis_table_column=amis.TableColumn(toggled=False))

@@ -1571,6 +1571,27 @@
       "email": "Shu.Ming.Wang@ibm.com",
       "organization": "Global Sales",
       "manager": "DU XIAO YU"
+    },
+    {
+      "id": "062502",
+      "nickname": "LV Jing Jing",
+      "email": "Jing.Jing.Lv@ibm.com",
+      "organization": "Global Sales",
+      "manager": "SU YUE"
+    },
+    {
+      "id": "057495",
+      "nickname": "JIA ZHEN ZHEN",
+      "email": "jiazhzh@cn.ibm.com",
+      "organization": "Global Sales",
+      "manager": "SU YUE"
+    },
+    {
+      "id": "977310",
+      "nickname": "Liu Shi",
+      "email": "shiliu@cn.ibm.com",
+      "organization": "Global Sales",
+      "manager": "SU YUE"
     }
   ]
 }
