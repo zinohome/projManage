@@ -26,3 +26,7 @@ data
 volumes
 config.yaml
 .DS_Store
+/backend/utils/data4.xlsx
+/backend/utils/data4o.xlsx
+/backend/utils/dataall.xlsx
+/backend/utils/dataall-o.xlsx
