@@ -43,6 +43,9 @@ class AuthAdminSite(AdminSite):
         app = await super().get_page(request)
         user_auth_app = self.get_admin_or_create(self.UserAuthApp)
         username = await self.auth.get_current_user_identity(request) or SystemUserEnum.GUEST
+        user = await self.auth.get_current_user(request)
+        #print(user)
+        #print(user.nickname)
         app.header = Flex(
             className="w-full",
             justify="flex-end",
@@ -52,7 +55,7 @@ class AuthAdminSite(AdminSite):
                 app.header,
                 {
                     "type": "dropdown-button",
-                    "label": f"{username}",
+                    "label": f"{{user.nickname}}",
                     "trigger": "hover",
                     "icon": "fa fa-user",
                     "buttons": [
