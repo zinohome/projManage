@@ -55,7 +55,7 @@ class AuthAdminSite(AdminSite):
                 app.header,
                 {
                     "type": "dropdown-button",
-                    "label": f"{{user.nickname}}",
+                    "label": f"{user.nickname}",
                     "trigger": "hover",
                     "icon": "fa fa-user",
                     "buttons": [
