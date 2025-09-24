@@ -26,7 +26,7 @@ from fastapi import Body, Depends, FastAPI, HTTPException, Request
 
 class ActLogAdmin(SwiftAdmin):
     group_schema = "ActLog"
-    page_schema = PageSchema(label='ActLog', page_title='ActLog', icon='fa fa-folder-open', sort=80)
+    page_schema = PageSchema(label='ActLog', page_title='ActLog', icon='fa fa-info', sort=80)
     model = ActLog
     pk_name = 'id'
     list_per_page = 20

@@ -10,6 +10,7 @@
 from fastapi import APIRouter
 from fastapi_amis_admin.crud import SqlalchemyCrud
 
+from apps.admin.pages.actchart import ActChartAdmin
 from apps.admin.pages.actlogadmin import ActLogAdmin
 from core.globals import site
 from fastapi_amis_admin import amis, admin
@@ -32,3 +33,5 @@ class ActLoggroup(admin.AdminApp):
     def __init__(self, app: "AdminApp"):
         super().__init__(app)
         self.register_admin(ActLogAdmin)
+        self.register_admin(ActChartAdmin)
+

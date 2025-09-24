@@ -38,7 +38,7 @@ from sqlalchemy import text, func, Select
 
 class ProjmanAdmin(SwiftAdmin):
     group_schema = "Customers"
-    page_schema = PageSchema(label='Customers', page_title='Customers', icon='fa fa-folder-open', sort=80)
+    page_schema = PageSchema(label='Customers', page_title='Customers', icon='fa fa-users', sort=80)
     model = Projman
     pk_name = 'id'
     list_per_page = 20
@@ -551,7 +551,7 @@ class ProjmanAdmin(SwiftAdmin):
                     result = await self.db.async_run_sync(lambda _: parse_obj_to_schema(items[0], self.schema_model, refresh=True))
                 #log.info(f"Create successful, result: {result}")
                 # 添加创建记录后的actlog日志，act_type为create_{result.id}
-                await add_act_log(user.username, f"create_{result.id}")
+                await add_act_log(user.nickname, f"create_{result.id}")
                 return BaseApiOut(data=result)
             except Exception as exp:
                 log.error(f"Exception at ProjmanAdmin.route_create(): {str(exp)}")
@@ -583,7 +583,7 @@ class ProjmanAdmin(SwiftAdmin):
                     return self.error_data_handle(request)
                 items = await self.update_items(request, item_id, values)
                 # 添加更新记录后的actlog日志，act_type为update_{item_id}
-                await add_act_log(user.username, f"update_{item_id}")
+                await add_act_log(user.nickname, f"update_{item_id}")
                 return BaseApiOut(data=len(items))
             except Exception as exp:
                 print('Exception at SwiftAdmin.route_update() %s ' % exp)
@@ -619,7 +619,7 @@ class ProjmanAdmin(SwiftAdmin):
                     return self.error_no_router_permission(request)
                 items = await self.delete_items(request, item_id)
                 # 添加删除记录后的actlog日志，act_type为delete_{item_id}
-                await add_act_log(user.username, f"delete_{item_id}")
+                await add_act_log(user.nickname, f"delete_{item_id}")
                 return BaseApiOut(data=len(items))
             except Exception as exp:
                 print('Exception at SwiftAdmin.route_delete() %s ' % exp)
@@ -640,7 +640,7 @@ class ProjmanAdmin(SwiftAdmin):
                     return self.error_no_router_permission(request)
                 items = await self.read_items(request, item_id)
                 # 添加读取记录后的actlog日志，act_type为read_{item_id}
-                await add_act_log(user.username, f"read_{item_id}")
+                await add_act_log(user.nickname, f"read_{item_id}")
                 return BaseApiOut(data=items if len(items) > 1 else items[0])
             except Exception as exp:
                 print('Exception at SwiftAdmin.route_read() %s ' % exp)
@@ -677,7 +677,7 @@ class ProjmanAdmin(SwiftAdmin):
                 sel = sel.limit(paginator.perPage).offset(paginator.offset)
                 result = await self.db.async_execute(sel)
                 # 添加读取列表记录后的actlog日志，act_type为list_{paginator.perPage}_{paginator.offset}
-                await add_act_log(user.username, f"list_{paginator.perPage}_{paginator.offset}")
+                await add_act_log(user.nickname, f"list_{paginator.perPage}_{paginator.offset}")
                 return BaseApiOut(data=await self.on_list_after(request, result, data))
             except Exception as exp:
                 print('Exception at SwiftAdmin.route_list() %s ' % exp)
@@ -690,7 +690,7 @@ class ProjmanAdmin(SwiftAdmin):
         subject = await self.site.auth.get_current_user_identity(request)
         user = await auth.get_current_user(request)
         # 添加读取列表记录后的actlog日志，act_type为list_{paginator.perPage}_{paginator.offset}
-        await add_act_log(user.username, f"select_{self.unique_id}")
+        await add_act_log(user.nickname, f"select_{self.unique_id}")
         if subject == SystemUserEnum.ROOT:
             return sel
         return await super().filter_select(request, sel)

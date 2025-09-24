@@ -25,7 +25,7 @@ appdef = App()
 
 class Projmangroup(admin.AdminApp):
     group_schema = 'Customers'
-    page_schema = amis.PageSchema(label='Customers', title='Customers', icon='fa fa-folder', sort=10)
+    page_schema = amis.PageSchema(label='Customers', title='Customers', icon='fa fa-university', sort=10)
     router_prefix = '/customers'
 
 

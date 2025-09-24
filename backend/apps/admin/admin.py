@@ -39,6 +39,7 @@ for file in items:
                 site.register_admin(class_)
 
 #site.register_admin(AppHome)
+
 #site.register_admin(Contractadmingroup, Customeradmingroup)
 
 
