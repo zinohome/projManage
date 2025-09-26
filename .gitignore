@@ -30,3 +30,4 @@ config.yaml
 /backend/utils/data4o.xlsx
 /backend/utils/dataall.xlsx
 /backend/utils/dataall-o.xlsx
+/backend/projID.db
