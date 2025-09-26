@@ -3292,3 +3292,37 @@
 2025-09-24 at 15:33:14 | DEBUG | Regist admin module [ ActLoggroup ] ...
 2025-09-24 at 15:33:14 | DEBUG | Regist admin module [ AppHome ] ...
 2025-09-24 at 15:33:16 | INFO | 数据库连接正常
+2025-09-26 at 17:29:54 | DEBUG | Check models Starting ...
+2025-09-26 at 17:29:54 | DEBUG | Check models completed ！
+2025-09-26 at 17:29:55 | DEBUG | Regist admin module [ Projmangroup ] ...
+2025-09-26 at 17:29:55 | DEBUG | Regist admin module [ ActLoggroup ] ...
+2025-09-26 at 17:29:55 | DEBUG | Regist admin module [ AppHome ] ...
+2025-09-26 at 17:29:57 | INFO | 数据库连接正常
+2025-09-26 at 17:32:11 | DEBUG | user: email='root@ibm.com' delete_time=None create_time=datetime.datetime(2025, 7, 14, 15, 58, 21) is_active=True avatar='' update_time=datetime.datetime(2025, 9, 23, 2, 38, 49) password=SecretStr('**********') username='root' id=2 nickname='root'
+2025-09-26 at 17:32:11 | DEBUG | user: email='root@ibm.com' delete_time=None create_time=datetime.datetime(2025, 7, 14, 15, 58, 21) is_active=True avatar='' update_time=datetime.datetime(2025, 9, 23, 2, 38, 49) password=SecretStr('**********') username='root' id=2 nickname='root'
+2025-09-26 at 17:32:12 | INFO | 添加操作日志成功: root - select_3dda089bed1d377b
+2025-09-26 at 17:32:12 | INFO | 添加操作日志成功: root - list_20_0
+2025-09-26 at 17:32:19 | DEBUG | Processing item 1
+2025-09-26 at 17:32:19 | WARNING | Validation failed for item 1: {'customer_location': 'customer_location字段不能为None'}
+2025-09-26 at 17:32:19 | WARNING | Validation failed: 参数验证失败: customer_location: customer_location字段不能为None
+2025-09-26 at 17:32:30 | DEBUG | Processing item 1
+2025-09-26 at 17:32:30 | WARNING | Validation failed for item 1: {'business_category': 'business_category字段不能为None'}
+2025-09-26 at 17:32:30 | WARNING | Validation failed: 参数验证失败: business_category: business_category字段不能为None
+2025-09-26 at 17:32:41 | DEBUG | Processing item 1
+2025-09-26 at 17:32:41 | INFO | 添加操作日志成功: root - create_1271
+2025-09-26 at 17:32:42 | INFO | 添加操作日志成功: root - select_3dda089bed1d377b
+2025-09-26 at 17:32:42 | INFO | 添加操作日志成功: root - list_20_0
+2025-09-26 at 17:37:51 | DEBUG | Check models Starting ...
+2025-09-26 at 17:37:51 | DEBUG | Check models completed ！
+2025-09-26 at 17:37:52 | DEBUG | Regist admin module [ Projmangroup ] ...
+2025-09-26 at 17:37:52 | DEBUG | Regist admin module [ ActLoggroup ] ...
+2025-09-26 at 17:37:52 | DEBUG | Regist admin module [ AppHome ] ...
+2025-09-26 at 17:37:53 | INFO | 数据库连接正常
+2025-09-26 at 17:38:48 | DEBUG | user: delete_time=None email='root@ibm.com' create_time=datetime.datetime(2025, 7, 14, 15, 58, 21) is_active=True avatar='' update_time=datetime.datetime(2025, 9, 23, 2, 38, 49) username='root' password=SecretStr('**********') id=2 nickname='root'
+2025-09-26 at 17:38:48 | DEBUG | user: delete_time=None email='root@ibm.com' create_time=datetime.datetime(2025, 7, 14, 15, 58, 21) is_active=True avatar='' update_time=datetime.datetime(2025, 9, 23, 2, 38, 49) username='root' password=SecretStr('**********') id=2 nickname='root'
+2025-09-26 at 17:38:49 | INFO | 添加操作日志成功: root - select_3dda089bed1d377b
+2025-09-26 at 17:38:49 | INFO | 添加操作日志成功: root - list_20_0
+2025-09-26 at 17:39:02 | DEBUG | Processing item 1
+2025-09-26 at 17:39:03 | INFO | 添加操作日志成功: root - create_1272
+2025-09-26 at 17:39:03 | INFO | 添加操作日志成功: root - select_3dda089bed1d377b
+2025-09-26 at 17:39:03 | INFO | 添加操作日志成功: root - list_20_0
