@@ -67,15 +67,15 @@ class ActChartAdmin(admin.PageAdmin):
                             Card(
                                 title="Activity Overview",
                                 body=[
-                                    # 折线图配置
+                                    # 柱状图配置
                                     amis.Service(
-                                        api="/actlog/daily_activities",
+                                        api="/actlog/monthly_activities",
                                         body=[
                                             Chart(
                                                 height="180px",
                                                 config={
                                                     "title": {
-                                                    "text": "每日浏览量"
+                                                    "text": "近12个月浏览量"
                                                     },
                                                     "tooltip": {},
                                                     "legend": {
@@ -88,12 +88,12 @@ class ActChartAdmin(admin.PageAdmin):
                                                         "type": "value"
                                                     },
                                                     "series": [{
-                                                        "type": "line"
+                                                        "type": "bar"
                                                     }]
                                                 },
-                                                dataFilter="""config.title.text = '每日浏览量';
-                                                            config.xAxis.data = data.date || [];
-                                                            config.series[0].data = data.line || [];
+                                                dataFilter="""config.title.text = '近12个月浏览量';
+                                                            config.xAxis.data = data.month || [];
+                                                            config.series[0].data = data.bar || [];
                                                             return config;"""
                                             )
                                         ]
@@ -116,13 +116,13 @@ class ActChartAdmin(admin.PageAdmin):
                                     title="Monthly User Activity",
                                     body=[
                                         amis.Service(
-                                            api="/actlog/activity_by_person",
+                                            api="/actlog/activity_by_manager_current_month",
                                             body=[
                                                 Chart(
                                                     height="180px",
                                                     config={
                                                         "title": {
-                                                            "text": "上月浏览量排名-Person"
+                                                            "text": "当月浏览量排名-Manager"
                                                         },
                                                         "tooltip": {},
                                                         "legend": {
@@ -141,7 +141,7 @@ class ActChartAdmin(admin.PageAdmin):
                                                             "data": "${data?.series?.[0]?.data || []}"
                                                         }]
                                                     },
-                                                    dataFilter="""config.title = data.title || {text: '上月浏览量排名-Person'};
+                                                    dataFilter="""config.title = data.title || {text: '当月浏览量排名-Manager'};
                                                                 config.tooltip = data.tooltip || {};
                                                                 config.legend = data.legend || {data: ['浏览次数']};
                                                                 config.xAxis = data.xAxis || {type: 'category', data: []};
@@ -164,7 +164,7 @@ class ActChartAdmin(admin.PageAdmin):
                                     title="Monthly User Activity",
                                     body=[
                                         amis.Service(
-                                            api="/actlog/activity_by_manager",
+                                            api="/actlog/activity_by_manager_last_month",
                                             body=[
                                                 Chart(
                                                     height="180px",
@@ -218,13 +218,13 @@ class ActChartAdmin(admin.PageAdmin):
                                     title="Monthly User Activity",
                                     body=[
                                         amis.Service(
-                                            api="/actlog/contribution_by_person",
+                                            api="/actlog/contribution_by_manager_current_month",
                                             body=[
                                                 Chart(
                                                     height="180px",
                                                     config={
                                                         "title": {
-                                                            "text": "上月贡献度排名-Person"
+                                                            "text": "当月贡献度排名-Manager"
                                                         },
                                                         "tooltip": {},
                                                         "legend": {
@@ -243,7 +243,7 @@ class ActChartAdmin(admin.PageAdmin):
                                                             "data": "${data?.series?.[0]?.data || []}"
                                                         }]
                                                     },
-                                                    dataFilter="""config.title = data.title || {text: '上月贡献度排名-Person'};
+                                                    dataFilter="""config.title = data.title || {text: '当月贡献度排名-Manager'};
                                                                 config.tooltip = data.tooltip || {};
                                                                 config.legend = data.legend || {data: ['贡献次数']};
                                                                 config.xAxis = data.xAxis || {type: 'category', data: []};
@@ -265,39 +265,34 @@ class ActChartAdmin(admin.PageAdmin):
                                 Card(
                                     title="Monthly User Activity",
                                     body=[
+                                        # 修改第三行右侧栏的图表，替换重复的/actlog/monthly_activities调用
                                         amis.Service(
-                                            api="/actlog/contribution_by_manager",
+                                            api="/actlog/contribution_by_manager_last_month",  # 使用贡献度数据替代
                                             body=[
                                                 Chart(
                                                     height="180px",
                                                     config={
-                                                        "title": {
-                                                            "text": "上月贡献度排名-Person"
-                                                        },
+                                                        "title": {"text": "上月贡献度排名-Manager"},
                                                         "tooltip": {},
-                                                        "legend": {
-                                                            "data": ["贡献次数"]
-                                                        },
+                                                        "legend": {"data": ["贡献次数"]},
                                                         "xAxis": {
                                                             "type": "category",
                                                             "data": "${data?.xAxis?.data || []}"
                                                         },
-                                                        "yAxis": {
-                                                            "type": "value"
-                                                        },
+                                                        "yAxis": {"type": "value"},
                                                         "series": [{
                                                             "name": "贡献次数",
                                                             "type": "bar",
                                                             "data": "${data?.series?.[0]?.data || []}"
                                                         }]
                                                     },
-                                                    dataFilter="""config.title = data.title || {text: '上月贡献度排名-Person'};
-                                                                config.tooltip = data.tooltip || {};
-                                                                config.legend = data.legend || {data: ['贡献次数']};
-                                                                config.xAxis = data.xAxis || {type: 'category', data: []};
-                                                                config.yAxis = data.yAxis || {};
-                                                                config.series = data.series || [{name: '贡献次数', type: 'bar', data: []}];
-                                                                return config;"""
+                                                    dataFilter="""config.title = data.title || {text: '上月贡献度排名-Manager'};
+                                                            config.tooltip = data.tooltip || {};
+                                                            config.legend = data.legend || {data: ['贡献次数']};
+                                                            config.xAxis = data.xAxis || {type: 'category', data: []};
+                                                            config.yAxis = data.yAxis || {};
+                                                            config.series = data.series || [{name: '贡献次数', type: 'bar', data: []}];
+                                                            return config;"""
                                                 )
                                             ]
                                         )

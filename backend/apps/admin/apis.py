@@ -84,53 +84,46 @@ async def test_async_db(sess: AsyncSess):
     # do something
     pass
 
-@router.get("/actlog/daily_activities", summary="获取一个月内每天活动统计数据")
-async def get_daily_activities(sess: SyncSess):
-    """统计一个月内每天record_count总数，返回给折线图使用的数据格式"""
+@router.get("/actlog/monthly_activities", summary="获取近12个月的每月活动统计数据")
+async def get_monthly_activities(sess: SyncSess):
+    """统计本月起往前推12个月，每月记录总数，用于柱状图显示"""
     returnobj = {
         "status": 0,
         "msg": "ok",
         "data": {
-            "date": [],
-            "line": []
+            "month": [],
+            "bar": []
         }
     }
     try:
-        # SQL查询：统计一个月内每天的记录总数
+        # 统计本月起往前推12个月每月的总浏览量
         query = text("""
-            SELECT action_date, SUM(record_count) as total_count
+            SELECT DATE_FORMAT(action_date, '%Y-%m') as month, SUM(record_count) as total_count
             FROM actlog_daily_stats_user
-            WHERE action_date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
-            GROUP BY action_date
-            ORDER BY action_date ASC
+            WHERE action_date >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 11 MONTH), '%Y-%m-01')
+              AND action_date <= LAST_DAY(CURDATE())
+            GROUP BY month
+            ORDER BY month ASC
         """)
         result = await site.engine.execute(query)
         rows = result.fetchall()
-        
-        # 提取日期和对应的总数
-        dates = []
+        months = []
         counts = []
         for row in rows:
-            dates.append(row.action_date.strftime('%Y-%m-%d'))  # 转换日期格式
-            counts.append(int(row.total_count))  # 确保是整数类型
-        
-        # 如果line数组长度小于2，返回示例数据
-        if len(returnobj["data"]["line"]) < 2:
-            returnobj["data"]["date"] = ["2025-09-24", "2025-09-25", "2025-09-26", "2025-09-27"]
-            returnobj["data"]["line"] = [20, 30, 40, 25]
+            months.append(row.month)
+            counts.append(int(row.total_count))
+        # 如果数据不足1个月，返回示例数据
+        if len(months) < 1:
+            returnobj["data"]["month"] = ["2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03"]
+            returnobj["data"]["bar"] = [99, 122, 88, 110, 92, 101]
         else:
-            returnobj["data"]["date"] = dates
-            returnobj["data"]["line"] = counts
-        
-        #returnobj["data"]["date"] = ["2025-09-24", "2025-09-25", "2025-09-26"]
-        #returnobj["data"]["line"] = [20, 30, 30]
-        
+            returnobj["data"]["month"] = months
+            returnobj["data"]["bar"] = counts
     except Exception as exp:
-        print('Exception at apis.get_daily_activities() %s ' % exp)
+        print('Exception at apis.get_monthly_activities() %s ' % exp)
         traceback.print_exc()
         returnobj["status"] = 1
         returnobj["msg"] = f"查询失败: {str(exp)}"
-    
     return returnobj
 
 # from fastapi_user_authuser_auth.globals.deps import CurrentUser
@@ -140,71 +133,14 @@ async def get_daily_activities(sess: SyncSess):
 #     return user
 
 
-@router.get("/actlog/activity_by_person", summary="获取本月按用户分类的浏览量统计数据")
-async def get_activity_by_person(sess: SyncSess):
-    """统计本月按act_username分类的record_count总和排名前10的记录，返回给条形图使用的数据格式"""
-    returnobj = {
-        "status": 0,
-        "msg": "ok",
-        "data": {
-            "title": {"text": "上月浏览量排名-Person"},
-            "tooltip": {},
-            "legend": {"data": ["浏览次数"]},
-            "xAxis": {"data": []},
-            "yAxis": {},
-            "series": [{"name": "浏览次数", "type": "bar", "data": []}]
-        }
-    }
-    try:
-        # SQL查询：统计本月按用户分类的活动总数，取前10名
-        query = text("""
-            SELECT act_username, SUM(record_count) as total_count
-            FROM actlog_daily_stats_user
-            WHERE action_date >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
-              AND action_date <= LAST_DAY(CURDATE())
-            GROUP BY act_username
-            ORDER BY total_count DESC
-            LIMIT 10
-        """)
-        result = await site.engine.execute(query)
-        rows = result.fetchall()
-        
-        # 提取用户名和对应的活动总数
-        usernames = []
-        counts = []
-        for row in rows:
-            usernames.append(row.act_username)
-            counts.append(int(row.total_count))  # 确保是整数类型
-        
-        # 设置返回数据
-        #returnobj["data"]["xAxis"]["data"] = usernames
-        #returnobj["data"]["series"][0]["data"] = counts
-        
-        # 如果数据长度小于2，返回示例数据
-        if len(usernames) < 2:
-            returnobj["data"]["xAxis"]["data"] = ["用户1", "用户2", "用户3", "用户4", "用户5"]
-            returnobj["data"]["series"][0]["data"] = [84, 53, 28, 15, 11]
-        else:
-            returnobj["data"]["xAxis"]["data"] = usernames
-            returnobj["data"]["series"][0]["data"] = counts
-
-            
-    except Exception as exp:
-        print('Exception at apis.get_activity_by_person() %s ' % exp)
-        traceback.print_exc()
-        returnobj["status"] = 1
-        returnobj["msg"] = f"查询失败: {str(exp)}"
-    
-    return returnobj
-
-@router.get("/actlog/activity_by_manager", summary="获取本月按经理分类的浏览量统计数据")
+@router.get("/actlog/activity_by_manager", summary="获取当月按经理分类的浏览量统计数据")
 async def get_activity_by_manager(sess: SyncSess):
-    """统计本月按act_manager分类的record_count总和排名前10的记录，返回给条形图使用的数据格式"""
+    """统计当月按act_manager分类的record_count总和排名前10的记录，返回给条形图使用的数据格式"""
     returnobj = {
         "status": 0,
         "msg": "ok",
         "data": {
-            "title": {"text": "上月浏览量排名-Manager"},
+            "title": {"text": "当月浏览量排名-Manager"},
             "tooltip": {},
             "legend": {"data": ["浏览次数"]},
             "xAxis": {"data": []},
@@ -213,12 +149,12 @@ async def get_activity_by_manager(sess: SyncSess):
         }
     }
     try:
-        # SQL查询：统计本月按经理分类的活动总数，取前10名
+        # SQL查询：统计当月按经理分类的活动总数，取前10名
         query = text("""
             SELECT act_manager, SUM(record_count) as total_count
             FROM actlog_daily_stats_user
             WHERE action_date >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
-              AND action_date <= LAST_DAY(CURDATE())
+              AND action_date <= CURDATE()
             GROUP BY act_manager
             ORDER BY total_count DESC
             LIMIT 10
@@ -234,7 +170,7 @@ async def get_activity_by_manager(sess: SyncSess):
             counts.append(int(row.total_count))  # 确保是整数类型
         
         # 如果数据长度小于2，返回示例数据
-        if len(managers) < 2:
+        if len(managers) < 1:
             returnobj["data"]["xAxis"]["data"] = ["经理1", "经理2", "经理3", "经理4", "经理5"]
             returnobj["data"]["series"][0]["data"] = [94, 63, 48, 35, 21]
         else:
@@ -250,68 +186,14 @@ async def get_activity_by_manager(sess: SyncSess):
     
     return returnobj
 
-@router.get("/actlog/contribution_by_person", summary="获取本月按用户分类的贡献度统计数据")
-async def get_contribution_by_person(sess: SyncSess):
-    """统计本月按act_username分类的创建/更新操作记录总和排名前10的记录，返回给条形图使用的数据格式"""
-    returnobj = {
-        "status": 0,
-        "msg": "ok",
-        "data": {
-            "title": {"text": "上月贡献度排名-Person"},
-            "tooltip": {},
-            "legend": {"data": ["贡献次数"]},
-            "xAxis": {"data": []},
-            "yAxis": {},
-            "series": [{"name": "贡献次数", "type": "bar", "data": []}]
-        }
-    }
-    try:
-        # SQL查询：统计本月按用户分类的创建/更新操作总数，取前10名
-        query = text("""
-            SELECT act_username, SUM(record_count) as total_count
-            FROM actlog_daily_stats_user
-            WHERE action_date >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
-              AND action_date <= LAST_DAY(CURDATE())
-              AND (action_type LIKE 'create%' OR action_type LIKE 'update%')
-            GROUP BY act_username
-            ORDER BY total_count DESC
-            LIMIT 10
-        """)
-        result = await site.engine.execute(query)
-        rows = result.fetchall()
-        
-        # 提取用户名和对应的贡献总数
-        usernames = []
-        counts = []
-        for row in rows:
-            usernames.append(row.act_username)
-            counts.append(int(row.total_count))  # 确保是整数类型
-        
-        # 如果数据长度小于2，返回示例数据
-        if len(usernames) < 2:
-            returnobj["data"]["xAxis"]["data"] = ["用户1", "用户2", "用户3", "用户4", "用户5"]
-            returnobj["data"]["series"][0]["data"] = [64, 43, 28, 15, 11]
-        else:
-            returnobj["data"]["xAxis"]["data"] = usernames
-            returnobj["data"]["series"][0]["data"] = counts
-
-            
-    except Exception as exp:
-        print('Exception at apis.get_contribution_by_person() %s ' % exp)
-        traceback.print_exc()
-        returnobj["status"] = 1
-        returnobj["msg"] = f"查询失败: {str(exp)}"
-    
-    return returnobj
-
-@router.get("/actlog/contribution_by_manager", summary="获取本月按经理分类的贡献度统计数据")
+@router.get("/actlog/contribution_by_manager", summary="获取当月按经理分类的贡献度统计数据")
 async def get_contribution_by_manager(sess: SyncSess):
-    """统计本月按act_manager分类的创建/更新操作记录总和排名前10的记录，返回给条形图使用的数据格式"""
+    """统计当月按act_manager分类的创建/更新操作记录总和排名前10的记录，返回给条形图使用的数据格式"""
     returnobj = {
         "status": 0,
         "msg": "ok",
         "data": {
-            "title": {"text": "上月贡献度排名-Manager"},
+            "title": {"text": "当月贡献度排名-Manager"},
             "tooltip": {},
             "legend": {"data": ["贡献次数"]},
             "xAxis": {"data": []},
@@ -320,12 +202,12 @@ async def get_contribution_by_manager(sess: SyncSess):
         }
     }
     try:
-        # SQL查询：统计本月按经理分类的创建/更新操作总数，取前10名
+        # SQL查询：统计当月按经理分类的创建/更新操作总数，取前10名
         query = text("""
             SELECT act_manager, SUM(record_count) as total_count
             FROM actlog_daily_stats_user
             WHERE action_date >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
-              AND action_date <= LAST_DAY(CURDATE())
+              AND action_date <= CURDATE()
               AND (action_type LIKE 'create%' OR action_type LIKE 'update%')
             GROUP BY act_manager
             ORDER BY total_count DESC
@@ -342,7 +224,7 @@ async def get_contribution_by_manager(sess: SyncSess):
             counts.append(int(row.total_count))  # 确保是整数类型
         
         # 如果数据长度小于2，返回示例数据
-        if len(managers) < 2:
+        if len(managers) < 1:
             returnobj["data"]["xAxis"]["data"] = ["经理1", "经理2", "经理3", "经理4", "经理5"]
             returnobj["data"]["series"][0]["data"] = [74, 53, 38, 25, 11]
         else:
@@ -357,7 +239,6 @@ async def get_contribution_by_manager(sess: SyncSess):
         returnobj["msg"] = f"查询失败: {str(exp)}"
     
     return returnobj
-
 
 @router.get("/actlog/activity_total", summary="获取所有活动记录总数")
 async def get_activity_total(sess: SyncSess):
@@ -388,6 +269,225 @@ async def get_activity_total(sess: SyncSess):
         
     except Exception as exp:
         print('Exception at apis.get_activity_total() %s ' % exp)
+        traceback.print_exc()
+        returnobj["status"] = 1
+        returnobj["msg"] = f"查询失败: {str(exp)}"
+    
+    return returnobj
+
+# 以下是新增的四个接口：当月（本月1日到今天）、上自然月的浏览量和贡献度统计
+
+@router.get("/actlog/activity_by_manager_current_month", summary="获取当月（本月1日到今天）按经理分类的浏览量统计数据")
+async def get_activity_by_manager_current_month(sess: SyncSess):
+    """统计当月（本月1日到今天）按act_manager分类的record_count总和排名前10的记录，返回给条形图使用的数据格式"""
+    returnobj = {
+        "status": 0,
+        "msg": "ok",
+        "data": {
+            "title": {"text": "当月浏览量排名-Manager"},
+            "tooltip": {},
+            "legend": {"data": ["浏览次数"]},
+            "xAxis": {"data": []},
+            "yAxis": {},
+            "series": [{"name": "浏览次数", "type": "bar", "data": []}]
+        }
+    }
+    try:
+        # SQL查询：统计当月（本月1日到今天）按经理分类的活动总数，取前10名
+        query = text("""
+            SELECT act_manager, SUM(record_count) as total_count
+            FROM actlog_daily_stats_user
+            WHERE action_date >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
+              AND action_date <= CURDATE()
+            GROUP BY act_manager
+            ORDER BY total_count DESC
+            LIMIT 10
+        """)
+        result = await site.engine.execute(query)
+        rows = result.fetchall()
+        log.debug(f"get_activity_by_manager_current_month() rows: {rows}")
+        
+        # 提取经理名和对应的活动总数
+        managers = []
+        counts = []
+        for row in rows:
+            managers.append(row.act_manager)
+            counts.append(int(row.total_count))  # 确保是整数类型
+        
+        # 如果数据长度小于2，返回示例数据
+        if len(managers) < 1:
+            returnobj["data"]["xAxis"]["data"] = ["经理1", "经理2", "经理3", "经理4", "经理5"]
+            returnobj["data"]["series"][0]["data"] = [94, 63, 48, 35, 21]
+        else:
+            returnobj["data"]["xAxis"]["data"] = managers
+            returnobj["data"]["series"][0]["data"] = counts
+
+            
+    except Exception as exp:
+        print('Exception at apis.get_activity_by_manager_current_month() %s ' % exp)
+        traceback.print_exc()
+        returnobj["status"] = 1
+        returnobj["msg"] = f"查询失败: {str(exp)}"
+    
+    return returnobj
+
+@router.get("/actlog/activity_by_manager_last_month", summary="获取上自然月按经理分类的浏览量统计数据")
+async def get_activity_by_manager_last_month(sess: SyncSess):
+    """统计上自然月按act_manager分类的record_count总和排名前10的记录，返回给条形图使用的数据格式"""
+    returnobj = {
+        "status": 0,
+        "msg": "ok",
+        "data": {
+            "title": {"text": "上月浏览量排名-Manager"},
+            "tooltip": {},
+            "legend": {"data": ["浏览次数"]},
+            "xAxis": {"data": []},
+            "yAxis": {},
+            "series": [{"name": "浏览次数", "type": "bar", "data": []}]
+        }
+    }
+    try:
+        # SQL查询：统计上自然月按经理分类的活动总数，取前10名
+        query = text("""
+            SELECT act_manager, SUM(record_count) as total_count
+            FROM actlog_daily_stats_user
+            WHERE action_date >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-01')
+              AND action_date <= LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH))
+            GROUP BY act_manager
+            ORDER BY total_count DESC
+            LIMIT 10
+        """)
+        result = await site.engine.execute(query)
+        rows = result.fetchall()
+        log.debug(f"get_activity_by_manager_last_month() rows: {rows}")
+        
+        # 提取经理名和对应的活动总数
+        managers = []
+        counts = []
+        for row in rows:
+            managers.append(row.act_manager)
+            counts.append(int(row.total_count))  # 确保是整数类型
+        
+        # 如果数据长度小于2，返回示例数据
+        if len(managers) < 1:
+            returnobj["data"]["xAxis"]["data"] = ["经理1", "经理2", "经理3", "经理4", "经理5"]
+            returnobj["data"]["series"][0]["data"] = [94, 63, 48, 35, 21]
+        else:
+            returnobj["data"]["xAxis"]["data"] = managers
+            returnobj["data"]["series"][0]["data"] = counts
+
+            
+    except Exception as exp:
+        print('Exception at apis.get_activity_by_manager_last_month() %s ' % exp)
+        traceback.print_exc()
+        returnobj["status"] = 1
+        returnobj["msg"] = f"查询失败: {str(exp)}"
+    
+    return returnobj
+
+@router.get("/actlog/contribution_by_manager_current_month", summary="获取当月（本月1日到今天）按经理分类的贡献度统计数据")
+async def get_contribution_by_manager_current_month(sess: SyncSess):
+    """统计当月（本月1日到今天）按act_manager分类的创建/更新操作记录总和排名前10的记录，返回给条形图使用的数据格式"""
+    returnobj = {
+        "status": 0,
+        "msg": "ok",
+        "data": {
+            "title": {"text": "当月贡献度排名-Manager"},
+            "tooltip": {},
+            "legend": {"data": ["贡献次数"]},
+            "xAxis": {"data": []},
+            "yAxis": {},
+            "series": [{"name": "贡献次数", "type": "bar", "data": []}]
+        }
+    }
+    try:
+        # SQL查询：统计当月（本月1日到今天）按经理分类的创建/更新操作总数，取前10名
+        query = text("""
+            SELECT act_manager, SUM(record_count) as total_count
+            FROM actlog_daily_stats_user
+            WHERE action_date >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
+              AND action_date <= CURDATE()
+              AND (action_type LIKE 'create%' OR action_type LIKE 'update%')
+            GROUP BY act_manager
+            ORDER BY total_count DESC
+            LIMIT 10
+        """)
+        result = await site.engine.execute(query)
+        rows = result.fetchall()
+        log.debug(f"get_contribution_by_manager_current_month() rows: {rows}")
+        
+        # 提取经理名和对应的贡献总数
+        managers = []
+        counts = []
+        for row in rows:
+            managers.append(row.act_manager)
+            counts.append(int(row.total_count))  # 确保是整数类型
+        
+        # 如果数据长度小于2，返回示例数据
+        if len(managers) < 1:
+            returnobj["data"]["xAxis"]["data"] = ["经理1", "经理2", "经理3", "经理4", "经理5"]
+            returnobj["data"]["series"][0]["data"] = [74, 53, 38, 25, 11]
+        else:
+            returnobj["data"]["xAxis"]["data"] = managers
+            returnobj["data"]["series"][0]["data"] = counts
+
+            
+    except Exception as exp:
+        print('Exception at apis.get_contribution_by_manager_current_month() %s ' % exp)
+        traceback.print_exc()
+        returnobj["status"] = 1
+        returnobj["msg"] = f"查询失败: {str(exp)}"
+    
+    return returnobj
+
+@router.get("/actlog/contribution_by_manager_last_month", summary="获取上自然月按经理分类的贡献度统计数据")
+async def get_contribution_by_manager_last_month(sess: SyncSess):
+    """统计上自然月按act_manager分类的创建/更新操作记录总和排名前10的记录，返回给条形图使用的数据格式"""
+    returnobj = {
+        "status": 0,
+        "msg": "ok",
+        "data": {
+            "title": {"text": "上月贡献度排名-Manager"},
+            "tooltip": {},
+            "legend": {"data": ["贡献次数"]},
+            "xAxis": {"data": []},
+            "yAxis": {},
+            "series": [{"name": "贡献次数", "type": "bar", "data": []}]
+        }
+    }
+    try:
+        # SQL查询：统计上自然月按经理分类的创建/更新操作总数，取前10名
+        query = text("""
+            SELECT act_manager, SUM(record_count) as total_count
+            FROM actlog_daily_stats_user
+            WHERE action_date >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-01')
+              AND action_date <= LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH))
+              AND (action_type LIKE 'create%' OR action_type LIKE 'update%')
+            GROUP BY act_manager
+            ORDER BY total_count DESC
+            LIMIT 10
+        """)
+        result = await site.engine.execute(query)
+        rows = result.fetchall()
+        log.debug(f"get_contribution_by_manager_last_month() rows: {rows}")
+        
+        # 提取经理名和对应的贡献总数
+        managers = []
+        counts = []
+        for row in rows:
+            managers.append(row.act_manager)
+            counts.append(int(row.total_count))  # 确保是整数类型
+        
+        # 如果数据长度小于2，返回示例数据
+        if len(managers) < 1:
+            returnobj["data"]["xAxis"]["data"] = ["经理1", "经理2", "经理3", "经理4", "经理5"]
+            returnobj["data"]["series"][0]["data"] = [74, 53, 38, 25, 11]
+        else:
+            returnobj["data"]["xAxis"]["data"] = managers
+            returnobj["data"]["series"][0]["data"] = counts
+            
+    except Exception as exp:
+        print('Exception at apis.get_contribution_by_manager_last_month() %s ' % exp)
         traceback.print_exc()
         returnobj["status"] = 1
         returnobj["msg"] = f"查询失败: {str(exp)}"

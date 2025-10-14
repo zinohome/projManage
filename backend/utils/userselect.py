@@ -148,6 +148,8 @@ if __name__ == '__main__':
     log.debug(userselect.get_nickname('952530'))
     log.debug(userselect.get_org('952530'))
     log.debug(userselect.get_manager('952530'))
+    log.debug(userselect.get_org('952530'))
+    log.debug(userselect.get_manager('952530'))
 
     log.debug(datetime.now().astimezone(ZoneInfo("Asia/Shanghai")).strftime("%Y-%m-%d %H:%M"))
 
