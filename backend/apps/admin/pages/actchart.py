@@ -67,36 +67,59 @@ class ActChartAdmin(admin.PageAdmin):
                             Card(
                                 title="Activity Overview",
                                 body=[
-                                    # 柱状图配置
-                                    amis.Service(
+                                    # 柱状图配置（直接由 Chart 发起请求，避免父子数据时序问题）
+                                    Chart(
                                         api="/actlog/monthly_activities",
-                                        body=[
-                                            Chart(
-                                                height="180px",
-                                                config={
-                                                    "title": {
-                                                    "text": "近12个月浏览量"
-                                                    },
-                                                    "tooltip": {},
-                                                    "legend": {
-                                                        "data": ["浏览次数"]
-                                                    },
-                                                    "xAxis": {
-                                                        "type": "category"
-                                                    },
-                                                    "yAxis": {
-                                                        "type": "value"
-                                                    },
-                                                    "series": [{
-                                                        "type": "bar"
-                                                    }]
-                                                },
-                                                dataFilter="""config.title.text = '近12个月浏览量';
-                                                            config.xAxis.data = data.month || [];
-                                                            config.series[0].data = data.bar || [];
-                                                            return config;"""
-                                            )
-                                        ]
+                                        height="180px",
+                                        replaceChartOption=False,
+                                        setOptionOpts={
+                                            "notMerge": False,
+                                            "lazyUpdate": False
+                                        },
+                                        interval=10000,
+                                        config={
+                                            "title": {
+                                            "text": "近12个月浏览量"
+                                            },
+                                            "tooltip": {},
+                                            "legend": {
+                                                "data": ["浏览次数"]
+                                            },
+                                            "xAxis": {
+                                                "type": "category"
+                                            },
+                                            "yAxis": {
+                                                "type": "value"
+                                            },
+                                            "series": [{
+                                                "type": "bar"
+                                            }]
+                                        },
+                                        dataFilter="""
+                                                    const d = data?.data || data || {};
+                                                    const xAxisData = Array.isArray(d.labels) ? d.labels : (Array.isArray(d.month) ? d.month : []);
+                                                    const seriesData = Array.isArray(d.values) ? d.values : (Array.isArray(d.bar) ? d.bar : []);
+                                                    const items = xAxisData.map((name, i) => ({ name, value: Number(seriesData?.[i] ?? 0) }));
+                                                    return {
+                                                      animation: true,
+                                                      animationDuration: 500,
+                                                      animationDurationUpdate: 500,
+                                                      animationEasing: 'cubicOut',
+                                                      animationEasingUpdate: 'cubicOut',
+                                                      title: { text: '近12个月浏览量' },
+                                                      tooltip: {},
+                                                      legend: { data: ['浏览次数'] },
+                                                      xAxis: { type: 'category', data: xAxisData },
+                                                      yAxis: { type: 'value' },
+                                                      series: [{
+                                                        id: 'bar-main',
+                                                        type: 'bar',
+                                                        data: items,
+                                                        animation: true,
+                                                        label: { show: true, position: 'top', formatter: ({ value }) => value },
+                                                        emphasis: { focus: 'series' }
+                                                      }]
+                                                    };"""
                                     )
                                 ]
                             )
@@ -115,41 +138,60 @@ class ActChartAdmin(admin.PageAdmin):
                                 Card(
                                     title="Monthly User Activity",
                                     body=[
-                                        amis.Service(
+                                        Chart(
                                             api="/actlog/activity_by_manager_current_month",
-                                            body=[
-                                                Chart(
-                                                    height="180px",
-                                                    config={
-                                                        "title": {
-                                                            "text": "当月浏览量排名-Manager"
-                                                        },
-                                                        "tooltip": {},
-                                                        "legend": {
-                                                            "data": ["浏览次数"]
-                                                        },
-                                                        "xAxis": {
-                                                            "type": "category",
-                                                            "data": "${data?.xAxis?.data || []}"
-                                                        },
-                                                        "yAxis": {
-                                                            "type": "value"
-                                                        },
-                                                        "series": [{
-                                                            "name": "浏览次数",
-                                                            "type": "bar",
-                                                            "data": "${data?.series?.[0]?.data || []}"
-                                                        }]
-                                                    },
-                                                    dataFilter="""config.title = data.title || {text: '当月浏览量排名-Manager'};
-                                                                config.tooltip = data.tooltip || {};
-                                                                config.legend = data.legend || {data: ['浏览次数']};
-                                                                config.xAxis = data.xAxis || {type: 'category', data: []};
-                                                                config.yAxis = data.yAxis || {};
-                                                                config.series = data.series || [{name: '浏览次数', type: 'bar', data: []}];
-                                                                return config;"""
-                                                )
-                                            ]
+                                            height="180px",
+                                            replaceChartOption=False,
+                                            setOptionOpts={
+                                                "notMerge": False,
+                                                "lazyUpdate": False
+                                            },
+                                            interval=12000,
+                                            config={
+                                                "title": {
+                                                    "text": "当月浏览量排名-Manager"
+                                                },
+                                                "tooltip": {},
+                                                "legend": {
+                                                    "data": ["浏览次数"]
+                                                },
+                                                "xAxis": {
+                                                    "type": "category"
+                                                },
+                                                "yAxis": {
+                                                    "type": "value"
+                                                },
+                                                "series": [{
+                                                    "name": "浏览次数",
+                                                    "type": "bar"
+                                                }]
+                                            },
+                                            dataFilter="""
+                                                        const d = data?.data || data || {};
+                                                        const xAxis = Array.isArray(d.labels) ? d.labels : (d.xAxis && Array.isArray(d.xAxis.data) ? d.xAxis.data : []);
+                                                        const series0 = Array.isArray(d.values) ? d.values : (d.series && Array.isArray(d.series) && Array.isArray(d.series[0]?.data) ? d.series[0].data : []);
+                                                        const items = xAxis.map((name, i) => ({ name, value: Number(series0?.[i] ?? 0) }));
+                                                        return {
+                                                          animation: true,
+                                                          animationDuration: 500,
+                                                          animationDurationUpdate: 500,
+                                                          animationEasing: 'cubicOut',
+                                                          animationEasingUpdate: 'cubicOut',
+                                                          title: d.title || { text: '当月浏览量排名-Manager' },
+                                                          tooltip: d.tooltip || {},
+                                                          legend: d.legend || { data: ['浏览次数'] },
+                                                          xAxis: { type: 'category', data: xAxis },
+                                                          yAxis: d.yAxis || {},
+                                                          series: [{
+                                                            id: 'bar-main',
+                                                            name: '浏览次数',
+                                                            type: 'bar',
+                                                            data: items,
+                                                            animation: true,
+                                                            label: { show: true, position: 'top', formatter: ({ value }) => value },
+                                                            emphasis: { focus: 'series' }
+                                                          }]
+                                                        };"""
                                         )
                                     ]
                                 )
@@ -163,41 +205,60 @@ class ActChartAdmin(admin.PageAdmin):
                                 Card(
                                     title="Monthly User Activity",
                                     body=[
-                                        amis.Service(
+                                        Chart(
                                             api="/actlog/activity_by_manager_last_month",
-                                            body=[
-                                                Chart(
-                                                    height="180px",
-                                                    config={
-                                                        "title": {
-                                                            "text": "上月浏览量排名-Manager"
-                                                        },
-                                                        "tooltip": {},
-                                                        "legend": {
-                                                            "data": ["浏览次数"]
-                                                        },
-                                                        "xAxis": {
-                                                            "type": "category",
-                                                            "data": "${data?.xAxis?.data || []}"
-                                                        },
-                                                        "yAxis": {
-                                                            "type": "value"
-                                                        },
-                                                        "series": [{
-                                                            "name": "浏览次数",
-                                                            "type": "bar",
-                                                            "data": "${data?.series?.[0]?.data || []}"
-                                                        }]
-                                                    },
-                                                    dataFilter="""config.title = data.title || {text: '上月浏览量排名-Manager'};
-                                                                config.tooltip = data.tooltip || {};
-                                                                config.legend = data.legend || {data: ['浏览次数']};
-                                                                config.xAxis = data.xAxis || {type: 'category', data: []};
-                                                                config.yAxis = data.yAxis || {};
-                                                                config.series = data.series || [{name: '浏览次数', type: 'bar', data: []}];
-                                                                return config;"""
-                                                )
-                                            ]
+                                            height="180px",
+                                            replaceChartOption=False,
+                                            setOptionOpts={
+                                                "notMerge": False,
+                                                "lazyUpdate": False
+                                            },
+                                            interval=15000,
+                                            config={
+                                                "title": {
+                                                    "text": "上月浏览量排名-Manager"
+                                                },
+                                                "tooltip": {},
+                                                "legend": {
+                                                    "data": ["浏览次数"]
+                                                },
+                                                "xAxis": {
+                                                    "type": "category"
+                                                },
+                                                "yAxis": {
+                                                    "type": "value"
+                                                },
+                                                "series": [{
+                                                    "name": "浏览次数",
+                                                    "type": "bar"
+                                                }]
+                                            },
+                                            dataFilter="""
+                                                        const d = data?.data || data || {};
+                                                        const xAxis = Array.isArray(d.labels) ? d.labels : (d.xAxis && Array.isArray(d.xAxis.data) ? d.xAxis.data : []);
+                                                        const series0 = Array.isArray(d.values) ? d.values : (d.series && Array.isArray(d.series) && Array.isArray(d.series[0]?.data) ? d.series[0].data : []);
+                                                        const items = xAxis.map((name, i) => ({ name, value: Number(series0?.[i] ?? 0) }));
+                                                        return {
+                                                          animation: true,
+                                                          animationDuration: 500,
+                                                          animationDurationUpdate: 500,
+                                                          animationEasing: 'cubicOut',
+                                                          animationEasingUpdate: 'cubicOut',
+                                                          title: d.title || { text: '上月浏览量排名-Manager' },
+                                                          tooltip: d.tooltip || {},
+                                                          legend: d.legend || { data: ['浏览次数'] },
+                                                          xAxis: { type: 'category', data: xAxis },
+                                                          yAxis: d.yAxis || {},
+                                                          series: [{
+                                                            id: 'bar-main',
+                                                            name: '浏览次数',
+                                                            type: 'bar',
+                                                            data: items,
+                                                            animation: true,
+                                                            label: { show: true, position: 'top', formatter: ({ value }) => value },
+                                                            emphasis: { focus: 'series' }
+                                                          }]
+                                                        };"""
                                         )
                                     ]
                                 )
@@ -217,41 +278,60 @@ class ActChartAdmin(admin.PageAdmin):
                                 Card(
                                     title="Monthly User Activity",
                                     body=[
-                                        amis.Service(
+                                        Chart(
                                             api="/actlog/contribution_by_manager_current_month",
-                                            body=[
-                                                Chart(
-                                                    height="180px",
-                                                    config={
-                                                        "title": {
-                                                            "text": "当月贡献度排名-Manager"
-                                                        },
-                                                        "tooltip": {},
-                                                        "legend": {
-                                                            "data": ["贡献次数"]
-                                                        },
-                                                        "xAxis": {
-                                                            "type": "category",
-                                                            "data": "${data?.xAxis?.data || []}"
-                                                        },
-                                                        "yAxis": {
-                                                            "type": "value"
-                                                        },
-                                                        "series": [{
-                                                            "name": "贡献次数",
-                                                            "type": "bar",
-                                                            "data": "${data?.series?.[0]?.data || []}"
-                                                        }]
-                                                    },
-                                                    dataFilter="""config.title = data.title || {text: '当月贡献度排名-Manager'};
-                                                                config.tooltip = data.tooltip || {};
-                                                                config.legend = data.legend || {data: ['贡献次数']};
-                                                                config.xAxis = data.xAxis || {type: 'category', data: []};
-                                                                config.yAxis = data.yAxis || {};
-                                                                config.series = data.series || [{name: '贡献次数', type: 'bar', data: []}];
-                                                                return config;"""
-                                                )
-                                            ]
+                                            height="180px",
+                                            replaceChartOption=False,
+                                            setOptionOpts={
+                                                "notMerge": False,
+                                                "lazyUpdate": False
+                                            },
+                                            interval=18000,
+                                            config={
+                                                "title": {
+                                                    "text": "当月贡献度排名-Manager"
+                                                },
+                                                "tooltip": {},
+                                                "legend": {
+                                                    "data": ["贡献次数"]
+                                                },
+                                                "xAxis": {
+                                                    "type": "category"
+                                                },
+                                                "yAxis": {
+                                                    "type": "value"
+                                                },
+                                                "series": [{
+                                                    "name": "贡献次数",
+                                                    "type": "bar"
+                                                }]
+                                            },
+                                            dataFilter="""
+                                                        const d = data?.data || data || {};
+                                                        const xAxis = Array.isArray(d.labels) ? d.labels : (d.xAxis && Array.isArray(d.xAxis.data) ? d.xAxis.data : []);
+                                                        const series0 = Array.isArray(d.values) ? d.values : (d.series && Array.isArray(d.series) && Array.isArray(d.series[0]?.data) ? d.series[0].data : []);
+                                                        const items = xAxis.map((name, i) => ({ name, value: Number(series0?.[i] ?? 0) }));
+                                                        return {
+                                                          animation: true,
+                                                          animationDuration: 500,
+                                                          animationDurationUpdate: 500,
+                                                          animationEasing: 'cubicOut',
+                                                          animationEasingUpdate: 'cubicOut',
+                                                          title: d.title || { text: '当月贡献度排名-Manager' },
+                                                          tooltip: d.tooltip || {},
+                                                          legend: d.legend || { data: ['贡献次数'] },
+                                                          xAxis: { type: 'category', data: xAxis },
+                                                          yAxis: d.yAxis || {},
+                                                          series: [{
+                                                            id: 'bar-main',
+                                                            name: '贡献次数',
+                                                            type: 'bar',
+                                                            data: items,
+                                                            animation: true,
+                                                            label: { show: true, position: 'top', formatter: ({ value }) => value },
+                                                            emphasis: { focus: 'series' }
+                                                          }]
+                                                        };"""
                                         )
                                     ]
                                 )
@@ -265,36 +345,55 @@ class ActChartAdmin(admin.PageAdmin):
                                 Card(
                                     title="Monthly User Activity",
                                     body=[
-                                        # 修改第三行右侧栏的图表，替换重复的/actlog/monthly_activities调用
-                                        amis.Service(
-                                            api="/actlog/contribution_by_manager_last_month",  # 使用贡献度数据替代
-                                            body=[
-                                                Chart(
-                                                    height="180px",
-                                                    config={
-                                                        "title": {"text": "上月贡献度排名-Manager"},
-                                                        "tooltip": {},
-                                                        "legend": {"data": ["贡献次数"]},
-                                                        "xAxis": {
-                                                            "type": "category",
-                                                            "data": "${data?.xAxis?.data || []}"
-                                                        },
-                                                        "yAxis": {"type": "value"},
-                                                        "series": [{
-                                                            "name": "贡献次数",
-                                                            "type": "bar",
-                                                            "data": "${data?.series?.[0]?.data || []}"
-                                                        }]
-                                                    },
-                                                    dataFilter="""config.title = data.title || {text: '上月贡献度排名-Manager'};
-                                                            config.tooltip = data.tooltip || {};
-                                                            config.legend = data.legend || {data: ['贡献次数']};
-                                                            config.xAxis = data.xAxis || {type: 'category', data: []};
-                                                            config.yAxis = data.yAxis || {};
-                                                            config.series = data.series || [{name: '贡献次数', type: 'bar', data: []}];
-                                                            return config;"""
-                                                )
-                                            ]
+                                        # 修改第三行右侧栏的图表：直接由 Chart 发起请求
+                                        Chart(
+                                            api="/actlog/contribution_by_manager_last_month",
+                                            height="180px",
+                                            replaceChartOption=False,
+                                            setOptionOpts={
+                                                "notMerge": False,
+                                                "lazyUpdate": False
+                                            },
+                                            interval=20000,
+                                            config={
+                                                "title": {"text": "上月贡献度排名-Manager"},
+                                                "tooltip": {},
+                                                "legend": {"data": ["贡献次数"]},
+                                                "xAxis": {
+                                                    "type": "category"
+                                                },
+                                                "yAxis": {"type": "value"},
+                                                "series": [{
+                                                    "name": "贡献次数",
+                                                    "type": "bar"
+                                                }]
+                                            },
+                                            dataFilter="""
+                                                    const d = data?.data || data || {};
+                                                    const xAxis = Array.isArray(d.labels) ? d.labels : (d.xAxis && Array.isArray(d.xAxis.data) ? d.xAxis.data : []);
+                                                    const series0 = Array.isArray(d.values) ? d.values : (d.series && Array.isArray(d.series) && Array.isArray(d.series[0]?.data) ? d.series[0].data : []);
+                                                    const items = xAxis.map((name, i) => ({ name, value: Number(series0?.[i] ?? 0) }));
+                                                    return {
+                                                      animation: true,
+                                                      animationDuration: 500,
+                                                      animationDurationUpdate: 500,
+                                                      animationEasing: 'cubicOut',
+                                                      animationEasingUpdate: 'cubicOut',
+                                                      title: d.title || { text: '上月贡献度排名-Manager' },
+                                                      tooltip: d.tooltip || {},
+                                                      legend: d.legend || { data: ['贡献次数'] },
+                                                      xAxis: { type: 'category', data: xAxis },
+                                                      yAxis: d.yAxis || {},
+                                                      series: [{
+                                                        id: 'bar-main',
+                                                        name: '贡献次数',
+                                                        type: 'bar',
+                                                        data: items,
+                                                        animation: true,
+                                                        label: { show: true, position: 'top', formatter: ({ value }) => value },
+                                                        emphasis: { focus: 'series' }
+                                                      }]
+                                                    };"""
                                         )
                                     ]
                                 )

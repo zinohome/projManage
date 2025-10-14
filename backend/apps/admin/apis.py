@@ -169,11 +169,13 @@ async def get_activity_by_manager(sess: SyncSess):
             managers.append(row.act_manager)
             counts.append(int(row.total_count))  # 确保是整数类型
         
-        # 如果数据长度小于2，返回示例数据
-        if len(managers) < 1:
+        # 检查数据是否为空或长度不足，如果是则返回示例数据
+        if not rows or len(managers) < 1:
+            log.info(f"get_activity_by_manager_current_month(): 查询结果为空，返回示例数据")
             returnobj["data"]["xAxis"]["data"] = ["经理1", "经理2", "经理3", "经理4", "经理5"]
             returnobj["data"]["series"][0]["data"] = [94, 63, 48, 35, 21]
         else:
+            log.debug(f"get_activity_by_manager_current_month(): 查询到{len(managers)}条数据")
             returnobj["data"]["xAxis"]["data"] = managers
             returnobj["data"]["series"][0]["data"] = counts
 
@@ -223,11 +225,13 @@ async def get_contribution_by_manager(sess: SyncSess):
             managers.append(row.act_manager)
             counts.append(int(row.total_count))  # 确保是整数类型
         
-        # 如果数据长度小于2，返回示例数据
-        if len(managers) < 1:
+        # 检查数据是否为空或长度不足，如果是则返回示例数据
+        if not rows or len(managers) < 1:
+            log.info(f"get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据")
             returnobj["data"]["xAxis"]["data"] = ["经理1", "经理2", "经理3", "经理4", "经理5"]
             returnobj["data"]["series"][0]["data"] = [74, 53, 38, 25, 11]
         else:
+            log.debug(f"get_contribution_by_manager_current_month(): 查询到{len(managers)}条数据")
             returnobj["data"]["xAxis"]["data"] = managers
             returnobj["data"]["series"][0]["data"] = counts
 
@@ -277,20 +281,13 @@ async def get_activity_total(sess: SyncSess):
 
 # 以下是新增的四个接口：当月（本月1日到今天）、上自然月的浏览量和贡献度统计
 
-@router.get("/actlog/activity_by_manager_current_month", summary="获取当月（本月1日到今天）按经理分类的浏览量统计数据")
+@router.get("/actlog/activity_by_manager_current_month", summary="获取当月（本月1日到今天）按经理分类的浏览量统计数据（纯数据）")
 async def get_activity_by_manager_current_month(sess: SyncSess):
-    """统计当月（本月1日到今天）按act_manager分类的record_count总和排名前10的记录，返回给条形图使用的数据格式"""
+    """统计当月（本月1日到今天）按act_manager分类的record_count总和排名前10的记录，返回纯数据 labels/values"""
     returnobj = {
         "status": 0,
         "msg": "ok",
-        "data": {
-            "title": {"text": "当月浏览量排名-Manager"},
-            "tooltip": {},
-            "legend": {"data": ["浏览次数"]},
-            "xAxis": {"data": []},
-            "yAxis": {},
-            "series": [{"name": "浏览次数", "type": "bar", "data": []}]
-        }
+        "data": {"labels": [], "values": []}
     }
     try:
         # SQL查询：统计当月（本月1日到今天）按经理分类的活动总数，取前10名
@@ -314,13 +311,15 @@ async def get_activity_by_manager_current_month(sess: SyncSess):
             managers.append(row.act_manager)
             counts.append(int(row.total_count))  # 确保是整数类型
         
-        # 如果数据长度小于2，返回示例数据
-        if len(managers) < 1:
-            returnobj["data"]["xAxis"]["data"] = ["经理1", "经理2", "经理3", "经理4", "经理5"]
-            returnobj["data"]["series"][0]["data"] = [94, 63, 48, 35, 21]
+        # 检查数据是否为空或长度不足，如果是则返回示例数据
+        if not rows or len(managers) < 1:
+            log.info(f"get_activity_by_manager_current_month(): 查询结果为空，返回示例数据")
+            returnobj["data"]["labels"] = ["经理1", "经理2", "经理3", "经理4", "经理5"]
+            returnobj["data"]["values"] = [94, 63, 48, 35, 21]
         else:
-            returnobj["data"]["xAxis"]["data"] = managers
-            returnobj["data"]["series"][0]["data"] = counts
+            log.debug(f"get_activity_by_manager_current_month(): 查询到{len(managers)}条数据")
+            returnobj["data"]["labels"] = managers
+            returnobj["data"]["values"] = counts
 
             
     except Exception as exp:
@@ -331,20 +330,13 @@ async def get_activity_by_manager_current_month(sess: SyncSess):
     
     return returnobj
 
-@router.get("/actlog/activity_by_manager_last_month", summary="获取上自然月按经理分类的浏览量统计数据")
+@router.get("/actlog/activity_by_manager_last_month", summary="获取上自然月按经理分类的浏览量统计数据（纯数据）")
 async def get_activity_by_manager_last_month(sess: SyncSess):
-    """统计上自然月按act_manager分类的record_count总和排名前10的记录，返回给条形图使用的数据格式"""
+    """统计上自然月按act_manager分类的record_count总和排名前10的记录，返回纯数据 labels/values"""
     returnobj = {
         "status": 0,
         "msg": "ok",
-        "data": {
-            "title": {"text": "上月浏览量排名-Manager"},
-            "tooltip": {},
-            "legend": {"data": ["浏览次数"]},
-            "xAxis": {"data": []},
-            "yAxis": {},
-            "series": [{"name": "浏览次数", "type": "bar", "data": []}]
-        }
+        "data": {"labels": [], "values": []}
     }
     try:
         # SQL查询：统计上自然月按经理分类的活动总数，取前10名
@@ -368,13 +360,15 @@ async def get_activity_by_manager_last_month(sess: SyncSess):
             managers.append(row.act_manager)
             counts.append(int(row.total_count))  # 确保是整数类型
         
-        # 如果数据长度小于2，返回示例数据
-        if len(managers) < 1:
-            returnobj["data"]["xAxis"]["data"] = ["经理1", "经理2", "经理3", "经理4", "经理5"]
-            returnobj["data"]["series"][0]["data"] = [94, 63, 48, 35, 21]
+        # 检查数据是否为空或长度不足，如果是则返回示例数据
+        if not rows or len(managers) < 1:
+            log.info(f"get_activity_by_manager_last_month(): 查询结果为空，返回示例数据")
+            returnobj["data"]["labels"] = ["经理1", "经理2", "经理3", "经理4", "经理5"]
+            returnobj["data"]["values"] = [94, 63, 48, 35, 21]
         else:
-            returnobj["data"]["xAxis"]["data"] = managers
-            returnobj["data"]["series"][0]["data"] = counts
+            log.debug(f"get_activity_by_manager_last_month(): 查询到{len(managers)}条数据")
+            returnobj["data"]["labels"] = managers
+            returnobj["data"]["values"] = counts
 
             
     except Exception as exp:
@@ -385,20 +379,13 @@ async def get_activity_by_manager_last_month(sess: SyncSess):
     
     return returnobj
 
-@router.get("/actlog/contribution_by_manager_current_month", summary="获取当月（本月1日到今天）按经理分类的贡献度统计数据")
+@router.get("/actlog/contribution_by_manager_current_month", summary="获取当月（本月1日到今天）按经理分类的贡献度统计数据（纯数据）")
 async def get_contribution_by_manager_current_month(sess: SyncSess):
-    """统计当月（本月1日到今天）按act_manager分类的创建/更新操作记录总和排名前10的记录，返回给条形图使用的数据格式"""
+    """统计当月（本月1日到今天）按act_manager分类的创建/更新操作记录总和排名前10的记录，返回纯数据 labels/values"""
     returnobj = {
         "status": 0,
         "msg": "ok",
-        "data": {
-            "title": {"text": "当月贡献度排名-Manager"},
-            "tooltip": {},
-            "legend": {"data": ["贡献次数"]},
-            "xAxis": {"data": []},
-            "yAxis": {},
-            "series": [{"name": "贡献次数", "type": "bar", "data": []}]
-        }
+        "data": {"labels": [], "values": []}
     }
     try:
         # SQL查询：统计当月（本月1日到今天）按经理分类的创建/更新操作总数，取前10名
@@ -423,13 +410,15 @@ async def get_contribution_by_manager_current_month(sess: SyncSess):
             managers.append(row.act_manager)
             counts.append(int(row.total_count))  # 确保是整数类型
         
-        # 如果数据长度小于2，返回示例数据
-        if len(managers) < 1:
-            returnobj["data"]["xAxis"]["data"] = ["经理1", "经理2", "经理3", "经理4", "经理5"]
-            returnobj["data"]["series"][0]["data"] = [74, 53, 38, 25, 11]
+        # 检查数据是否为空或长度不足，如果是则返回示例数据
+        if not rows or len(managers) < 1:
+            log.info(f"get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据")
+            returnobj["data"]["labels"] = ["经理1", "经理2", "经理3", "经理4", "经理5"]
+            returnobj["data"]["values"] = [74, 53, 38, 25, 11]
         else:
-            returnobj["data"]["xAxis"]["data"] = managers
-            returnobj["data"]["series"][0]["data"] = counts
+            log.debug(f"get_contribution_by_manager_current_month(): 查询到{len(managers)}条数据")
+            returnobj["data"]["labels"] = managers
+            returnobj["data"]["values"] = counts
 
             
     except Exception as exp:
@@ -440,20 +429,13 @@ async def get_contribution_by_manager_current_month(sess: SyncSess):
     
     return returnobj
 
-@router.get("/actlog/contribution_by_manager_last_month", summary="获取上自然月按经理分类的贡献度统计数据")
+@router.get("/actlog/contribution_by_manager_last_month", summary="获取上自然月按经理分类的贡献度统计数据（纯数据）")
 async def get_contribution_by_manager_last_month(sess: SyncSess):
-    """统计上自然月按act_manager分类的创建/更新操作记录总和排名前10的记录，返回给条形图使用的数据格式"""
+    """统计上自然月按act_manager分类的创建/更新操作记录总和排名前10的记录，返回纯数据 labels/values"""
     returnobj = {
         "status": 0,
         "msg": "ok",
-        "data": {
-            "title": {"text": "上月贡献度排名-Manager"},
-            "tooltip": {},
-            "legend": {"data": ["贡献次数"]},
-            "xAxis": {"data": []},
-            "yAxis": {},
-            "series": [{"name": "贡献次数", "type": "bar", "data": []}]
-        }
+        "data": {"labels": [], "values": []}
     }
     try:
         # SQL查询：统计上自然月按经理分类的创建/更新操作总数，取前10名
@@ -478,13 +460,15 @@ async def get_contribution_by_manager_last_month(sess: SyncSess):
             managers.append(row.act_manager)
             counts.append(int(row.total_count))  # 确保是整数类型
         
-        # 如果数据长度小于2，返回示例数据
-        if len(managers) < 1:
-            returnobj["data"]["xAxis"]["data"] = ["经理1", "经理2", "经理3", "经理4", "经理5"]
-            returnobj["data"]["series"][0]["data"] = [74, 53, 38, 25, 11]
+        # 检查数据是否为空或长度不足，如果是则返回示例数据
+        if not rows or len(managers) < 1:
+            log.info(f"get_contribution_by_manager_last_month(): 查询结果为空，返回示例数据")
+            returnobj["data"]["labels"] = ["经理1", "经理2", "经理3", "经理4", "经理5"]
+            returnobj["data"]["values"] = [74, 53, 38, 25, 11]
         else:
-            returnobj["data"]["xAxis"]["data"] = managers
-            returnobj["data"]["series"][0]["data"] = counts
+            log.debug(f"get_contribution_by_manager_last_month(): 查询到{len(managers)}条数据")
+            returnobj["data"]["labels"] = managers
+            returnobj["data"]["values"] = counts
             
     except Exception as exp:
         print('Exception at apis.get_contribution_by_manager_last_month() %s ' % exp)
