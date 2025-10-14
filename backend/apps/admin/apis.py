@@ -413,8 +413,8 @@ async def get_contribution_by_manager_current_month(sess: SyncSess):
         # 检查数据是否为空或长度不足，如果是则返回示例数据
         if not rows or len(managers) < 1:
             log.info(f"get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据")
-            returnobj["data"]["labels"] = ["经理1", "经理2", "经理3", "经理4", "经理5"]
-            returnobj["data"]["values"] = [74, 53, 38, 25, 11]
+            returnobj["data"]["labels"] = ["Team1", "Team2", "Team3", "Team4", "Team5"]
+            returnobj["data"]["values"] = [0, 0, 0, 0, 0]
         else:
             log.debug(f"get_contribution_by_manager_current_month(): 查询到{len(managers)}条数据")
             returnobj["data"]["labels"] = managers
