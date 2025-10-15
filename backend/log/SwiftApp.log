@@ -7011,3 +7011,693 @@
 2025-10-15 at 00:11:12 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
 2025-10-15 at 00:11:14 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
 2025-10-15 at 00:11:14 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:11:18 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:11:18 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:11:24 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:11:24 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:11:30 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:11:30 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:11:30 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:11:30 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:11:34 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:11:34 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:11:37 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:11:37 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:11:37 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:11:37 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:11:37 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:11:37 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:11:37 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:11:37 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:11:49 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:11:49 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:11:52 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:11:52 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:11:56 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:11:56 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:11:57 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:11:57 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:12:03 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:12:03 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:12:08 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:12:08 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:12:15 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:12:15 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:12:16 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:12:16 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:12:18 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:12:18 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:12:24 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:12:24 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:12:29 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:12:29 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:12:34 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:12:34 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:12:39 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:12:39 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:12:40 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:12:40 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:12:42 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:12:42 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:12:54 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:12:54 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:12:55 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:12:55 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:12:56 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:12:56 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:13:00 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:13:00 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:13:08 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:13:08 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:13:12 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:13:12 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:13:13 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:13:13 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:13:21 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:13:21 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:13:21 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:13:21 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:13:28 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:13:28 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:13:32 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:13:32 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:13:34 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:13:34 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:13:42 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:13:42 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:13:45 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:13:45 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:13:47 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:13:47 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:13:51 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:13:51 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:14:00 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:14:00 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:14:00 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:14:00 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:14:03 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:14:03 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:14:10 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:14:10 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:14:13 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:14:13 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:14:18 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:14:18 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:14:24 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:14:24 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:14:27 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:14:27 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:14:29 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:14:29 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:14:34 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:14:34 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:14:40 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:14:40 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:14:45 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:14:45 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:14:48 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:14:48 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:14:51 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:14:51 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:14:54 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:14:54 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:15:06 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:15:06 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:15:07 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:15:07 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:15:07 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:15:07 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:15:07 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:15:07 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:15:20 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:15:20 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:15:24 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:15:24 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:15:26 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:15:26 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:15:27 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:15:27 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:15:33 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:15:33 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:15:40 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:15:40 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:15:45 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:15:45 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:15:45 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:15:45 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:15:48 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:15:48 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:15:56 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:15:56 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:15:58 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:15:58 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:16:04 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:16:04 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:16:09 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:16:09 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:16:11 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:16:11 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:16:12 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:16:12 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:16:23 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:16:23 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:16:24 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:16:24 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:16:28 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:16:28 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:16:30 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:16:30 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:16:37 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:16:37 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:16:42 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:16:42 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:16:45 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:16:45 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:16:50 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:16:50 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:16:51 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:16:51 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:17:01 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:17:01 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:17:01 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:17:01 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:17:03 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:17:03 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:17:12 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:17:12 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:17:16 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:17:16 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:17:17 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:17:17 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:17:19 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:17:19 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:17:29 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:17:29 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:17:33 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:17:33 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:17:33 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:17:33 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:17:38 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:17:38 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:17:42 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:17:42 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:17:48 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:17:48 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:17:53 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:17:53 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:17:55 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:17:55 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:17:57 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:17:57 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:18:04 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:18:04 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:18:08 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:18:08 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:18:14 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:18:14 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:18:16 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:18:16 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:18:20 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:18:20 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:18:21 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:18:21 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:18:34 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:18:34 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:18:35 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:18:35 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:18:35 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:18:35 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:18:36 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:18:36 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:18:47 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:18:47 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:18:52 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:18:52 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:18:54 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:18:54 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:18:56 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:18:56 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:19:00 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:19:00 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:19:08 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:19:08 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:19:13 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:19:13 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:19:13 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:19:13 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:19:17 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:19:17 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:19:24 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:19:24 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:19:26 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:19:26 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:19:32 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:19:32 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:19:38 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:19:38 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:19:39 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:19:39 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:19:40 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:19:40 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:19:51 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:19:51 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:19:52 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:19:52 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:19:57 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:19:57 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:19:59 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:19:59 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:20:05 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:20:05 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:20:10 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:20:10 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:20:13 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:20:13 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:20:18 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:20:18 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:20:20 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:20:20 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:20:28 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:20:28 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:20:29 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:20:29 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:20:31 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:20:31 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:20:41 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:20:41 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:20:45 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:20:45 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:20:45 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:20:45 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:20:49 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:20:49 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:20:58 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:20:58 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:21:01 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:21:01 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:21:02 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:21:02 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:21:07 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:21:07 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:21:11 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:21:11 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:21:17 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:21:17 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:21:23 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:21:23 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:21:24 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:21:24 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:21:27 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:21:27 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:21:33 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:21:33 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:21:37 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:21:37 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:21:44 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:21:44 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:21:46 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:21:46 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:21:49 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:21:49 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:21:50 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:21:50 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:22:03 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:22:03 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:22:05 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:22:05 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:22:05 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:22:05 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:22:05 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:22:05 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:22:16 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:22:16 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:22:21 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:22:21 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:22:24 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:22:24 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:22:27 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:22:27 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:22:29 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:22:29 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:22:37 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:22:37 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:22:42 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:22:42 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:22:43 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:22:43 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:22:49 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:22:49 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:22:53 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:22:53 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:22:55 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:22:55 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:23:03 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:23:03 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:23:08 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:23:08 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:23:09 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:23:09 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:23:09 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:23:09 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:23:21 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:23:21 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:23:22 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:23:22 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:23:25 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:23:25 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:23:30 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:23:30 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:23:34 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:23:34 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:23:41 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:23:41 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:23:41 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:23:41 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:23:47 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:23:47 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:23:51 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:23:51 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:23:57 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:23:57 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:24:00 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:24:00 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:24:00 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:24:00 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:24:12 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:24:12 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:24:13 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:24:13 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:24:13 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:24:13 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:24:19 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:24:19 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:24:26 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:24:26 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:24:29 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:24:29 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:24:33 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:24:33 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:24:38 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:24:38 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:24:39 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:24:39 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:24:45 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:24:45 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:24:52 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:24:52 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:24:55 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:24:55 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:24:57 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:24:57 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:25:01 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:25:01 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:25:05 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:25:05 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:25:15 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:25:15 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:25:16 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:25:16 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:25:17 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:25:17 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:25:18 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:25:18 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:25:31 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:25:31 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:25:33 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:25:33 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:25:35 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:25:35 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:25:36 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:25:36 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:25:44 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:25:44 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:25:49 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:25:49 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:25:53 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:25:53 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:25:57 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:25:57 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:25:57 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:25:57 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:26:05 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:26:05 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:26:10 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:26:10 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:26:12 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:26:12 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:26:19 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:26:19 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:26:21 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:26:21 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:26:23 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:26:23 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:26:31 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:26:31 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:26:36 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:26:36 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:26:37 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:26:37 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:26:39 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:26:39 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:26:49 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:26:49 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:26:50 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:26:50 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:26:53 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:26:53 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:27:00 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:27:00 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:27:02 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:27:02 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:27:09 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:27:09 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:27:09 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:27:09 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:27:15 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:27:15 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:27:21 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:27:21 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:27:25 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:27:25 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:27:28 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:27:28 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:27:28 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:27:28 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:27:41 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:27:41 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:27:41 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:27:41 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:27:43 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:27:43 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:27:47 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:27:47 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:27:54 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:27:54 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:27:57 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:27:57 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:28:03 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:28:03 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:28:06 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:28:06 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:28:07 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:28:07 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:28:13 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:28:13 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:28:20 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:28:20 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:28:24 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:28:24 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:28:25 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:28:25 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:28:29 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:28:29 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:28:33 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:28:33 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:28:44 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:28:44 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:28:45 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:28:45 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:28:45 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:28:45 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:28:46 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:28:46 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:28:59 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:28:59 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:29:01 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:29:01 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:29:03 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:29:03 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:29:06 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:29:06 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:29:12 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:29:12 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:29:17 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:29:17 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:29:22 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:29:22 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:29:25 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:29:25 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:29:27 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:29:27 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:29:33 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:29:33 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:29:38 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:29:38 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:29:41 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:29:41 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:29:48 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:29:48 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:29:49 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:29:49 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:29:51 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:29:51 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:30:00 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:30:00 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:30:04 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:30:04 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:30:05 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:30:05 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:30:09 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:30:09 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:30:17 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:30:17 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:30:19 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:30:19 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:30:21 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:30:21 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:30:30 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:30:30 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:30:30 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:30:30 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:30:37 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:30:37 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:30:38 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:30:38 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:30:43 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:30:43 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:30:51 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:30:51 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:30:52 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:30:52 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:30:56 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:30:56 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:30:57 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:30:57 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:31:08 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:31:08 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:31:09 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:31:09 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:31:13 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:31:13 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:31:16 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:31:16 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:31:22 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:31:22 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:31:25 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:31:25 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:31:34 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:31:34 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:31:35 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:31:35 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:31:35 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:31:35 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:31:41 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:31:41 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 00:31:48 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 00:31:48 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 00:31:54 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 00:31:54 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 00:31:55 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 00:31:55 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 00:31:57 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 00:31:57 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 01:02:04 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 01:02:04 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 01:02:07 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 01:02:07 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 01:02:07 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 01:02:07 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 01:02:10 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 01:02:10 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 01:02:17 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 01:02:17 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 01:02:23 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 01:02:23 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 01:02:26 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 01:02:26 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 01:02:30 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 01:02:30 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 01:02:31 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 01:02:31 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 01:02:39 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 01:02:39 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 01:02:43 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 01:02:43 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 01:02:45 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 01:02:45 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 01:02:52 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 01:02:52 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 01:02:55 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 01:02:55 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 01:02:56 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 01:02:56 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 01:03:04 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 01:03:04 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 01:03:09 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 01:03:09 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 01:03:11 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 01:03:11 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 01:03:14 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 01:03:14 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 01:03:22 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 01:03:22 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 01:03:23 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 01:03:23 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 01:03:26 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 01:03:26 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 01:03:35 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 01:03:35 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 01:03:35 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 01:03:35 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 01:03:42 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 01:03:42 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 01:03:42 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 01:03:42 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 01:03:48 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 01:03:48 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 01:03:56 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 01:03:56 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 01:03:59 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 01:03:59 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 01:04:01 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 01:04:01 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 01:04:01 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 01:04:01 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 01:04:14 | DEBUG | get_activity_by_manager_current_month() rows: [('REN JIAN', Decimal('12')), ('WANG QIA', Decimal('12'))]
+2025-10-15 at 01:04:14 | DEBUG | get_activity_by_manager_current_month(): 查询到2条数据
+2025-10-15 at 01:04:15 | DEBUG | get_activity_by_manager_last_month() rows: [('REN JIAN', Decimal('107')), ('FU WEN BIN', Decimal('33')), ('YUAN QUAN', Decimal('28')), ('WANG BIAO', Decimal('21')), ('YU XIAO CHEN', Decimal('18')), ('GUO YAN', Decimal('10')), ('WANG QIA', Decimal('2'))]
+2025-10-15 at 01:04:15 | DEBUG | get_activity_by_manager_last_month(): 查询到7条数据
+2025-10-15 at 01:04:17 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 01:04:17 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 01:04:20 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 01:04:20 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 08:42:16 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 08:42:16 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 08:42:17 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 08:42:17 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 08:42:36 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 08:42:36 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 08:42:37 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 08:42:37 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 08:42:55 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 08:42:55 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 08:42:58 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 08:42:58 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 08:43:14 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 08:43:14 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 08:43:19 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 08:43:19 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
+2025-10-15 at 08:43:33 | DEBUG | get_contribution_by_manager_current_month() rows: []
+2025-10-15 at 08:43:33 | INFO | get_contribution_by_manager_current_month(): 查询结果为空，返回示例数据
+2025-10-15 at 08:43:40 | DEBUG | get_contribution_by_manager_last_month() rows: [('WANG BIAO', Decimal('7')), ('REN JIAN', Decimal('1'))]
+2025-10-15 at 08:43:40 | DEBUG | get_contribution_by_manager_last_month(): 查询到2条数据
