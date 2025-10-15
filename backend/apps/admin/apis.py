@@ -157,7 +157,7 @@ async def get_activity_by_manager(sess: SyncSess):
               AND action_date <= CURDATE()
             GROUP BY act_manager
             ORDER BY total_count DESC
-            LIMIT 10
+            LIMIT 50
         """)
         result = await site.engine.execute(query)
         rows = result.fetchall()
@@ -213,7 +213,7 @@ async def get_contribution_by_manager(sess: SyncSess):
               AND (action_type LIKE 'create%' OR action_type LIKE 'update%')
             GROUP BY act_manager
             ORDER BY total_count DESC
-            LIMIT 10
+            LIMIT 50
         """)
         result = await site.engine.execute(query)
         rows = result.fetchall()
@@ -298,7 +298,7 @@ async def get_activity_by_manager_current_month(sess: SyncSess):
               AND action_date <= CURDATE()
             GROUP BY act_manager
             ORDER BY total_count DESC
-            LIMIT 10
+            LIMIT 50
         """)
         result = await site.engine.execute(query)
         rows = result.fetchall()
@@ -347,7 +347,7 @@ async def get_activity_by_manager_last_month(sess: SyncSess):
               AND action_date <= LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH))
             GROUP BY act_manager
             ORDER BY total_count DESC
-            LIMIT 10
+            LIMIT 50
         """)
         result = await site.engine.execute(query)
         rows = result.fetchall()
@@ -397,7 +397,7 @@ async def get_contribution_by_manager_current_month(sess: SyncSess):
               AND (action_type LIKE 'create%' OR action_type LIKE 'update%')
             GROUP BY act_manager
             ORDER BY total_count DESC
-            LIMIT 10
+            LIMIT 50
         """)
         result = await site.engine.execute(query)
         rows = result.fetchall()
@@ -447,7 +447,7 @@ async def get_contribution_by_manager_last_month(sess: SyncSess):
               AND (action_type LIKE 'create%' OR action_type LIKE 'update%')
             GROUP BY act_manager
             ORDER BY total_count DESC
-            LIMIT 10
+            LIMIT 50
         """)
         result = await site.engine.execute(query)
         rows = result.fetchall()
