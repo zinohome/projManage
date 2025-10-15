@@ -16,7 +16,7 @@ from fastapi_user_auth.globals import auth
 from fastapi_amis_admin.crud import CrudEnum, BaseApiOut
 from fastapi_amis_admin.amis import PageSchema, TableColumn, ActionType, Action, Dialog, SizeEnum, Drawer, LevelEnum, \
     TableCRUD, TabsModeEnum, Form, AmisAPI, DisplayModeEnum, InputExcel, InputTable, Page, FormItem, SchemaNode, Group, \
-    Divider, Grid, Card, Html, Tpl, Chart
+    Divider, Grid, Card, Html, Tpl, Chart, Service, Table
 from fastapi_amis_admin.utils.translation import i18n as _
 
 from apps.admin.models.actlog import ActLog
@@ -36,29 +36,15 @@ class ActChartAdmin(admin.PageAdmin):
     # Configure page information directly through the page class property;
     page = Page()
     page.body = [
-                # 第一行：一整栏
-                Grid(
-                    columns=[{
-                        "body": [
-                            Card(
-                                title="Activity Overview",
-                                body=[
-                                    amis.Service(
-                                        api="/actlog/activity_total",
-                                        body=[
-                                            Tpl(
-                                                tpl="<div style='font-size: 18px; font-weight: bold; text-align: center; padding: 5px 0;'>总浏览量：${total_count}</div>",
-                                                dataFilter="return {total_count: data?.data?.total_count || 0}"
-                                            )
-                                        ]
-                                    )
-                                ]
-                            )
-                        ],
-                        "lg": 12,  # 大屏幕占12格（一整行）
-                        "md": 12,  # 中等屏幕占12格
-                        "sm": 12   # 小屏幕占12格
-                    }]
+                # 添加自定义CSS样式
+                Html(
+                    html="""
+                    <style>
+                    .bg-light-blue {
+                        background-color: #e3f2fd !important;
+                    }
+                    </style>
+                    """
                 ),
                 # 第一行：一整栏
                 Grid(
@@ -116,6 +102,7 @@ class ActChartAdmin(admin.PageAdmin):
                                                         type: 'bar',
                                                         data: items,
                                                         animation: true,
+                                                        barMaxWidth: 60,
                                                         label: { show: true, position: 'top', formatter: ({ value }) => value },
                                                         emphasis: { focus: 'series' }
                                                       }]
@@ -132,66 +119,47 @@ class ActChartAdmin(admin.PageAdmin):
                 
                 # 第二行：两栏布局
                 Grid(
+                    style={"height": "300px"},
                     columns=[
                         {
                             "body": [
                                 Card(
-                                    title="Monthly User Activity",
+                                    header=Card.Header(
+                                        title="当月浏览量排名-Manager"
+                                    ),
+                                    bodyClassName="p-1",
+                                    style={"height": "100%"},
                                     body=[
-                                        Chart(
-                                            api="/actlog/activity_by_manager_current_month",
-                                            height="180px",
-                                            replaceChartOption=False,
-                                            setOptionOpts={
-                                                "notMerge": False,
-                                                "lazyUpdate": False
-                                            },
-                                            interval=12000,
-                                            config={
-                                                "title": {
-                                                    "text": "当月浏览量排名-Manager"
-                                                },
-                                                "tooltip": {},
-                                                "legend": {
-                                                    "data": ["浏览次数"]
-                                                },
-                                                "xAxis": {
-                                                    "type": "category"
-                                                },
-                                                "yAxis": {
-                                                    "type": "value"
-                                                },
-                                                "series": [{
-                                                    "name": "浏览次数",
-                                                    "type": "bar"
-                                                }]
-                                            },
-                                            dataFilter="""
-                                                        const d = data?.data || data || {};
-                                                        const xAxis = Array.isArray(d.labels) ? d.labels : (d.xAxis && Array.isArray(d.xAxis.data) ? d.xAxis.data : []);
-                                                        const series0 = Array.isArray(d.values) ? d.values : (d.series && Array.isArray(d.series) && Array.isArray(d.series[0]?.data) ? d.series[0].data : []);
-                                                        const items = xAxis.map((name, i) => ({ name, value: Number(series0?.[i] ?? 0) }));
-                                                        return {
-                                                          animation: true,
-                                                          animationDuration: 500,
-                                                          animationDurationUpdate: 500,
-                                                          animationEasing: 'cubicOut',
-                                                          animationEasingUpdate: 'cubicOut',
-                                                          title: d.title || { text: '当月浏览量排名-Manager' },
-                                                          tooltip: d.tooltip || {},
-                                                          legend: d.legend || { data: ['浏览次数'] },
-                                                          xAxis: { type: 'category', data: xAxis },
-                                                          yAxis: d.yAxis || {},
-                                                          series: [{
-                                                            id: 'bar-main',
-                                                            name: '浏览次数',
-                                                            type: 'bar',
-                                                            data: items,
-                                                            animation: true,
-                                                            label: { show: true, position: 'top', formatter: ({ value }) => value },
-                                                            emphasis: { focus: 'series' }
-                                                          }]
-                                                        };"""
+                                        Service(
+                                            api="/actlog/manager_ranking_current_month",
+                                            body=Table(
+                                                source="${items}",
+                                                columns=[
+                                                    TableColumn(
+                                                        name="rank",
+                                                        label="排名",
+                                                        width=60,
+                                                        type="text"
+                                                    ),
+                                                    TableColumn(
+                                                        name="manager", 
+                                                        label="Manager",
+                                                        type="tpl",
+                                                        tpl="${number > 0 ? '<span style=\"background-color: #ffeb3b; padding: 2px 4px; border-radius: 3px;\">' + manager + '</span>' : manager}"
+                                                    ),
+                                                    TableColumn(
+                                                        name="number",
+                                                        label="浏览次数",
+                                                        width=100,
+                                                        type="tpl",
+                                                        tpl="${number > 0 ? '<span style=\"background-color: #ffeb3b; padding: 2px 4px; border-radius: 3px;\">' + number + '</span>' : number}",
+                                                    )
+                                                ],
+                                                placeholder="暂无数据",
+                                                className="table-striped",
+                                                autoFillHeight=True,
+                                                style={"height": "250px", "overflow": "auto"},
+                                            )
                                         )
                                     ]
                                 )
@@ -203,62 +171,42 @@ class ActChartAdmin(admin.PageAdmin):
                         {
                             "body": [
                                 Card(
-                                    title="Monthly User Activity",
+                                    header=Card.Header(
+                                        title="上月浏览量排名-Manager"
+                                    ),
+                                    bodyClassName="p-1",
+                                    style={"height": "100%"},
                                     body=[
-                                        Chart(
-                                            api="/actlog/activity_by_manager_last_month",
-                                            height="180px",
-                                            replaceChartOption=False,
-                                            setOptionOpts={
-                                                "notMerge": False,
-                                                "lazyUpdate": False
-                                            },
-                                            interval=15000,
-                                            config={
-                                                "title": {
-                                                    "text": "上月浏览量排名-Manager"
-                                                },
-                                                "tooltip": {},
-                                                "legend": {
-                                                    "data": ["浏览次数"]
-                                                },
-                                                "xAxis": {
-                                                    "type": "category"
-                                                },
-                                                "yAxis": {
-                                                    "type": "value"
-                                                },
-                                                "series": [{
-                                                    "name": "浏览次数",
-                                                    "type": "bar"
-                                                }]
-                                            },
-                                            dataFilter="""
-                                                        const d = data?.data || data || {};
-                                                        const xAxis = Array.isArray(d.labels) ? d.labels : (d.xAxis && Array.isArray(d.xAxis.data) ? d.xAxis.data : []);
-                                                        const series0 = Array.isArray(d.values) ? d.values : (d.series && Array.isArray(d.series) && Array.isArray(d.series[0]?.data) ? d.series[0].data : []);
-                                                        const items = xAxis.map((name, i) => ({ name, value: Number(series0?.[i] ?? 0) }));
-                                                        return {
-                                                          animation: true,
-                                                          animationDuration: 500,
-                                                          animationDurationUpdate: 500,
-                                                          animationEasing: 'cubicOut',
-                                                          animationEasingUpdate: 'cubicOut',
-                                                          title: d.title || { text: '上月浏览量排名-Manager' },
-                                                          tooltip: d.tooltip || {},
-                                                          legend: d.legend || { data: ['浏览次数'] },
-                                                          xAxis: { type: 'category', data: xAxis },
-                                                          yAxis: d.yAxis || {},
-                                                          series: [{
-                                                            id: 'bar-main',
-                                                            name: '浏览次数',
-                                                            type: 'bar',
-                                                            data: items,
-                                                            animation: true,
-                                                            label: { show: true, position: 'top', formatter: ({ value }) => value },
-                                                            emphasis: { focus: 'series' }
-                                                          }]
-                                                        };"""
+                                        Service(
+                                            api="/actlog/manager_ranking_last_month",
+                                            body=Table(
+                                                source="${items}",
+                                                columns=[
+                                                    TableColumn(
+                                                        name="rank",
+                                                        label="排名",
+                                                        width=60,
+                                                        type="text"
+                                                    ),
+                                                    TableColumn(
+                                                        name="manager", 
+                                                        label="Manager",
+                                                        type="tpl",
+                                                        tpl="${number > 0 ? '<span style=\"background-color: #ffeb3b; padding: 2px 4px; border-radius: 3px;\">' + manager + '</span>' : manager}"
+                                                    ),
+                                                    TableColumn(
+                                                        name="number",
+                                                        label="浏览次数",
+                                                        width=100,
+                                                        type="tpl",
+                                                        tpl="${number > 0 ? '<span style=\"background-color: #ffeb3b; padding: 2px 4px; border-radius: 3px;\">' + number + '</span>' : number}",
+                                                    )
+                                                ],
+                                                placeholder="暂无数据",
+                                                className="table-striped",
+                                                autoFillHeight=True,
+                                                style={"height": "250px", "overflow": "auto"},
+                                            )
                                         )
                                     ]
                                 )
@@ -272,66 +220,47 @@ class ActChartAdmin(admin.PageAdmin):
                 
                 # 第三行：两栏布局
                 Grid(
+                    style={"height": "300px"},
                     columns=[
                         {
                             "body": [
                                 Card(
-                                    title="Monthly User Activity",
+                                    header=Card.Header(
+                                        title="当月贡献度排名-Manager"
+                                    ),
+                                    bodyClassName="p-1",
+                                    style={"height": "100%"},
                                     body=[
-                                        Chart(
-                                            api="/actlog/contribution_by_manager_current_month",
-                                            height="180px",
-                                            replaceChartOption=False,
-                                            setOptionOpts={
-                                                "notMerge": False,
-                                                "lazyUpdate": False
-                                            },
-                                            interval=18000,
-                                            config={
-                                                "title": {
-                                                    "text": "当月贡献度排名-Manager"
-                                                },
-                                                "tooltip": {},
-                                                "legend": {
-                                                    "data": ["贡献次数"]
-                                                },
-                                                "xAxis": {
-                                                    "type": "category"
-                                                },
-                                                "yAxis": {
-                                                    "type": "value"
-                                                },
-                                                "series": [{
-                                                    "name": "贡献次数",
-                                                    "type": "bar"
-                                                }]
-                                            },
-                                            dataFilter="""
-                                                        const d = data?.data || data || {};
-                                                        const xAxis = Array.isArray(d.labels) ? d.labels : (d.xAxis && Array.isArray(d.xAxis.data) ? d.xAxis.data : []);
-                                                        const series0 = Array.isArray(d.values) ? d.values : (d.series && Array.isArray(d.series) && Array.isArray(d.series[0]?.data) ? d.series[0].data : []);
-                                                        const items = xAxis.map((name, i) => ({ name, value: Number(series0?.[i] ?? 0) }));
-                                                        return {
-                                                          animation: true,
-                                                          animationDuration: 500,
-                                                          animationDurationUpdate: 500,
-                                                          animationEasing: 'cubicOut',
-                                                          animationEasingUpdate: 'cubicOut',
-                                                          title: d.title || { text: '当月贡献度排名-Manager' },
-                                                          tooltip: d.tooltip || {},
-                                                          legend: d.legend || { data: ['贡献次数'] },
-                                                          xAxis: { type: 'category', data: xAxis },
-                                                          yAxis: d.yAxis || {},
-                                                          series: [{
-                                                            id: 'bar-main',
-                                                            name: '贡献次数',
-                                                            type: 'bar',
-                                                            data: items,
-                                                            animation: true,
-                                                            label: { show: true, position: 'top', formatter: ({ value }) => value },
-                                                            emphasis: { focus: 'series' }
-                                                          }]
-                                                        };"""
+                                        Service(
+                                            api="/actlog/manager_contribution_current_month",
+                                            body=Table(
+                                                source="${items}",
+                                                columns=[
+                                                    TableColumn(
+                                                        name="rank",
+                                                        label="排名",
+                                                        width=60,
+                                                        type="text"
+                                                    ),
+                                                    TableColumn(
+                                                        name="manager", 
+                                                        label="Manager",
+                                                        type="tpl",
+                                                        tpl="${number > 0 ? '<span style=\"background-color: #ffeb3b; padding: 2px 4px; border-radius: 3px;\">' + manager + '</span>' : manager}"
+                                                    ),
+                                                    TableColumn(
+                                                        name="number",
+                                                        label="贡献次数",
+                                                        width=100,
+                                                        type="tpl",
+                                                        tpl="${number > 0 ? '<span style=\"background-color: #ffeb3b; padding: 2px 4px; border-radius: 3px;\">' + number + '</span>' : number}",
+                                                    )
+                                                ],
+                                                placeholder="暂无数据",
+                                                className="table-striped",
+                                                autoFillHeight=True,
+                                                style={"height": "250px", "overflow": "auto"},
+                                            )
                                         )
                                     ]
                                 )
@@ -343,57 +272,42 @@ class ActChartAdmin(admin.PageAdmin):
                         {
                             "body": [
                                 Card(
-                                    title="Monthly User Activity",
+                                    header=Card.Header(
+                                        title="上月贡献度排名-Manager"
+                                    ),
+                                    bodyClassName="p-1",
+                                    style={"height": "100%"},
                                     body=[
-                                        # 修改第三行右侧栏的图表：直接由 Chart 发起请求
-                                        Chart(
-                                            api="/actlog/contribution_by_manager_last_month",
-                                            height="180px",
-                                            replaceChartOption=False,
-                                            setOptionOpts={
-                                                "notMerge": False,
-                                                "lazyUpdate": False
-                                            },
-                                            interval=20000,
-                                            config={
-                                                "title": {"text": "上月贡献度排名-Manager"},
-                                                "tooltip": {},
-                                                "legend": {"data": ["贡献次数"]},
-                                                "xAxis": {
-                                                    "type": "category"
-                                                },
-                                                "yAxis": {"type": "value"},
-                                                "series": [{
-                                                    "name": "贡献次数",
-                                                    "type": "bar"
-                                                }]
-                                            },
-                                            dataFilter="""
-                                                    const d = data?.data || data || {};
-                                                    const xAxis = Array.isArray(d.labels) ? d.labels : (d.xAxis && Array.isArray(d.xAxis.data) ? d.xAxis.data : []);
-                                                    const series0 = Array.isArray(d.values) ? d.values : (d.series && Array.isArray(d.series) && Array.isArray(d.series[0]?.data) ? d.series[0].data : []);
-                                                    const items = xAxis.map((name, i) => ({ name, value: Number(series0?.[i] ?? 0) }));
-                                                    return {
-                                                      animation: true,
-                                                      animationDuration: 500,
-                                                      animationDurationUpdate: 500,
-                                                      animationEasing: 'cubicOut',
-                                                      animationEasingUpdate: 'cubicOut',
-                                                      title: d.title || { text: '上月贡献度排名-Manager' },
-                                                      tooltip: d.tooltip || {},
-                                                      legend: d.legend || { data: ['贡献次数'] },
-                                                      xAxis: { type: 'category', data: xAxis },
-                                                      yAxis: d.yAxis || {},
-                                                      series: [{
-                                                        id: 'bar-main',
-                                                        name: '贡献次数',
-                                                        type: 'bar',
-                                                        data: items,
-                                                        animation: true,
-                                                        label: { show: true, position: 'top', formatter: ({ value }) => value },
-                                                        emphasis: { focus: 'series' }
-                                                      }]
-                                                    };"""
+                                        Service(
+                                            api="/actlog/manager_contribution_last_month",
+                                            body=Table(
+                                                source="${items}",
+                                                columns=[
+                                                    TableColumn(
+                                                        name="rank",
+                                                        label="排名",
+                                                        width=60,
+                                                        type="text"
+                                                    ),
+                                                    TableColumn(
+                                                        name="manager", 
+                                                        label="Manager",
+                                                        type="tpl",
+                                                        tpl="${number > 0 ? '<span style=\"background-color: #ffeb3b; padding: 2px 4px; border-radius: 3px;\">' + manager + '</span>' : manager}"
+                                                    ),
+                                                    TableColumn(
+                                                        name="number",
+                                                        label="贡献次数",
+                                                        width=100,
+                                                        type="tpl",
+                                                        tpl="${number > 0 ? '<span style=\"background-color: #ffeb3b; padding: 2px 4px; border-radius: 3px;\">' + number + '</span>' : number}",
+                                                    )
+                                                ],
+                                                placeholder="暂无数据",
+                                                className="table-striped",
+                                                autoFillHeight=True,
+                                                style={"height": "250px", "overflow": "auto"},
+                                            )
                                         )
                                     ]
                                 )

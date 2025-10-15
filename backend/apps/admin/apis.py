@@ -107,18 +107,30 @@ async def get_monthly_activities(sess: SyncSess):
         """)
         result = await site.engine.execute(query)
         rows = result.fetchall()
+        
+        # 生成完整的12个月列表
+        from datetime import datetime, timedelta
+        current_date = datetime.now()
+        full_months = []
+        for i in range(12):
+            month_date = current_date - timedelta(days=30 * (11 - i))
+            full_months.append(month_date.strftime('%Y-%m'))
+        
+        # 创建数据字典，便于查找
+        data_dict = {}
+        for row in rows:
+            data_dict[row.month] = int(row.total_count)
+        
+        # 填充完整的12个月数据，缺失的月份用0填充
         months = []
         counts = []
-        for row in rows:
-            months.append(row.month)
-            counts.append(int(row.total_count))
-        # 如果数据不足1个月，返回示例数据
-        if len(months) < 1:
-            returnobj["data"]["month"] = ["2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03"]
-            returnobj["data"]["bar"] = [99, 122, 88, 110, 92, 101]
-        else:
-            returnobj["data"]["month"] = months
-            returnobj["data"]["bar"] = counts
+        for month in full_months:
+            months.append(month)
+            counts.append(data_dict.get(month, 0))
+        
+        returnobj["data"]["month"] = months
+        returnobj["data"]["bar"] = counts
+        
     except Exception as exp:
         print('Exception at apis.get_monthly_activities() %s ' % exp)
         traceback.print_exc()
@@ -472,6 +484,225 @@ async def get_contribution_by_manager_last_month(sess: SyncSess):
             
     except Exception as exp:
         print('Exception at apis.get_contribution_by_manager_last_month() %s ' % exp)
+        traceback.print_exc()
+        returnobj["status"] = 1
+        returnobj["msg"] = f"查询失败: {str(exp)}"
+    
+    return returnobj
+
+
+# 新增4个Manager排名API接口
+@router.get("/actlog/manager_ranking_current_month", summary="获取当月Manager浏览量排名")
+async def get_manager_ranking_current_month(sess: SyncSess):
+    """获取当月Manager浏览量排名，与userselect.getAllManager()合并排序"""
+    from utils.userselect import UserSelect
+    
+    returnobj = {
+        "status": 0,
+        "msg": "ok",
+        "data": {"items": []}
+    }
+    try:
+        # 获取所有Manager列表
+        userselect = UserSelect()
+        all_managers = userselect.getAllManager()
+        
+        # 创建Manager字典，便于查找
+        manager_dict = {item["manager"]: item for item in all_managers}
+        
+        # 获取当月浏览量数据
+        query = text("""
+            SELECT act_manager, SUM(record_count) as total_count
+            FROM actlog_daily_stats_user
+            WHERE action_date >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
+              AND action_date <= CURDATE()
+            GROUP BY act_manager
+            ORDER BY total_count DESC
+        """)
+        result = await site.engine.execute(query)
+        rows = result.fetchall()
+        
+        # 更新Manager的number值
+        for row in rows:
+            manager_name = row.act_manager
+            if manager_name in manager_dict:
+                manager_dict[manager_name]["number"] = int(row.total_count)
+        
+        # 按number排序，返回所有Manager（包括number为0的）
+        sorted_managers = sorted(manager_dict.values(), key=lambda x: x["number"], reverse=True)
+        
+        # 添加排名，从1开始
+        for i, manager in enumerate(sorted_managers):
+            manager["rank"] = i + 1 
+        
+        returnobj["data"]["items"] = sorted_managers
+        
+    except Exception as exp:
+        print('Exception at apis.get_manager_ranking_current_month() %s ' % exp)
+        traceback.print_exc()
+        returnobj["status"] = 1
+        returnobj["msg"] = f"查询失败: {str(exp)}"
+    
+    return returnobj
+
+
+@router.get("/actlog/manager_ranking_last_month", summary="获取上月Manager浏览量排名")
+async def get_manager_ranking_last_month(sess: SyncSess):
+    """获取上月Manager浏览量排名，与userselect.getAllManager()合并排序"""
+    from utils.userselect import UserSelect
+    
+    returnobj = {
+        "status": 0,
+        "msg": "ok",
+        "data": {"items": []}
+    }
+    try:
+        # 获取所有Manager列表
+        userselect = UserSelect()
+        all_managers = userselect.getAllManager()
+        
+        # 创建Manager字典，便于查找
+        manager_dict = {item["manager"]: item for item in all_managers}
+        
+        # 获取上月浏览量数据
+        query = text("""
+            SELECT act_manager, SUM(record_count) as total_count
+            FROM actlog_daily_stats_user
+            WHERE action_date >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-01')
+              AND action_date <= LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH))
+            GROUP BY act_manager
+            ORDER BY total_count DESC
+        """)
+        result = await site.engine.execute(query)
+        rows = result.fetchall()
+        
+        # 更新Manager的number值
+        for row in rows:
+            manager_name = row.act_manager
+            if manager_name in manager_dict:
+                manager_dict[manager_name]["number"] = int(row.total_count)
+        
+        # 按number排序，返回所有Manager（包括number为0的）
+        sorted_managers = sorted(manager_dict.values(), key=lambda x: x["number"], reverse=True)
+        
+        # 添加排名，从1开始
+        for i, manager in enumerate(sorted_managers):
+            manager["rank"] = i + 1 
+        
+        returnobj["data"]["items"] = sorted_managers
+        
+    except Exception as exp:
+        print('Exception at apis.get_manager_ranking_last_month() %s ' % exp)
+        traceback.print_exc()
+        returnobj["status"] = 1
+        returnobj["msg"] = f"查询失败: {str(exp)}"
+    
+    return returnobj
+
+
+@router.get("/actlog/manager_contribution_current_month", summary="获取当月Manager贡献度排名")
+async def get_manager_contribution_current_month(sess: SyncSess):
+    """获取当月Manager贡献度排名，与userselect.getAllManager()合并排序"""
+    from utils.userselect import UserSelect
+    
+    returnobj = {
+        "status": 0,
+        "msg": "ok",
+        "data": {"items": []}
+    }
+    try:
+        # 获取所有Manager列表
+        userselect = UserSelect()
+        all_managers = userselect.getAllManager()
+        
+        # 创建Manager字典，便于查找
+        manager_dict = {item["manager"]: item for item in all_managers}
+        
+        # 获取当月贡献度数据
+        query = text("""
+            SELECT act_manager, SUM(record_count) as total_count
+            FROM actlog_daily_stats_user
+            WHERE action_date >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
+              AND action_date <= CURDATE()
+              AND (action_type LIKE 'create%' OR action_type LIKE 'update%')
+            GROUP BY act_manager
+            ORDER BY total_count DESC
+        """)
+        result = await site.engine.execute(query)
+        rows = result.fetchall()
+        
+        # 更新Manager的number值
+        for row in rows:
+            manager_name = row.act_manager
+            if manager_name in manager_dict:
+                manager_dict[manager_name]["number"] = int(row.total_count)
+        
+        # 按number排序，返回所有Manager（包括number为0的）
+        sorted_managers = sorted(manager_dict.values(), key=lambda x: x["number"], reverse=True)
+        
+        # 添加排名，从1开始
+        for i, manager in enumerate(sorted_managers):
+            manager["rank"] = i + 1 
+        
+        returnobj["data"]["items"] = sorted_managers
+        
+    except Exception as exp:
+        print('Exception at apis.get_manager_contribution_current_month() %s ' % exp)
+        traceback.print_exc()
+        returnobj["status"] = 1
+        returnobj["msg"] = f"查询失败: {str(exp)}"
+    
+    return returnobj
+
+
+@router.get("/actlog/manager_contribution_last_month", summary="获取上月Manager贡献度排名")
+async def get_manager_contribution_last_month(sess: SyncSess):
+    """获取上月Manager贡献度排名，与userselect.getAllManager()合并排序"""
+    from utils.userselect import UserSelect
+    
+    returnobj = {
+        "status": 0,
+        "msg": "ok",
+        "data": {"items": []}
+    }
+    try:
+        # 获取所有Manager列表
+        userselect = UserSelect()
+        all_managers = userselect.getAllManager()
+        
+        # 创建Manager字典，便于查找
+        manager_dict = {item["manager"]: item for item in all_managers}
+        
+        # 获取上月贡献度数据
+        query = text("""
+            SELECT act_manager, SUM(record_count) as total_count
+            FROM actlog_daily_stats_user
+            WHERE action_date >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-01')
+              AND action_date <= LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH))
+              AND (action_type LIKE 'create%' OR action_type LIKE 'update%')
+            GROUP BY act_manager
+            ORDER BY total_count DESC
+        """)
+        result = await site.engine.execute(query)
+        rows = result.fetchall()
+        
+        # 更新Manager的number值
+        for row in rows:
+            manager_name = row.act_manager
+            if manager_name in manager_dict:
+                manager_dict[manager_name]["number"] = int(row.total_count)
+        
+        # 按number排序，返回所有Manager（包括number为0的）
+        sorted_managers = sorted(manager_dict.values(), key=lambda x: x["number"], reverse=True)
+        
+        # 添加排名，从1开始
+        for i, manager in enumerate(sorted_managers):
+            manager["rank"] = i + 1 
+        
+        returnobj["data"]["items"] = sorted_managers
+        
+    except Exception as exp:
+        print('Exception at apis.get_manager_contribution_last_month() %s ' % exp)
         traceback.print_exc()
         returnobj["status"] = 1
         returnobj["msg"] = f"查询失败: {str(exp)}"

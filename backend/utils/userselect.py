@@ -140,6 +140,34 @@ class UserSelect(object):
         return "Unknown"
 
 
+    def getAllManager(self):
+        """
+        从三个字典中用最快的速度找到所有的 Manager，去重后返回数组
+        形如: [{"manager": "Manager_Name", "number": 0}, ...]
+        """
+        managers = set()
+        exclude_names = {
+            'PAN JUN',
+            'HOU MIAO',
+            'SU YUE',
+            'CHAO DENNIS',
+            'LI GARY',
+            'CHEN FEI',
+            'CHEN XU DONG'
+        }
+        # 依次遍历三个字典并收集 manager 字段，使用集合去重，O(n)
+        for user_dict in (self.tls_dict, self.mission_dict, self.sales_dict):
+            if not user_dict:
+                continue
+            for info in user_dict.values():
+                manager_name = info.get("manager")
+                if manager_name and manager_name not in exclude_names:
+                    managers.add(manager_name)
+
+        # 为了稳定输出，按管理者名称排序
+        return [{"manager": name, "number": 0} for name in sorted(managers)]
+
+
 if __name__ == '__main__':
     userselect = UserSelect()
     log.debug(userselect.tls_dict)
@@ -150,6 +178,7 @@ if __name__ == '__main__':
     log.debug(userselect.get_manager('952530'))
     log.debug(userselect.get_org('952530'))
     log.debug(userselect.get_manager('952530'))
+    log.debug(userselect.getAllManager())
 
     log.debug(datetime.now().astimezone(ZoneInfo("Asia/Shanghai")).strftime("%Y-%m-%d %H:%M"))
 
