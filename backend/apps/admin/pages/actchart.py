@@ -35,6 +35,15 @@ class ActChartAdmin(admin.PageAdmin):
     )
     # Configure page information directly through the page class property;
     page = Page()
+    
+    # 获取当前月份用于动态显示
+    current_month = datetime.now().strftime('%Y年%m月')
+    
+    # 获取上个月份用于动态显示
+    from datetime import timedelta
+    last_month_date = datetime.now().replace(day=1) - timedelta(days=1)
+    last_month = last_month_date.strftime('%Y年%m月')
+    
     page.body = [
                 # 添加自定义CSS样式
                 Html(
@@ -125,7 +134,7 @@ class ActChartAdmin(admin.PageAdmin):
                             "body": [
                                 Card(
                                     header=Card.Header(
-                                        title="当月浏览量排名-Manager"
+                                        title=f"{current_month}浏览量排名-Manager"
                                     ),
                                     bodyClassName="p-1",
                                     style={"height": "100%"},
@@ -172,7 +181,7 @@ class ActChartAdmin(admin.PageAdmin):
                             "body": [
                                 Card(
                                     header=Card.Header(
-                                        title="上月浏览量排名-Manager"
+                                        title=f"{last_month}浏览量排名-Manager"
                                     ),
                                     bodyClassName="p-1",
                                     style={"height": "100%"},
@@ -226,7 +235,7 @@ class ActChartAdmin(admin.PageAdmin):
                             "body": [
                                 Card(
                                     header=Card.Header(
-                                        title="当月贡献度排名-Manager"
+                                        title=f"{current_month}贡献度排名-Manager"
                                     ),
                                     bodyClassName="p-1",
                                     style={"height": "100%"},
@@ -273,7 +282,7 @@ class ActChartAdmin(admin.PageAdmin):
                             "body": [
                                 Card(
                                     header=Card.Header(
-                                        title="上月贡献度排名-Manager"
+                                        title=f"{last_month}贡献度排名-Manager"
                                     ),
                                     bodyClassName="p-1",
                                     style={"height": "100%"},

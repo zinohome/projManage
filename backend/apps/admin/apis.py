@@ -86,7 +86,7 @@ async def test_async_db(sess: AsyncSess):
 
 @router.get("/actlog/monthly_activities", summary="获取近12个月的每月活动统计数据")
 async def get_monthly_activities(sess: SyncSess):
-    """统计本月起往前推12个月，每月记录总数，用于柱状图显示"""
+    """统计本月起往前推12个月，每月记录总数，用于柱状图显示。不足12个月的，向后延展补齐，补齐数值为0"""
     returnobj = {
         "status": 0,
         "msg": "ok",
@@ -96,37 +96,41 @@ async def get_monthly_activities(sess: SyncSess):
         }
     }
     try:
-        # 统计本月起往前推12个月每月的总浏览量
+        # 查询所有有数据的月份，按月份排序
         query = text("""
             SELECT DATE_FORMAT(action_date, '%Y-%m') as month, SUM(record_count) as total_count
             FROM actlog_daily_stats_user
-            WHERE action_date >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 11 MONTH), '%Y-%m-01')
-              AND action_date <= LAST_DAY(CURDATE())
             GROUP BY month
             ORDER BY month ASC
         """)
         result = await site.engine.execute(query)
         rows = result.fetchall()
         
-        # 生成完整的12个月列表
-        from datetime import datetime, timedelta
-        current_date = datetime.now()
-        full_months = []
-        for i in range(12):
-            month_date = current_date - timedelta(days=30 * (11 - i))
-            full_months.append(month_date.strftime('%Y-%m'))
-        
         # 创建数据字典，便于查找
         data_dict = {}
         for row in rows:
             data_dict[row.month] = int(row.total_count)
         
-        # 填充完整的12个月数据，缺失的月份用0填充
+        # 生成完整的12个月列表：从最早数据月份开始，向后延展12个月
+        from datetime import datetime, timedelta
+        from dateutil.relativedelta import relativedelta
+        
+        if rows:
+            # 如果有数据，从最早的月份开始
+            earliest_month = rows[0].month
+            start_date = datetime.strptime(earliest_month, '%Y-%m')
+        else:
+            # 如果没有数据，从当前月份开始
+            start_date = datetime.now().replace(day=1)
+        
+        # 生成12个月的数据
         months = []
         counts = []
-        for month in full_months:
-            months.append(month)
-            counts.append(data_dict.get(month, 0))
+        for i in range(12):
+            current_month = start_date + relativedelta(months=i)
+            month_str = current_month.strftime('%Y-%m')
+            months.append(month_str)
+            counts.append(data_dict.get(month_str, 0))
         
         returnobj["data"]["month"] = months
         returnobj["data"]["bar"] = counts
