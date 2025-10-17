@@ -10,7 +10,7 @@ import traceback
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-import simplejson as json
+import json
 from utils.log import log as log
 
 
@@ -99,13 +99,13 @@ class UserSelect(object):
 
     def get_org(self, target_id):
         """
-        从三个字典中用最快的速度根据id找到对应的nickname
+        从三个字典中用最快的速度根据id找到对应的organization
 
         Args:
             target_id: 要查找的用户ID
 
         Returns:
-            str: 找到的nickname，如果所有字典中都不存在，则返回"Unknown"
+            str: 找到的organization，如果所有字典中都不存在，则返回"Unknown"
         """
         # 由于字典的查找是O(1)的，所以这是最快的查找方式
         # 依次检查三个字典
@@ -120,22 +120,38 @@ class UserSelect(object):
 
     def get_manager(self, target_id):
         """
-        从三个字典中用最快的速度根据id找到对应的nickname
+        从三个字典中用最快的速度根据id找到对应的manager或nickname
+        如果isManager是0，返回manager；如果isManager是1，返回nickname
 
         Args:
             target_id: 要查找的用户ID
 
         Returns:
-            str: 找到的nickname，如果所有字典中都不存在，则返回"Unknown"
+            str: 根据isManager字段返回manager或nickname，如果所有字典中都不存在，则返回"Unknown"
         """
         # 由于字典的查找是O(1)的，所以这是最快的查找方式
         # 依次检查三个字典
         if target_id in self.tls_dict:
-            return self.tls_dict[target_id]["manager"]
+            user_info = self.tls_dict[target_id]
+            # 根据isManager字段决定返回manager还是nickname
+            if user_info.get("isManager", 0) == 1:
+                return user_info["nickname"]
+            else:
+                return user_info["manager"]
         if target_id in self.mission_dict:
-            return self.mission_dict[target_id]["manager"]
+            user_info = self.mission_dict[target_id]
+            # 根据isManager字段决定返回manager还是nickname
+            if user_info.get("isManager", 0) == 1:
+                return user_info["nickname"]
+            else:
+                return user_info["manager"]
         if target_id in self.sales_dict:
-            return self.sales_dict[target_id]["manager"]
+            user_info = self.sales_dict[target_id]
+            # 根据isManager字段决定返回manager还是nickname
+            if user_info.get("isManager", 0) == 1:
+                return user_info["nickname"]
+            else:
+                return user_info["manager"]
         # 如果所有字典中都不存在，则返回默认值
         return "Unknown"
 
@@ -175,9 +191,9 @@ if __name__ == '__main__':
     log.debug(userselect.sales_dict)
     log.debug(userselect.get_nickname('952530'))
     log.debug(userselect.get_org('952530'))
-    log.debug(userselect.get_manager('952530'))
+    log.debug(userselect.get_manager('062502'))
     log.debug(userselect.get_org('952530'))
-    log.debug(userselect.get_manager('952530'))
+    log.debug(userselect.get_manager('050184'))
     log.debug(userselect.getAllManager())
 
     log.debug(datetime.now().astimezone(ZoneInfo("Asia/Shanghai")).strftime("%Y-%m-%d %H:%M"))
