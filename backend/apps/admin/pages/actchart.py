@@ -259,7 +259,7 @@ class ActChartAdmin(admin.PageAdmin):
                                                     ),
                                                     TableColumn(
                                                         name="number",
-                                                        label="贡献次数",
+                                                        label="贡献记录",
                                                         width=100,
                                                         type="tpl",
                                                         tpl="${number > 0 ? '<span style=\"background-color: #ffeb3b; padding: 2px 4px; border-radius: 3px;\">' + number + '</span>' : number}",
@@ -306,7 +306,7 @@ class ActChartAdmin(admin.PageAdmin):
                                                     ),
                                                     TableColumn(
                                                         name="number",
-                                                        label="贡献次数",
+                                                        label="贡献记录",
                                                         width=100,
                                                         type="tpl",
                                                         tpl="${number > 0 ? '<span style=\"background-color: #ffeb3b; padding: 2px 4px; border-radius: 3px;\">' + number + '</span>' : number}",
