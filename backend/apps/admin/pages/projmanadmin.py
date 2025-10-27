@@ -33,7 +33,7 @@ from utils.projectIDGenerator import ProjectIDGenerator
 from fastapi import Body, Depends, FastAPI, HTTPException, Request
 from typing_extensions import Annotated, Literal
 from fastapi_amis_admin.globals.deps import SyncSess, AsyncSess
-from sqlalchemy import text, func, Select
+from sqlalchemy import False_, text, func, Select
 
 
 class ProjmanAdmin(SwiftAdmin):
@@ -41,6 +41,7 @@ class ProjmanAdmin(SwiftAdmin):
     page_schema = PageSchema(label='Customers', page_title='Customers', icon='fa fa-users', sort=80)
     model = Projman
     pk_name = 'id'
+    enable_bulk_create = False
     list_per_page = 20
     list_filter = [
         Projman.customer_name, Projman.project_name, Projman.customer_location, Projman.business_category, Projman.project_location,
@@ -59,6 +60,13 @@ class ProjmanAdmin(SwiftAdmin):
             tooltip="复制",
             flags=["item"],
             getter=lambda request: self.get_duplicate_action(request, bulk=False),
+        ),
+        lambda self: AdminAction(
+            admin=self,
+            name="import",
+            tooltip="导入Excel",
+            flags=["toolbar"],
+            getter=lambda request: self.get_import_action(request),
         )
     ]
 
@@ -90,12 +98,112 @@ class ProjmanAdmin(SwiftAdmin):
         }
     ]
 
+    importactions = [
+        {
+            "type": "button",
+            "actionType": "cancel",
+            "icon": "fa fa-reply",
+            "label": "取消",
+            "primary": False
+        },
+        {
+            "type": "button",
+            "icon": "fa fa-upload",
+            "onEvent": {
+                "click": {"actions": [{"actionType": "submit", "componentId": "form_import"}]}
+            },
+            "label": "导入",
+            "primary": True
+        }
+    ]
+
     def __init__(self, app: "AdminApp"):
         super().__init__(app)
-        self.enable_bulk_create = True
+        self.enable_bulk_create = False
         self.schema_read = None
         self.action_type = 'Drawer'
 
+    def _normalize_field_value(self, field_name: str, value: Any) -> str:
+        """
+        根据字段名和值，进行格式化转换
+        确保数据符合模型要求
+        """
+        # None值转换为空字符串
+        if value is None:
+            return ''
+        
+        # 如果是字符串，先去掉首尾空格
+        if isinstance(value, str):
+            value = value.strip()
+            if value == '' or value.upper() in ['NULL', 'N/A', 'N/A']:
+                return ''
+        
+        # 日期相关字段统一处理
+        date_fields = [
+            'contract_sign_date', 'contract_end_date', 'expected_renewal_time',
+            'publish_time', 'deadline', 'bid_date'
+        ]
+        if field_name in date_fields:
+            # 如果是数字格式的年份（如2027），转换为日期格式
+            if isinstance(value, (int, float)):
+                try:
+                    year = int(value)
+                    if 2000 <= year <= 2099:
+                        return f"{year}-01-01"
+                except (ValueError, TypeError):
+                    pass
+            # 如果已经是日期格式字符串，尝试标准化
+            elif isinstance(value, str) and len(value) > 0:
+                # 处理常见日期格式
+                if value.isdigit() and len(value) == 4:
+                    # 纯年份"2027"
+                    try:
+                        year = int(value)
+                        if 2000 <= year <= 2099:
+                            return f"{year}-01-01"
+                    except ValueError:
+                        pass
+                elif len(value) == 8 and value.isdigit():
+                    # 纯数字日期"20270101"
+                    return f"{value[:4]}-{value[4:6]}-{value[6:8]}"
+                # 其他情况直接返回字符串
+                return value
+        
+        # 时间戳类型字段特殊处理（publish_time可能包含时间）
+        if field_name in ['publish_time', 'deadline']:
+            # 如果是datetime对象
+            if isinstance(value, (int, float)):
+                # 可能是时间戳
+                try:
+                    from datetime import datetime
+                    dt = datetime.fromtimestamp(int(value))
+                    return dt.strftime("%Y-%m-%d %H:%M")
+                except (ValueError, OSError):
+                    pass
+        
+        # 其他字段统一转换为字符串
+        if isinstance(value, (int, float)):
+            # 数字类型转换为字符串，去除小数点后的0
+            if isinstance(value, float) and value.is_integer():
+                return str(int(value))
+            return str(value)
+        else:
+            return str(value) if value else ''
+
+    def register_router(self):
+        """重写register_router方法，添加自定义的import路由"""
+        # 先调用父类方法注册标准CRUD路由
+        super().register_router()
+        
+        # 添加自定义的import路由
+        self.router.add_api_route(
+            "/import",
+            self.route_import,
+            methods=["POST"],
+            response_model=BaseApiOut[Dict[str, Any]],
+            name="import",
+        )
+        return self
 
     async def get_list_table(self, request: Request) -> TableCRUD:
         '''
@@ -347,7 +455,7 @@ class ProjmanAdmin(SwiftAdmin):
                     name=CrudEnum.create,
                     mode=DisplayModeEnum.normal,
                     body=[
-                        InputExcel(name="excel",plainText=True),
+                        InputExcel(name="excel",plainText=False,includeEmpty=True),
                         InputTable(
                             name="excel",
                             showIndex=True,
@@ -464,6 +572,89 @@ class ProjmanAdmin(SwiftAdmin):
                 return None
         except Exception as exp:
             print('Exception at ProjmanAdmin.get_duplicate_action() %s ' % exp)
+            traceback.print_exc()
+
+    async def get_import_form(self, request: Request) -> Form:
+        """创建导入表单，包含InputExcel和InputTable"""
+        try:
+            # 获取需要导入的字段（排除id, creator, create_time, update_time）
+            fields = [field for field in model_fields(self.schema_create).values() 
+                     if field.name != self.pk_name and field.name not in ['creator', 'create_time', 'update_time']]
+            
+            # 构建columns，用于InputTable显示
+            columns, keys, field_name_map = [], {}, {}  # field_name_map用于记录中文字段名到英文字段名的映射
+            for field in fields:
+                column = await self.get_list_column(request, self.parser.get_modelfield(field))
+                column.quickEdit = False
+                original_name = column.name  # 保存英文字段名
+                column.id = column.name
+                keys[column.name] = "${" + column.label + "}"
+                # 记录映射：中文字段名 -> 英文字段名
+                field_name_map[column.label] = original_name
+                column.name = column.label  # 显示用中文标签
+                columns.append(column)
+            
+            # 将映射保存到类中，供route_import使用
+            if not hasattr(self, '_field_name_map'):
+                self._field_name_map = {}
+            self._field_name_map.update(field_name_map)
+            
+            # 创建导入表单
+            return Form(
+                api=AmisAPI(
+                    method="post",
+                    url=f"{self.router_path}/import",
+                ),
+                name="import",
+                id="form_import",
+                mode=DisplayModeEnum.normal,
+                body=[
+                    InputExcel(
+                        name="excel", 
+                        plainText=True, 
+                        includeEmpty=True,
+                        data={
+                            "&": {"$excel": keys}
+                        }
+                    ),
+                    InputTable(
+                        name="excel",
+                        showIndex=True,
+                        columns=columns,
+                        addable=False,
+                        copyable=False,
+                        editable=True,  # 可以编辑
+                        removable=True,  # 可以删除
+                    ),
+                ],
+            )
+        except Exception as exp:
+            print('Exception at ProjmanAdmin.get_import_form() %s ' % exp)
+            traceback.print_exc()
+
+    async def get_import_action(self, request: Request) -> Optional[Action]:
+        """获取导入按钮的Action"""
+        try:
+            return ActionType.Drawer(
+                icon="fa fa-upload",
+                label=_("导入"),
+                level=LevelEnum.primary,
+                drawer=Drawer(
+                    title=_("导入Excel") + " - " + _(self.page_schema.label),
+                    id="form_import",
+                    position="right",
+                    showCloseButton=False,
+                    actions=self.importactions,
+                    overlay=False,
+                    closeOnOutside=False,
+                    size=SizeEnum.lg,
+                    resizable=True,
+                    width="900px",
+                    body=await self.get_import_form(request),
+                ),
+            )
+        except Exception as exp:
+            print('Exception at ProjmanAdmin.get_import_action() %s ' % exp)
             traceback.print_exc()
 
     async def on_create_pre(
@@ -629,6 +820,164 @@ class ProjmanAdmin(SwiftAdmin):
                 print('Exception at SwiftAdmin.route_delete() %s ' % exp)
                 traceback.print_exc()
 
+        return route
+
+
+    @property
+    def route_import(self) -> Callable:
+        """处理Excel导入的路由"""
+        async def route(
+            request: Request,
+            data: Annotated[Dict[str, Any], Body()],  # type: ignore
+        ) -> BaseApiOut:  # type: ignore
+            try:
+                # 获取当前用户
+                user = await auth.get_current_user(request)
+                
+                # 检查创建权限
+                if not await self.has_create_permission(request, None):
+                    return self.error_no_router_permission(request)
+                
+                # 从请求体中获取Excel数据，InputExcel解析后的数据在excel字段中
+                excel_data = data.get("excel", [])
+                if not excel_data or not isinstance(excel_data, list):
+                    return BaseApiOut(
+                        status=422,
+                        msg="Excel数据为空或格式不正确",
+                        data=None
+                    )
+                
+                # 调试：打印第一行数据看看字段名
+                if excel_data:
+                    #log.debug(f"Excel data sample: {excel_data[0]}")
+                    pass
+                
+                # 将中文字段名转换为英文字段名
+                # 获取字段名映射（中文字段名 -> 英文字段名）
+                field_name_map = getattr(self, '_field_name_map', {})
+                log.debug(f"Field name map: {field_name_map}")
+                
+                # 转换数据：将中文标签转换为英文字段名并格式化
+                converted_data = []
+                original_data = []  # 保存原始数据（中文标签）用于后续creator匹配
+                for idx, row_data in enumerate(excel_data):
+                    converted_row = {}
+                    for cn_name, value in row_data.items():
+                        # 查找对应的英文字段名
+                        en_name = field_name_map.get(cn_name, cn_name)
+                        # 使用规范化函数格式化值
+                        converted_row[en_name] = self._normalize_field_value(en_name, value)
+                    converted_data.append(converted_row)
+                    original_data.append(row_data)  # 保存原始数据
+                    
+                # 更新excel_data为转换后的数据（用于验证和导入）
+                excel_data = converted_data
+                log.debug(f"Converted data sample: {excel_data[0] if excel_data else {}}")
+                
+                # 验证必填字段
+                required_fields = ['customer_name', 'customer_location', 'business_category', 'project_name']
+                errors = {}
+                
+                # 准备导入数据列表
+                import_data_list = []
+                generator = ProjectIDGenerator()
+                
+                for idx, row_data in enumerate(excel_data):
+                    # 验证必填字段
+                    row_errors = {}
+                    for field in required_fields:
+                        if field not in row_data or not row_data[field]:
+                            row_errors[field] = f"第{idx+1}行：{field}字段不能为空"
+                    
+                    if row_errors:
+                        errors.update(row_errors)
+                        continue
+                    
+                    # 构建导入数据对象
+                    import_obj = self.schema_create(**row_data)
+                    import_data_list.append(import_obj)
+                
+                # 如果有验证错误，返回错误
+                if errors:
+                    error_msg = "参数验证失败: " + ", ".join([f"{k}: {v}" for k, v in errors.items()])
+                    log.warning(f"Import validation failed: {error_msg}")
+                    return BaseApiOut(
+                        status=422,
+                        msg=error_msg,
+                        errors=errors,
+                        data=None
+                    )
+                
+                # 批量创建数据
+                try:
+                    items = await self.create_items(request, import_data_list)
+                except Exception as error:
+                    await self.db.async_rollback()
+                    log.error(f"Database error during import: {str(error)}")
+                    return self.error_execute_sql(request=request, error=error)
+                
+                # 根据需求记录操作日志
+                # 从converted_data和original_data中查找creator字段
+                log.debug(f"Recording logs for {len(items)} items")
+                for idx, item in enumerate(items):
+                    try:
+                        creator = None
+                        
+                        # 方法1: 尝试从converted_data中获取（如果有creator列）
+                        if idx < len(excel_data):
+                            row_data = excel_data[idx]
+                            creator = row_data.get('creator')
+                        
+                        # 方法2: 如果converted_data中没有，尝试从original_data中获取（支持多种字段名）
+                        if not creator and idx < len(original_data):
+                            row_data = original_data[idx]
+                            log.debug(f"Row {idx} original data keys: {list(row_data.keys())}")
+                            # 尝试多种可能的字段名：英文字段名
+                            creator = (row_data.get('creator') or 
+                                      row_data.get('Creator') or 
+                                      row_data.get('CREATOR'))
+                            
+                            # 如果英文字段名都找不到，尝试中文字段名
+                            if not creator:
+                                creator = (row_data.get('创建人') or 
+                                          row_data.get('创建者') or 
+                                          row_data.get('创建人姓名') or
+                                          row_data.get('负责人'))
+                        
+                        log.debug(f"Found creator: {creator} for item {item.id if hasattr(item, 'id') else 'unknown'}")
+                        
+                        # 如果找到creator且不为空，使用creator记录日志
+                        if creator and str(creator).strip():
+                            await add_act_log(str(creator).strip(), f"create_{item.id}")
+                        else:
+                            # 否则使用当前登录用户
+                            log.debug(f"No creator found for item {item.id}, using current user: {user.username}")
+                            await add_act_log(user.username, f"create_{item.id}")
+                            
+                    except Exception as log_error:
+                        log.error(f"Error recording log for item {item.id}: {str(log_error)}")
+                        traceback.print_exc()
+                        # 发生错误时使用当前用户
+                        try:
+                            await add_act_log(user.username, f"create_{item.id}")
+                        except:
+                            pass
+                
+                log.info(f"Import successful, imported {len(items)} items")
+                
+                return BaseApiOut(
+                    data={"count": len(items), "items": items}
+                )
+                
+            except Exception as exp:
+                log.error(f"Exception at ProjmanAdmin.route_import(): {str(exp)}")
+                traceback.print_exc()
+                return BaseApiOut(
+                    status=500,
+                    msg=f"导入失败: {str(exp)}",
+                    data=None
+                )
+        
         return route
 
 
