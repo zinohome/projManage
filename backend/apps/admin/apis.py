@@ -226,7 +226,7 @@ async def get_contribution_by_manager(sess: SyncSess):
             FROM actlog_daily_stats_user
             WHERE action_date >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
               AND action_date <= CURDATE()
-              AND (action_type LIKE 'create%' OR action_type LIKE 'update%')
+              AND (action_type LIKE 'create%')
             GROUP BY act_manager
             ORDER BY total_count DESC
             LIMIT 50
@@ -410,7 +410,7 @@ async def get_contribution_by_manager_current_month(sess: SyncSess):
             FROM actlog_daily_stats_user
             WHERE action_date >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
               AND action_date <= CURDATE()
-              AND (action_type LIKE 'create%' OR action_type LIKE 'update%')
+              AND (action_type LIKE 'create%')
             GROUP BY act_manager
             ORDER BY total_count DESC
             LIMIT 50
@@ -455,6 +455,7 @@ async def get_contribution_by_manager_last_month(sess: SyncSess):
     }
     try:
         # SQL查询：统计上自然月按经理分类的创建/更新操作总数，取前10名
+        '''
         query = text("""
             SELECT act_manager, SUM(record_count) as total_count
             FROM actlog_daily_stats_user
@@ -465,6 +466,17 @@ async def get_contribution_by_manager_last_month(sess: SyncSess):
             ORDER BY total_count DESC
             LIMIT 50
         """)
+        '''
+        query = text("""
+                    SELECT act_manager, SUM(record_count) as total_count
+                    FROM actlog_daily_stats_user
+                    WHERE action_date >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-01')
+                      AND action_date <= LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH))
+                      AND (action_type LIKE 'create%')
+                    GROUP BY act_manager
+                    ORDER BY total_count DESC
+                    LIMIT 50
+                """)
         result = await site.engine.execute(query)
         rows = result.fetchall()
         log.debug(f"get_contribution_by_manager_last_month() rows: {rows}")
@@ -628,7 +640,7 @@ async def get_manager_contribution_current_month(sess: SyncSess):
             FROM actlog_daily_stats_user
             WHERE action_date >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
               AND action_date <= CURDATE()
-              AND (action_type LIKE 'create%' OR action_type LIKE 'update%')
+              AND (action_type LIKE 'create%')
             GROUP BY act_manager
             ORDER BY total_count DESC
         """)
@@ -683,7 +695,7 @@ async def get_manager_contribution_last_month(sess: SyncSess):
             FROM actlog_daily_stats_user
             WHERE action_date >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-01')
               AND action_date <= LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH))
-              AND (action_type LIKE 'create%' OR action_type LIKE 'update%')
+              AND (action_type LIKE 'create%')
             GROUP BY act_manager
             ORDER BY total_count DESC
         """)
